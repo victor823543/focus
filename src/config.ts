@@ -1,1 +1,5 @@
-export const API_ADDRESS: string = "http://localhost:4000";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+export const API_ADDRESS = process.env.API_ADDRESS;
