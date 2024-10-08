@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
 export const API_ADDRESS = process.env.API_ADDRESS;
