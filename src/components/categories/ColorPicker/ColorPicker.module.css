@@ -1,0 +1,29 @@
+.colorPicker {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 30rem;
+}
+
+.colorItem {
+  border-radius: 1rem;
+  height: 4rem;
+  width: 4rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: scale 0.2s;
+  background-color: var(--hex);
+}
+
+.selected {
+  outline: solid 5px hsl(from var(--hex) h s calc(l + 15));
+}
+
+.colorItem:hover {
+  scale: 1.1;
+}

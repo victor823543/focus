@@ -1,0 +1,88 @@
+:root {
+  --primary-color: #34d399;
+  --primary-color-light: #6ee7b7;
+  --primary-color-x-light: #a7f3d0;
+  --primary-color-2x-light: #d1fae5;
+  --primary-color-3x-light: #ecfdf5;
+  --primary-color-mid: #10b981;
+  --primary-color-dark: #059669;
+
+  --secondary-color: #60a5fa;
+
+  --slate: hsl(215, 16%, 47%);
+  --slate-3x-light: #f8fafc;
+  --slate-2x-light: #f1f5f9;
+  --slate-x-light: #e2e8f0;
+  --slate-light: #e1e7ef;
+  --slate-dark: hsl(215, 25%, 27%);
+  --slate-x-dark: hsl(222, 47%, 11%);
+
+  --gray-2x-light: #fafafa;
+  --gray-x-light: #f3f4f6;
+  --gray-m-light: #e5e7eb;
+  --gray-light: #d1d5db;
+  --gray: #6b7280;
+  --gray-dark: #384252;
+  --gray-x-dark: #111827;
+  --gray-2x-dark: #030711;
+
+  --primary-text: black;
+  --secondary-text: hsl(215, 25%, 27%);
+
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  --border-light: hsl(from var(--gray) h s l / 0.3);
+  --border: hsl(from var(--gray-dark) h s l / 0.4);
+  --border-dark: hsl(from var(--gray-dark) h s l / 0.6);
+
+  --btn-primary: #10b981; /* emerald-500 */
+  --btn-secondary: #0ea5e9; /* sky-500 */
+
+  --text-primary: #1f2937;
+  --text-primary-soft: #6b7280;
+  --text-secondary: white;
+  --text-secondary-soft: #f3f4f6;
+
+  --form-primary: #ffffff;
+  --form-secondary: #d1d5db;
+  --form-third: #e1e7ef;
+  --form-text: #111827;
+  --form-text-secondary: #6b7280;
+
+  --error-soft: #fcd34d;
+  --error: #f87171;
+  --error-x-light: #fef2f2;
+
+  --success: #86efac;
+
+  --blue: #60a5fa;
+  --blue-2x-light: #dbeafe;
+  --blue-dark: #2563eb;
+
+  --purple: #c084fc;
+  --purple-2x-light: #f3e8ff;
+  --purple-dark: #9333ea;
+
+  --red: #f87171;
+  --red-2x-light: #fee2e2;
+  --red-dark: #b91c1c;
+
+  --cyan: #22d3ee;
+  --orange: #fb923c;
+
+  --amber: #fbbf24;
+  --amber-2x-light: #fef3c7;
+  --amber-dark: #d97706;
+
+  --lime: #a3e635;
+
+  --green: #4ade80;
+  --green-2x-light: #dcfce7;
+  --green-dark: #16a34a;
+
+  --pink: #f472b6;
+}

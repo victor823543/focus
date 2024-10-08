@@ -1,0 +1,42 @@
+.primary {
+  color: var(--gray-x-dark);
+  font-size: 2.5rem;
+}
+
+.secondary {
+  color: var(--gray-dark);
+  font-size: 1.8rem;
+}
+
+.gridbox {
+  color: var(--gray-dark);
+  font-size: 1.15rem;
+}
+
+.landing {
+  font-size: 2.8rem;
+  color: var(--gray-x-dark);
+  font-weight: 300;
+}
+
+.center {
+  text-align: center;
+}
+
+@media (min-width: 786px) {
+  .landing {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 610px) {
+  .landing {
+    font-size: 3.7rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .landing {
+    font-size: 3.5rem;
+  }
+}

@@ -1,0 +1,13 @@
+.secondary {
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+
+.bold {
+  color: var(--text-primary-soft);
+  font-weight: 600;
+}
+
+.center {
+  text-align: center;
+}

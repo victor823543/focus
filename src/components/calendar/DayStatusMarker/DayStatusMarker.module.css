@@ -1,0 +1,37 @@
+.marker {
+  height: 1rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+}
+
+.markerP {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.marker.status-2 {
+  background-color: var(--green-2x-light);
+  border-left: solid 4px var(--green);
+}
+
+.status-2 .markerP {
+  color: var(--green-dark);
+}
+
+.marker.status-1 {
+  background-color: var(--blue-2x-light);
+  border-left: solid 4px var(--blue);
+}
+
+.status-1 .markerP {
+  color: var(--blue-dark);
+}
+
+.marker.status-0 {
+  background-color: var(--red-2x-light);
+  border-left: solid 4px var(--red);
+}
+
+.status-0 .markerP {
+  color: var(--red-dark);
+}

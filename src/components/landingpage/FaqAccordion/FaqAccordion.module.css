@@ -1,0 +1,29 @@
+.accordion > * + * {
+  border-top: solid 1px var(--gray-light);
+}
+
+.item {
+  cursor: pointer;
+  padding: 1.5rem 0;
+}
+
+.questionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--gray-x-dark);
+}
+
+.question {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.answer {
+  margin-top: 1rem;
+  font-weight: 400;
+}
+
+.icon {
+  width: 1.5rem;
+}

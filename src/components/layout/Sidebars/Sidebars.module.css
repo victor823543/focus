@@ -1,0 +1,114 @@
+.sidebar {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  inset: 0;
+  /* background-color: var(--slate-3x-light); */
+  background-color: white;
+  width: 17rem;
+  pointer-events: auto;
+}
+
+.ul,
+.li {
+  all: unset;
+}
+
+.ul {
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
+
+.bottomContent {
+  margin-top: auto;
+}
+
+.sessionDisplay {
+  position: relative;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-primary-soft);
+  transition-property: background-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.sessionDisplay:hover {
+  background-color: var(--gray-x-light);
+  color: var(--text-primary);
+}
+
+.sessionIconWrapper {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--primary-color);
+  color: var(--text-secondary);
+}
+
+.userDisplay {
+  position: relative;
+  padding: 1.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-primary-soft);
+  transition-property: background-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.userDisplay:hover {
+  background-color: var(--gray-x-light);
+  color: var(--text-primary);
+}
+
+.iconWrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.closeBtn {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.25rem;
+  cursor: pointer;
+  position: absolute;
+  left: calc(100% + 1rem);
+  top: 1rem;
+  color: var(--gray-x-dark);
+}
+
+@media (max-width: 1023px) {
+  .sidebar {
+    transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  .sidebar.closed {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .closeBtn {
+    display: block;
+  }
+}

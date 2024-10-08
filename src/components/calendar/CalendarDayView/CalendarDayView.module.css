@@ -1,0 +1,125 @@
+.calendarDay {
+  height: clamp(40rem, 80vh, 70rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+}
+
+/* Header styles */
+.header {
+  height: 3rem;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: solid 1px var(--border-light);
+  background-color: var(--slate-3x-light);
+}
+
+.dayText {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.arrowContainer {
+  width: 2rem;
+  color: var(--gray);
+}
+
+/* Sec header styles */
+.secHeader {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 0.5rem 2rem;
+  border: solid 1px var(--border-light);
+  border-top: none;
+  border-bottom: solid 0.5px var(--border-light);
+  background-color: var(--slate-3x-light);
+}
+
+.leftSection,
+.rightSection {
+  flex-shrink: 1;
+}
+
+.centerSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.secHeader p {
+  font-weight: 600;
+}
+
+.missingData {
+  color: var(--error);
+}
+
+.waitingData {
+  color: hsl(from var(--primary-color) h s calc(l - 15));
+}
+
+.totalScore {
+  color: var(--gray);
+}
+
+.submit {
+  margin-left: auto;
+}
+
+/* Main styles */
+.day {
+  background-color: var(--slate-3x-light);
+  border: solid 0.5px var(--border-light);
+  border-top: none;
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.category {
+  flex: 1;
+  display: flex;
+  min-height: 5rem;
+}
+
+.categoryName {
+  padding: 0 2rem;
+  background-color: rgb(from var(--hex) r g b / 0.3);
+  width: 7rem;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--gray-dark);
+  border-left: solid 6px var(--hex);
+}
+
+.categoryImportance {
+  padding: 0 2rem;
+  width: 5rem;
+  border: solid 0.5px var(--border-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+.categoryResult {
+  padding: 0 2rem;
+  border: solid 0.5px var(--border-light);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}

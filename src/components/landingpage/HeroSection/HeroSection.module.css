@@ -1,0 +1,66 @@
+.sectionContainer {
+  padding: 1rem;
+  position: relative;
+}
+
+.heroSection {
+  border-radius: 1.5rem;
+  background-color: var(--gray-x-light);
+  height: 100vh;
+  position: relative;
+  overflow: visible;
+}
+
+.textWrapper {
+  padding: 10rem 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.header {
+  max-width: 40rem;
+}
+
+.highlight {
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-color: var(--primary-color);
+}
+
+.p {
+  max-width: 20rem;
+  text-align: center;
+}
+
+.screenContainer {
+  width: fit-content;
+  margin: 0 auto;
+  display: none;
+}
+
+.screenContainerPhone {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 610px) {
+  .screenContainer {
+    display: block;
+  }
+
+  .screenContainerPhone {
+    display: none;
+  }
+
+  .textWrapper {
+    padding: 10rem 5rem 5rem;
+  }
+}
