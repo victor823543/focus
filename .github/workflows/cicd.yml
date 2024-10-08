@@ -25,6 +25,6 @@ jobs:
       - name: Pull image from Docker Hub
         run: docker pull victor823543/focus-frontend:latest
       - name: Delete old container
-        run: docker -rm -f react-app-container
+        run: docker rm -f react-app-container
       - name: Run Docker Container
         run: docker run -d -p 3000:80 --name react-app-container victor823543/focus-frontend
