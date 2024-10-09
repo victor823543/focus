@@ -27,4 +27,4 @@ jobs:
       - name: Delete old container
         run: docker rm -f react-app-container
       - name: Run Docker Container
-        run: docker run -d -p 3000:80 --name react-app-container -e API_ADDRESS="${{ secrets.API_ADDRESS }}" victor823543/focus-frontend
+        run: docker run -d -p 3000:80 --name react-app-container victor823543/focus-frontend

@@ -1,15 +1,15 @@
 # Step 1: Build the app using Node.js
 FROM node:lts-alpine AS build
 
-ARG API_ADDRESS
-
-ENV API_ADDRESS=${API_ADDRESS}
-
 WORKDIR /app
 
 COPY package*.json ./
 
 RUN npm install
+
+# Accept API_ADDRESS as a build argument
+ARG API_ADDRESS
+ENV VITE_API_ADDRESS=${API_ADDRESS}
 
 COPY . .
 

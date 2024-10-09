@@ -2,5 +2,4 @@
 
 // dotenv.config();
 
-export const API_ADDRESS = process.env.API_ADDRESS;
-console.log(process.env);
+export const API_ADDRESS = import.meta.env.VITE_API_ADDRESS;
