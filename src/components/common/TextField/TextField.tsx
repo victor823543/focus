@@ -8,6 +8,7 @@ import styles from "./TextField.module.css";
 type TextFieldProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   type?: "text" | "password";
+  autoComplete?: "off" | "new-password" | "current-password";
   form: UseFormReturn<TFieldValues>;
   placeholder: string;
 };
@@ -15,6 +16,7 @@ type TextFieldProps<TFieldValues extends FieldValues> = {
 const TextField = <TFieldValues extends FieldValues>({
   name,
   type = "text",
+  autoComplete = "off",
   form,
   placeholder,
 }: TextFieldProps<TFieldValues>) => {
@@ -51,7 +53,7 @@ const TextField = <TFieldValues extends FieldValues>({
                 setInputFocus(false);
               }}
               autoCapitalize="off"
-              autoComplete="off"
+              autoComplete={autoComplete}
               spellCheck="false"
               autoCorrect="off"
               className={styles.input}
