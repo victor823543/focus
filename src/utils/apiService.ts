@@ -17,8 +17,6 @@ export async function callAPI<T extends Data | void = void>(
 ): Promise<T> {
   const token = localStorage.getItem("token");
 
-  console.log(API_ADDRESS);
-
   const headers =
     body instanceof FormData
       ? new Headers()
