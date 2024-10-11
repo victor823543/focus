@@ -10,7 +10,7 @@ import { callAPI } from "../utils/apiService";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email().required("Email cannot be empty."),
-  password: yup.string().required("You must create a password."),
+  password: yup.string().required("You must enter a password."),
 });
 
 export type LoginFormFields = yup.InferType<typeof loginSchema>;

@@ -13,7 +13,10 @@ const signupSchema = yup.object().shape({
   username: yup.string().required("Username cannot be empty."),
   password: yup
     .string()
-    .min(5, "Must be at least 5 characters")
+    .trim()
+    .matches(/[A-Za-z]/, "Must contain at least 1 letter")
+    .matches(/\d/, "Must contain at least 1 number")
+    .min(6, "Must be at least 6 characters")
     .required("You must create a password."),
 });
 
@@ -32,6 +35,11 @@ const Signup = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(signupSchema),
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+    },
   });
 
   const mutation = useMutation({
