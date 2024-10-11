@@ -1,9 +1,11 @@
-import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import googleIcon from "../../../assets/svgs/google-icon.svg";
 import { useAuth } from "../../../provider/authProvider";
 import { callAPI } from "../../../utils/apiService";
+import styles from "./GoogleLoginButton.module.css";
 
 const GoogleLoginButton: React.FC = () => {
   const { setToken } = useAuth();
@@ -16,6 +18,7 @@ const GoogleLoginButton: React.FC = () => {
       }),
     onSuccess: (response) => {
       setToken(response.token);
+      navigate("/dashboard");
     },
     onError: (error) => {
       console.error(error);
@@ -25,14 +28,26 @@ const GoogleLoginButton: React.FC = () => {
   const handleGoogleLoginSuccess = (response: any) => {
     const googleToken = response.credential;
     mutation.mutate(googleToken);
-    navigate("/dashboard");
   };
 
+  const login = useGoogleLogin({
+    onSuccess: handleGoogleLoginSuccess,
+    onError: () => console.log("Login Failed"),
+  });
+
   return (
-    <GoogleLogin
-      onSuccess={handleGoogleLoginSuccess}
-      onError={() => console.log("Login Failed")}
-    />
+    <button
+      className={styles.btn}
+      onClick={(e) => {
+        e.preventDefault(), login();
+      }}
+    >
+      <div className={styles.icon}>
+        <img src={googleIcon} alt="google logo" />
+        {/* <GoogleSvg color="white" /> */}
+      </div>
+      Continue with Google
+    </button>
   );
 };
 

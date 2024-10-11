@@ -1,7 +1,12 @@
 import React from "react";
 import styles from "./CustomizableButton.module.css";
 
-export type ButtonVariants = "default" | "primary" | "secondary" | "opaque";
+export type ButtonVariants =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "opaque"
+  | "wide";
 export type ButtonSize = "sm" | "base" | "lg" | "xl";
 
 export interface CustomizableButtonProps

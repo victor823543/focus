@@ -26,6 +26,13 @@
   font-size: 1.5rem;
 }
 
+.wide {
+  width: 100%;
+  color: white;
+  background-color: var(--btn-primary);
+  border: none;
+}
+
 .default {
   color: white;
   background-color: hsl(222, 47%, 11%);
@@ -36,6 +43,10 @@
   color: white;
   background-color: var(--btn-primary);
   border: none;
+}
+
+.wide:hover {
+  background-color: hsl(from var(--btn-primary) h s calc(l - 10));
 }
 
 .default:hover {
