@@ -15,7 +15,7 @@ type LoginFormProps = {
 const LoginForm: React.FC<LoginFormProps> = ({ form, handleSubmit }) => {
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
-      <Container gap="lg" paddingX="xl">
+      <Container gap="lg">
         <Header as="h2" variant="secondary">
           Log in to your account
         </Header>

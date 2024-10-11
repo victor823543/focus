@@ -3,6 +3,7 @@
   border: solid 1px var(--border-dark);
   position: relative;
   width: 25rem;
+  overflow: hidden;
 }
 
 .placeholder {
@@ -36,6 +37,7 @@
   color: var(--text-primary-soft);
   background-color: transparent;
   height: 100%;
+  width: 100%;
   padding: 1.75rem 0.75rem 0.5rem;
 }
 

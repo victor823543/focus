@@ -3,9 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Modal, ModalWrapperBlur } from "../components/common/Modals/Modals";
-import Layout from "../components/layout/Layout/Layout";
 import SignupForm from "../components/signup/SignupForm/SignupForm";
+import SignupLayout from "../components/signup/SignupLayout/SignupLayout";
 import { useAuth } from "../provider/authProvider";
 import { callAPI } from "../utils/apiService";
 
@@ -56,13 +55,9 @@ const Signup = () => {
   };
 
   return (
-    <Layout name="Dashboard">
-      <ModalWrapperBlur>
-        <Modal>
-          <SignupForm form={form} handleSubmit={handleSubmit} />
-        </Modal>
-      </ModalWrapperBlur>
-    </Layout>
+    <SignupLayout>
+      <SignupForm form={form} handleSubmit={handleSubmit} />
+    </SignupLayout>
   );
 };
 
