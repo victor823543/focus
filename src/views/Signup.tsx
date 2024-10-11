@@ -13,11 +13,10 @@ const signupSchema = yup.object().shape({
   username: yup.string().required("Username cannot be empty."),
   password: yup
     .string()
-    .trim()
+    .required("You must create a password.")
     .matches(/[A-Za-z]/, "Must contain at least 1 letter")
     .matches(/\d/, "Must contain at least 1 number")
-    .min(6, "Must be at least 6 characters")
-    .required("You must create a password."),
+    .min(6, "Must be at least 6 characters"),
 });
 
 export type SignupFormFields = yup.InferType<typeof signupSchema>;

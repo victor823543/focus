@@ -7,6 +7,7 @@ import Label from "../../common/Label/Label";
 import Link from "../../common/Link/Link";
 import { Paragraph } from "../../common/Paragraphs/Paragraphs";
 import TextField from "../../common/TextField/TextField";
+import GoogleLoginButton from "../GoogleLoginButton/GoogleLoginButton";
 
 type SignupFormProps = {
   form: UseFormReturn<SignupFormFields>;
@@ -54,6 +55,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ form, handleSubmit }) => {
         <CustomizableButton variant="primary" type="submit">
           Submit
         </CustomizableButton>
+        <GoogleLoginButton />
         <Link to={"/login"}>
           Already have an account? Login <span>here.</span>
         </Link>
