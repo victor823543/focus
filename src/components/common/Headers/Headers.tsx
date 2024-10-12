@@ -3,7 +3,7 @@ import styles from "./Headers.module.css";
 
 type HeaderProps = React.HTMLProps<HTMLHeadingElement> & {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  variant?: "primary" | "secondary" | "gridbox" | "landing";
+  variant?: "primary" | "secondary" | "gridbox" | "landing" | "config";
   center?: boolean;
 };
 
