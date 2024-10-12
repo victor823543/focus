@@ -9,11 +9,13 @@ import styles from "./ColorPicker.module.css";
 type ColorPickerProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
   form: UseFormReturn<TFieldValues>;
+  callback?: () => void;
 };
 
 const ColorPicker = <TFieldValues extends FieldValues>({
   name,
   form,
+  callback,
 }: ColorPickerProps<TFieldValues>) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["colors"],
@@ -36,7 +38,9 @@ const ColorPicker = <TFieldValues extends FieldValues>({
               key={color.name}
               style={{ "--hex": color.hex } as CSSProperties}
               className={`${styles.colorItem} ${value.name === color.name ? styles.selected : ""}`}
-              onClick={() => onChange(color)}
+              onClick={() => {
+                onChange(color), callback ? callback() : undefined;
+              }}
             >
               {color.name}
             </div>

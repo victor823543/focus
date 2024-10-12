@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import * as yup from "yup";
 import ConfigurationLayout from "../components/configuration/ConfigurationLayout/ConfigurationLayout";
+import CategoriesStep from "../components/configuration/steps/CategoriesStep/CategoriesStep";
 import WelcomeStep from "../components/configuration/steps/WelcomeStep/WelcomeStep";
+import useConfigureCategories from "../hooks/useConfigureCategories";
 import useCreateSession from "../hooks/useCreateSession";
 import useSelectSession from "../hooks/useSelectSession";
 import { CreateSessionResponse, ListSessionsResponse } from "../types/Session";
@@ -23,6 +25,7 @@ export type ValidatedSteps = Record<number, boolean>;
 
 const Configuration = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { currentConfigCategories } = useConfigureCategories();
   const createSession = useCreateSession();
   const { selectSession, currentSession } = useSelectSession();
   const [validatedSteps, setValidatedSteps] = useState<ValidatedSteps>({
@@ -78,8 +81,16 @@ const Configuration = () => {
   }, [titleValue]);
 
   useEffect(() => {
+    if (currentConfigCategories && currentConfigCategories.length > 0) {
+      setValidatedSteps((prev) => ({ ...prev, 1: true }));
+    } else {
+      setValidatedSteps((prev) => ({ ...prev, 1: false }));
+    }
+  }, [currentConfigCategories]);
+
+  useEffect(() => {
     if (categoriesValue !== undefined) {
-      isFieldValid(1, "categories", categoriesValue);
+      isFieldValid(2, "categories", categoriesValue);
     }
   }, [categoriesValue]);
 
@@ -113,6 +124,9 @@ const Steps: React.FC<StepsProps> = ({ step, form }) => {
   switch (step) {
     case 0: {
       return <WelcomeStep form={form} />;
+    }
+    case 1: {
+      return <CategoriesStep />;
     }
     default:
       return <div>something went wrong</div>;

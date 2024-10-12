@@ -8,12 +8,13 @@ type ModalWrapperStylingProps = {
   darken: string;
 };
 
+type ModalWrapperProps = React.HTMLProps<HTMLDivElement> & {
+  noSidebar?: boolean;
+};
+
 const createModalWrapper =
-  ({
-    blur,
-    darken,
-  }: ModalWrapperStylingProps): React.FC<React.HTMLProps<HTMLDivElement>> =>
-  ({ children, style, className, ...rest }) => {
+  ({ blur, darken }: ModalWrapperStylingProps): React.FC<ModalWrapperProps> =>
+  ({ children, style, className, noSidebar = false, ...rest }) => {
     return (
       <div
         style={{
@@ -21,7 +22,7 @@ const createModalWrapper =
           backdropFilter: `blur(${blur})`,
           backgroundColor: `rgb(from var(--gray-2x-dark) r g b / ${darken})`,
         }}
-        className={`${className} ${styles.modalWrapper}`}
+        className={`${className} ${styles.modalWrapper} ${noSidebar ? "" : styles.marginLeft}`}
         {...rest}
       >
         {children}
@@ -31,6 +32,11 @@ const createModalWrapper =
 
 export const ModalWrapper = createModalWrapper({
   darken: ".2",
+  blur: "0",
+});
+
+export const ModalWrapperTransparent = createModalWrapper({
+  darken: "0",
   blur: "0",
 });
 

@@ -20,7 +20,7 @@
 }
 
 @media (min-width: 1024px) {
-  .modalWrapper {
+  .modalWrapper .marginLeft {
     padding-left: 17rem;
     width: calc(100vw - 17rem);
   }
