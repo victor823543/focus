@@ -42,13 +42,24 @@ const ConfigurationLayout: React.FC<ConfigurationLayoutProps> = ({
                 Back
               </CustomizableButton>
             )}
-            <CustomizableButton
-              disabled={!validatedSteps[step]}
-              onClick={nextStep}
-              variant="primary"
-            >
-              Next
-            </CustomizableButton>
+            {step !== 3 && (
+              <CustomizableButton
+                disabled={!validatedSteps[step]}
+                onClick={nextStep}
+                variant="primary"
+              >
+                Next
+              </CustomizableButton>
+            )}
+            {step === 3 && (
+              <CustomizableButton
+                disabled={!validatedSteps[step]}
+                variant="primary"
+                type={"submit"}
+              >
+                Create
+              </CustomizableButton>
+            )}
           </div>
         </div>
       </div>

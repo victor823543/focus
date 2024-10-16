@@ -22,8 +22,6 @@ const CalendarDateInput = <TFieldValues extends FieldValues>({
     goToNextMonth,
   } = useCalendar();
 
-  console.log(currentMonthDates);
-
   return (
     <Controller
       name={name}

@@ -10,8 +10,8 @@ const useLogout = () => {
 
   const logout = () => {
     setToken(null);
-    localStorage.clear();
     dispatch(clearSessionState());
+    localStorage.clear();
     navigate("/");
   };
 

@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import ConfigurationLayout from "../components/configuration/ConfigurationLayout/ConfigurationLayout";
 import CategoriesStep from "../components/configuration/steps/CategoriesStep/CategoriesStep";
@@ -9,7 +10,6 @@ import DateStep from "../components/configuration/steps/DateStep/DateStep";
 import ImportanceStep from "../components/configuration/steps/ImportanceStep/ImportanceStep";
 import WelcomeStep from "../components/configuration/steps/WelcomeStep/WelcomeStep";
 import useConfigureCategories from "../hooks/useConfigureCategories";
-import useCreateSession from "../hooks/useCreateSession";
 import useSelectSession from "../hooks/useSelectSession";
 import { CreateSessionResponse, ListSessionsResponse } from "../types/Session";
 import { callAPI } from "../utils/apiService";
@@ -56,16 +56,15 @@ const configureSessionSchema = yup.object().shape({
       "End date must be a valid date",
       (value) => !value || !isNaN(Date.parse(value)),
     ),
-  activeDays: yup.array().of(yup.number().required()),
 });
 
 export type ConfigureFormFields = yup.InferType<typeof configureSessionSchema>;
 export type ValidatedSteps = Record<number, boolean>;
 
 const Configuration = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const { currentConfigCategories } = useConfigureCategories();
-  const createSession = useCreateSession();
   const { selectSession, currentSession } = useSelectSession();
   const [validatedSteps, setValidatedSteps] = useState<ValidatedSteps>({
     0: false,
@@ -78,6 +77,16 @@ const Configuration = () => {
     queryKey: ["sessions"],
     queryFn: () => callAPI<ListSessionsResponse>("/sessions", "GET"),
   });
+
+  useEffect(() => {
+    if (currentSession !== null) {
+      navigate("/dashboard");
+    }
+    if (data && data.length > 0) {
+      selectSession(data[data.length - 1]);
+      navigate("/dashboard");
+    }
+  }, [data, currentSession]);
 
   const form = useForm<ConfigureFormFields>({
     mode: "onChange",
@@ -94,7 +103,9 @@ const Configuration = () => {
       callAPI<CreateSessionResponse>(`/sessions/configure`, "POST", params),
     onSuccess: (response) => {
       selectSession(response);
+      navigate("/dashboard");
     },
+    onError: (error) => console.log(error),
   });
 
   //   Field Validation
@@ -181,15 +192,16 @@ const Configuration = () => {
   }, [endValue, startValue]);
 
   return (
-    <ConfigurationLayout
-      step={currentStep}
-      prevStep={() => setCurrentStep((prev) => prev - 1)}
-      nextStep={handleNext}
-      validatedSteps={validatedSteps}
-    >
-      <form onSubmit={form.handleSubmit(handleSubmit)}></form>
-      <Steps step={currentStep} form={form} />
-    </ConfigurationLayout>
+    <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <ConfigurationLayout
+        step={currentStep}
+        prevStep={() => setCurrentStep((prev) => prev - 1)}
+        nextStep={handleNext}
+        validatedSteps={validatedSteps}
+      >
+        <Steps step={currentStep} form={form} />
+      </ConfigurationLayout>
+    </form>
   );
 };
 
