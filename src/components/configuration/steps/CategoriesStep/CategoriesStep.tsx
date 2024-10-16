@@ -82,7 +82,7 @@ const CategoriesStep = () => {
       <Header variant="config" center>
         Now choose your categories
       </Header>
-      <Paragraph>
+      <Paragraph className={styles.p}>
         Choose which categories on which you want to stay focused.
       </Paragraph>
       <div className={styles.grid}>
@@ -93,6 +93,7 @@ const CategoriesStep = () => {
 
           return (
             <div
+              key={category.name}
               className={`${styles.category} ${selected ? styles.selected : ""}`}
               style={
                 {

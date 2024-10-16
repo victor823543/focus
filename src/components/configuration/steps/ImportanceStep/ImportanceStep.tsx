@@ -47,6 +47,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
         {currentConfigCategories.map((category, index) => {
           return (
             <div
+              key={category.name}
               className={styles.formWrapper}
               style={
                 {

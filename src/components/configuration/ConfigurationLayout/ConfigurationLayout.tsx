@@ -38,12 +38,17 @@ const ConfigurationLayout: React.FC<ConfigurationLayoutProps> = ({
           </div>
           <div className={styles.btnContainer}>
             {step > 0 && (
-              <CustomizableButton onClick={prevStep} variant="opaque">
+              <CustomizableButton
+                onClick={prevStep}
+                type="button"
+                variant="opaque"
+              >
                 Back
               </CustomizableButton>
             )}
             {step !== 3 && (
               <CustomizableButton
+                type="button"
                 disabled={!validatedSteps[step]}
                 onClick={nextStep}
                 variant="primary"

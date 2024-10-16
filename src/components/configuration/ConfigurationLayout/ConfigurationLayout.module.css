@@ -1,12 +1,13 @@
 .main {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem 5rem;
+  padding: 1.5rem 1rem;
   box-sizing: border-box;
   flex-direction: column;
   overflow-y: scroll;
+  position: relative;
 }
 
 .modal {
@@ -17,6 +18,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  padding-top: 3rem;
 }
 
 .content {
@@ -47,8 +49,22 @@
   opacity: 0.4;
 }
 
+@media (min-width: 786px) {
+  .main {
+    padding: 3rem 5rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .main {
+    padding: 2rem 3rem;
+  }
+}
+
+/* Background styles */
 .background {
-  position: absolute;
+  position: fixed;
+  top: 0;
   height: 100%;
   width: 100%;
   overflow: hidden;

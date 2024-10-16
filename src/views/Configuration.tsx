@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ import ImportanceStep from "../components/configuration/steps/ImportanceStep/Imp
 import WelcomeStep from "../components/configuration/steps/WelcomeStep/WelcomeStep";
 import useConfigureCategories from "../hooks/useConfigureCategories";
 import useSelectSession from "../hooks/useSelectSession";
-import { CreateSessionResponse, ListSessionsResponse } from "../types/Session";
+import { CreateSessionResponse } from "../types/Session";
 import { callAPI } from "../utils/apiService";
 
 const categorySchema = yup.object({
@@ -65,28 +65,13 @@ const Configuration = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const { currentConfigCategories } = useConfigureCategories();
-  const { selectSession, currentSession } = useSelectSession();
+  const { selectSession } = useSelectSession();
   const [validatedSteps, setValidatedSteps] = useState<ValidatedSteps>({
     0: false,
     1: false,
     2: false,
     3: false,
   });
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["sessions"],
-    queryFn: () => callAPI<ListSessionsResponse>("/sessions", "GET"),
-  });
-
-  useEffect(() => {
-    if (currentSession !== null) {
-      navigate("/dashboard");
-    }
-    if (data && data.length > 0) {
-      selectSession(data[data.length - 1]);
-      navigate("/dashboard");
-    }
-  }, [data, currentSession]);
 
   const form = useForm<ConfigureFormFields>({
     mode: "onChange",
@@ -173,7 +158,9 @@ const Configuration = () => {
   }, [categoriesValue]);
 
   const handleSubmit = (params: ConfigureFormFields) => {
-    configureMutation.mutate(params);
+    if (currentStep === 3) {
+      configureMutation.mutate(params);
+    }
   };
 
   const handleNext = () => {

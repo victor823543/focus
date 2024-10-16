@@ -2,10 +2,15 @@
   color: var(--gray-x-light);
 }
 
+.p {
+  margin: 0 1.5rem;
+  text-align: center;
+}
+
 .grid {
   margin: 2rem 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem 1.5rem;
 }
 
@@ -30,8 +35,9 @@
 
 .addCategory {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   align-items: center;
+  flex-direction: column;
 }
 
 .colorBox {
@@ -56,4 +62,17 @@
   background-color: rgb(from var(--gray-x-dark) r g b / 0.9);
   border-radius: 8px;
   width: fit-content;
+}
+
+@media (min-width: 480px) {
+  .addCategory {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 786px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

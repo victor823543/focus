@@ -5,6 +5,7 @@
 .p {
   max-width: 30rem;
   text-align: center;
+  margin: 0 1.5rem;
 }
 
 .grid {
