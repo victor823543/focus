@@ -1,7 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthenticatedRoute } from "./components/layout/AuthenticatedRoute";
+import { ConfiguredRoute } from "./components/layout/ConfiguredRoute";
 import Calendar from "./views/Calendar";
 import Categories from "./views/Categories";
+import Configuration from "./views/Configuration";
 import Dashboard from "./views/Dashboard";
 import LandingPage from "./views/LandingPage";
 import Login from "./views/Login";
@@ -35,6 +37,18 @@ const Routes = () => {
       element: <AuthenticatedRoute />,
       children: [
         {
+          path: "/configuration",
+          element: <Configuration />,
+        },
+      ],
+    },
+  ];
+  const configurationCompletedRoutes = [
+    {
+      path: "/",
+      element: <ConfiguredRoute />,
+      children: [
+        {
           path: "/dashboard",
           element: <Dashboard />,
         },
@@ -58,7 +72,11 @@ const Routes = () => {
     },
   ];
 
-  const router = createBrowserRouter([...openRoutes, ...authenticatedRoutes]);
+  const router = createBrowserRouter([
+    ...openRoutes,
+    ...authenticatedRoutes,
+    ...configurationCompletedRoutes,
+  ]);
 
   return <RouterProvider router={router} />;
 };
