@@ -4,18 +4,28 @@ import path from "path";
 import { defineConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, "certs/server.key")),
-      cert: fs.readFileSync(path.resolve(__dirname, "certs/server.cert")),
+export default defineConfig(({ mode }) => {
+  const isProduction = mode === "production";
+
+  return {
+    plugins: [react()],
+    server: {
+      ...(isProduction
+        ? { open: true } // Open browser on server start in production
+        : {
+            https: {
+              key: fs.readFileSync(path.resolve(__dirname, "certs/server.key")),
+              cert: fs.readFileSync(
+                path.resolve(__dirname, "certs/server.cert"),
+              ),
+            },
+          }),
     },
-  },
-  test: {
-    globals: true,
-    environment: "jsdom",
-    setupFiles: "src/setupTests",
-    mockReset: true,
-  },
+    test: {
+      globals: true,
+      environment: "jsdom",
+      setupFiles: "src/setupTests",
+      mockReset: true,
+    },
+  };
 });
