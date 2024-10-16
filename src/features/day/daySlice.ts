@@ -22,6 +22,9 @@ const daySlice = createSlice({
     updateCompletedDays: (state, action: PayloadAction<ListDaysReturn>) => {
       state.completedDays = { ...state.completedDays, ...action.payload };
     },
+    clearDayState: (state) => {
+      return initialState;
+    },
   },
   selectors: {
     selectDayStatus: (dayState) => dayState.dayStatus,
@@ -29,7 +32,8 @@ const daySlice = createSlice({
   },
 });
 
-export const { updateDayStatus, updateCompletedDays } = daySlice.actions;
+export const { updateDayStatus, updateCompletedDays, clearDayState } =
+  daySlice.actions;
 
 export const { selectDayStatus, selectCompletedDays } = daySlice.selectors;
 

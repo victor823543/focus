@@ -3,9 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Modal, ModalWrapperBlur } from "../components/common/Modals/Modals";
-import Layout from "../components/layout/Layout/Layout";
 import SignupForm from "../components/signup/SignupForm/SignupForm";
+import SignupLayout from "../components/signup/SignupLayout/SignupLayout";
 import { useAuth } from "../provider/authProvider";
 import { callAPI } from "../utils/apiService";
 
@@ -14,8 +13,10 @@ const signupSchema = yup.object().shape({
   username: yup.string().required("Username cannot be empty."),
   password: yup
     .string()
-    .min(5, "Must be at least 5 characters")
-    .required("You must create a password."),
+    .required("You must create a password.")
+    .matches(/[A-Za-z]/, "Must contain at least 1 letter")
+    .matches(/\d/, "Must contain at least 1 number")
+    .min(6, "Must be at least 6 characters"),
 });
 
 export type SignupFormFields = yup.InferType<typeof signupSchema>;
@@ -33,6 +34,11 @@ const Signup = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(signupSchema),
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+    },
   });
 
   const mutation = useMutation({
@@ -56,13 +62,9 @@ const Signup = () => {
   };
 
   return (
-    <Layout name="Dashboard">
-      <ModalWrapperBlur>
-        <Modal>
-          <SignupForm form={form} handleSubmit={handleSubmit} />
-        </Modal>
-      </ModalWrapperBlur>
-    </Layout>
+    <SignupLayout>
+      <SignupForm form={form} handleSubmit={handleSubmit} />
+    </SignupLayout>
   );
 };
 

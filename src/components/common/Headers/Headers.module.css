@@ -19,6 +19,13 @@
   font-weight: 300;
 }
 
+.config {
+  font-size: 2.2rem;
+  color: var(--gray-x-light);
+  font-weight: 700;
+  max-width: 30rem;
+}
+
 .center {
   text-align: center;
 }

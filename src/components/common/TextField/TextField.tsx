@@ -11,6 +11,7 @@ type TextFieldProps<TFieldValues extends FieldValues> = {
   autoComplete?: "off" | "new-password" | "current-password";
   form: UseFormReturn<TFieldValues>;
   placeholder: string;
+  color?: string;
 };
 
 const TextField = <TFieldValues extends FieldValues>({
@@ -19,6 +20,7 @@ const TextField = <TFieldValues extends FieldValues>({
   autoComplete = "off",
   form,
   placeholder,
+  color = "var(--text-primary-soft)",
 }: TextFieldProps<TFieldValues>) => {
   const [inputFocus, setInputFocus] = useState(false);
 
@@ -31,7 +33,10 @@ const TextField = <TFieldValues extends FieldValues>({
         fieldState: { error },
       }) => (
         <div>
-          <div className={styles.textField}>
+          <div
+            className={styles.textField}
+            style={{ "--field-color": color } as React.CSSProperties}
+          >
             <div
               className={classNames(styles.placeholder, {
                 [styles.focus]: inputFocus || value.length > 0,

@@ -6,9 +6,8 @@ import Loading from "../components/common/Loading/Loading";
 import Layout from "../components/layout/Layout/Layout";
 import useCreateSession from "../hooks/useCreateSession";
 import useSelectSession from "../hooks/useSelectSession";
-import { ListSessionsResponse, Session } from "../types/Session";
+import { ListSessionsResponse } from "../types/Session";
 import { callAPI } from "../utils/apiService";
-import { queryConfig } from "../utils/constants";
 
 const Dashboard = () => {
   const createSession = useCreateSession();
@@ -19,16 +18,16 @@ const Dashboard = () => {
     queryFn: () => callAPI<ListSessionsResponse>("/sessions", "GET"),
   });
 
-  const {
-    data: sessionData,
-    isLoading: sessionIsLoading,
-    error: sessionError,
-  } = useQuery({
-    enabled: !!currentSession && !!data,
-    ...queryConfig,
-    queryKey: ["session", currentSession?.id],
-    queryFn: () => callAPI<Session>(`/sessions/${currentSession?.id}`, "GET"),
-  });
+  // const {
+  //   data: sessionData,
+  //   isLoading: sessionIsLoading,
+  //   error: sessionError,
+  // } = useQuery({
+  //   enabled: !!currentSession && !!data,
+  //   ...queryConfig,
+  //   queryKey: ["session", currentSession?.id],
+  //   queryFn: () => callAPI<Session>(`/sessions/${currentSession?.id}`, "GET"),
+  // });
 
   useEffect(() => {
     if (data && data.length > 0) {

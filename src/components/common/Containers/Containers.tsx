@@ -36,6 +36,7 @@ export const Container: React.FC<ContainerProps> = ({
   paddingY = "sm",
   gap = "sm",
   center = true,
+  className = "",
   ...rest
 }) => {
   const padding = `${paddingConvert[paddingY]} ${paddingConvert[paddingX]}`;
@@ -46,6 +47,7 @@ export const Container: React.FC<ContainerProps> = ({
       className={`${styles.container} ${styles[`flex-${flex}`]}
         ${styles[direction]}
         ${center ? styles.center : ""}
+         ${className}
         `}
       {...rest}
     >

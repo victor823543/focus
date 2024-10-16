@@ -3,15 +3,14 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { Modal, ModalWrapperBlur } from "../components/common/Modals/Modals";
-import Layout from "../components/layout/Layout/Layout";
 import LoginForm from "../components/signup/LoginForm/LoginForm";
+import SignupLayout from "../components/signup/SignupLayout/SignupLayout";
 import { useAuth } from "../provider/authProvider";
 import { callAPI } from "../utils/apiService";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email().required("Email cannot be empty."),
-  password: yup.string().required("You must create a password."),
+  password: yup.string().required("You must enter a password."),
 });
 
 export type LoginFormFields = yup.InferType<typeof loginSchema>;
@@ -29,6 +28,10 @@ const Login = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const mutation = useMutation({
@@ -51,13 +54,9 @@ const Login = () => {
   };
 
   return (
-    <Layout name="Dashboard">
-      <ModalWrapperBlur>
-        <Modal>
-          <LoginForm form={form} handleSubmit={handleSubmit} />
-        </Modal>
-      </ModalWrapperBlur>
-    </Layout>
+    <SignupLayout>
+      <LoginForm form={form} handleSubmit={handleSubmit} />
+    </SignupLayout>
   );
 };
 

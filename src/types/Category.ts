@@ -9,7 +9,7 @@ export type Category = {
 
 export type CreateCategoryParams = {
   name: string;
-  importance: string;
+  importance: number;
   color: { name: string; hex: string };
 };
 
