@@ -5,6 +5,8 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import * as yup from "yup";
 import ConfigurationLayout from "../components/configuration/ConfigurationLayout/ConfigurationLayout";
 import CategoriesStep from "../components/configuration/steps/CategoriesStep/CategoriesStep";
+import DateStep from "../components/configuration/steps/DateStep/DateStep";
+import ImportanceStep from "../components/configuration/steps/ImportanceStep/ImportanceStep";
 import WelcomeStep from "../components/configuration/steps/WelcomeStep/WelcomeStep";
 import useConfigureCategories from "../hooks/useConfigureCategories";
 import useCreateSession from "../hooks/useCreateSession";
@@ -12,11 +14,48 @@ import useSelectSession from "../hooks/useSelectSession";
 import { CreateSessionResponse, ListSessionsResponse } from "../types/Session";
 import { callAPI } from "../utils/apiService";
 
+const categorySchema = yup.object({
+  name: yup.string().required(),
+  importance: yup.number().required().default(1),
+  color: yup
+    .object({
+      name: yup.string().required(),
+      hex: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+    })
+    .required(),
+});
+
 const configureSessionSchema = yup.object().shape({
   title: yup.string().max(15, "Cannot exceed 15 characters").required(),
-  categories: yup.array().of(yup.string().required()),
-  start: yup.string().required(),
-  end: yup.string(),
+  categories: yup.array().of(categorySchema).required(),
+  start: yup
+    .string()
+    .required()
+    .test(
+      "valid-date",
+      "Start date must be a valid date",
+      (value) => !isNaN(Date.parse(value)),
+    ),
+  end: yup
+    .string()
+    .nullable()
+    .test(
+      "end-date-after-start",
+      "End date must be later than the start date",
+      function (value) {
+        const { start } = this.parent; // Access start date
+        if (!value) return true; // Allow end date to be null
+        return new Date(value) > new Date(start); // Ensure end > start
+      },
+    )
+    .test(
+      "valid-date",
+      "End date must be a valid date",
+      (value) => !value || !isNaN(Date.parse(value)),
+    ),
   activeDays: yup.array().of(yup.number().required()),
 });
 
@@ -32,6 +71,7 @@ const Configuration = () => {
     0: false,
     1: false,
     2: false,
+    3: false,
   });
 
   const { data, isLoading, error } = useQuery({
@@ -44,22 +84,25 @@ const Configuration = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(configureSessionSchema),
+    defaultValues: {
+      start: Date(),
+    },
   });
 
   const configureMutation = useMutation({
     mutationFn: (params: ConfigureFormFields) =>
-      callAPI<CreateSessionResponse>(
-        `/sessions/create/${currentSession?.id}`,
-        "POST",
-        params,
-      ),
+      callAPI<CreateSessionResponse>(`/sessions/configure`, "POST", params),
     onSuccess: (response) => {
       selectSession(response);
     },
   });
 
+  //   Field Validation
+
   const titleValue = form.watch("title");
   const categoriesValue = form.watch("categories");
+  const startValue = form.watch("start");
+  const endValue = form.watch("end");
 
   // Function to check if the field is valid and update state
   const isFieldValid = async (order: number, fieldName: string, value: any) => {
@@ -73,7 +116,31 @@ const Configuration = () => {
     }
   };
 
-  // UseEffect to watch fields and validate them as they change
+  // For multiple fields
+  const isFieldsValid = async (
+    order: number,
+    fieldNames: string[],
+    values: any[],
+    currentValues: any,
+  ) => {
+    try {
+      const updatedValues = { ...currentValues };
+
+      fieldNames.forEach((fieldName, index) => {
+        updatedValues[fieldName] = values[index];
+      });
+
+      await configureSessionSchema.validate(updatedValues, {
+        abortEarly: false,
+      });
+
+      setValidatedSteps((prev) => ({ ...prev, [order]: true }));
+    } catch (error) {
+      setValidatedSteps((prev) => ({ ...prev, [order]: false }));
+    }
+  };
+
+  // UseEffect's to watch fields and validate them as they change
   useEffect(() => {
     if (titleValue !== undefined) {
       isFieldValid(0, "title", titleValue);
@@ -102,6 +169,17 @@ const Configuration = () => {
     setCurrentStep((prev) => prev + 1);
   };
 
+  useEffect(() => {
+    if (startValue) {
+      isFieldsValid(
+        3,
+        ["start", "end"],
+        [startValue, endValue],
+        form.getValues(),
+      );
+    }
+  }, [endValue, startValue]);
+
   return (
     <ConfigurationLayout
       step={currentStep}
@@ -127,6 +205,12 @@ const Steps: React.FC<StepsProps> = ({ step, form }) => {
     }
     case 1: {
       return <CategoriesStep />;
+    }
+    case 2: {
+      return <ImportanceStep form={form} />;
+    }
+    case 3: {
+      return <DateStep form={form} />;
     }
     default:
       return <div>something went wrong</div>;

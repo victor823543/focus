@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CreateCategoryParams } from "../../types/Category";
 
 interface SessionState {
-  categories: Array<Partial<CreateCategoryParams>>;
-  customCategories: Array<Partial<CreateCategoryParams>>;
+  categories: Array<CreateCategoryParams>;
+  customCategories: Array<CreateCategoryParams>;
 }
 
 const initialState: SessionState = {
@@ -15,23 +15,14 @@ const configurationSlice = createSlice({
   name: "configuration",
   initialState,
   reducers: {
-    addCategory: (
-      state,
-      action: PayloadAction<Partial<CreateCategoryParams>>,
-    ) => {
+    addCategory: (state, action: PayloadAction<CreateCategoryParams>) => {
       state.categories = [...state.categories, action.payload];
     },
-    addCustomCategory: (
-      state,
-      action: PayloadAction<Partial<CreateCategoryParams>>,
-    ) => {
+    addCustomCategory: (state, action: PayloadAction<CreateCategoryParams>) => {
       state.customCategories = [...state.customCategories, action.payload];
       state.categories = [...state.categories, action.payload];
     },
-    removeCategory: (
-      state,
-      action: PayloadAction<Partial<CreateCategoryParams>>,
-    ) => {
+    removeCategory: (state, action: PayloadAction<CreateCategoryParams>) => {
       state.categories = [...state.categories].filter((category) => {
         if (category.name !== action.payload.name) return category;
       });
@@ -40,12 +31,14 @@ const configurationSlice = createSlice({
       state,
       action: PayloadAction<Partial<CreateCategoryParams>>,
     ) => {
-      state.categories = [...state.categories].filter((category) => {
-        if (category.name !== action.payload.name) {
-          return category;
-        } else {
-          return action.payload;
+      state.categories = state.categories.map((category) => {
+        if (category.name === action.payload.name) {
+          return {
+            ...category,
+            ...action.payload,
+          };
         }
+        return category;
       });
     },
 

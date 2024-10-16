@@ -1,0 +1,15 @@
+.container {
+  color: var(--gray-x-light);
+  max-width: 30rem;
+}
+
+.grid {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.grid > * {
+  flex-grow: 1;
+  flex-shrink: 0;
+}

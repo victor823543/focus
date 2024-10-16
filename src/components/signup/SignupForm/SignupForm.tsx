@@ -48,7 +48,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ form, handleSubmit }) => {
               name="password"
               placeholder="Choose a strong password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
             />
           </Container>
         </Container>

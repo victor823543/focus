@@ -20,6 +20,7 @@ const createCategorySchema = yup.object().shape({
     .string()
     .max(10, "Maximum 10 characters")
     .required("You must name your category."),
+  importance: yup.number().min(1).max(3).required().default(1),
   color: yup
     .object({
       name: yup.string().required(),
@@ -31,6 +32,14 @@ const createCategorySchema = yup.object().shape({
     .required()
     .default({ name: "Gray", hex: "#9ca3af" }),
 });
+
+const defaultValues = {
+  color: {
+    name: "Gray",
+    hex: "#9ca3af",
+  },
+  importance: 1,
+};
 
 type CategoryFormFields = yup.InferType<typeof createCategorySchema>;
 
@@ -53,19 +62,18 @@ const CategoriesStep = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(createCategorySchema),
-    defaultValues: {
-      color: {
-        name: "Gray",
-        hex: "#9ca3af",
-      },
-    },
+    defaultValues: defaultValues,
   });
 
   if (error !== null) return <span>Something went wrong</span>;
   if (isLoading || data === undefined) return <Loading />;
 
-  const categories: Array<Partial<CreateCategoryParams>> = [
-    ...data.map((category) => ({ name: category.name, color: category.color })),
+  const categories: Array<CreateCategoryParams> = [
+    ...data.map((category) => ({
+      name: category.name,
+      color: category.color,
+      importance: category.importance,
+    })),
     ...customConfigCategories,
   ];
 
@@ -135,9 +143,9 @@ const CategoriesStep = () => {
           )}
         </div>
         <CustomizableButton
-          onClick={form.handleSubmit((params) =>
-            addCustomConfigCategory(params),
-          )}
+          onClick={form.handleSubmit((params) => {
+            addCustomConfigCategory(params), form.reset(defaultValues);
+          })}
           size="sm"
           variant="primary"
         >
