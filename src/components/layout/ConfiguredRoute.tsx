@@ -29,10 +29,9 @@ export const ConfiguredRoute: React.FC = () => {
       return;
     }
 
-    // If there's an error, navigate to configuration
-    if (error || (data && data.length === 0)) {
+    // Navigate to configuration if no session has been configured
+    if ((!isLoading && data && data.length === 0 && !currentSession) || error) {
       navigate("/configuration");
-      return;
     }
 
     // If no current session is selected and data is available, select the latest session
@@ -42,7 +41,7 @@ export const ConfiguredRoute: React.FC = () => {
   }, [user, currentSession, data, error, isLoading, navigate, selectSession]);
 
   // Show loading spinner if user or session is not ready
-  if (isLoading || !user || !currentSession) {
+  if (isLoading || !user) {
     return <Loading />;
   }
 
