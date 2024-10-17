@@ -3,22 +3,22 @@ import styles from "./LineTabs.module.css";
 
 type LineTabsProps = {
   tabs: string[];
-  selected: number;
-  setSelected: (index: number) => void;
+  selected: string;
+  setSelected: (tab: string) => void;
 };
 
 const LineTabs: React.FC<LineTabsProps> = ({ tabs, selected, setSelected }) => {
   return (
     <div className={styles.tabs}>
-      {tabs.map((label, index) => (
+      {tabs.map((label) => (
         <div
           key={label}
-          onClick={() => setSelected(index)}
-          className={`${styles.tab} ${selected === index ? styles.selected : ""}`}
+          onClick={() => setSelected(label)}
+          className={`${styles.tab} ${selected === label ? styles.selected : ""}`}
         >
           <span>{label}</span>
           <div className={`${styles.line} ${styles.outline}`}></div>
-          {selected === index && (
+          {selected === label && (
             <div className={`${styles.line} ${styles.foreground}`}></div>
           )}
         </div>

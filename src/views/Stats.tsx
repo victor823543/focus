@@ -1,5 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { Container } from "../components/common/Containers/Containers";
+import { Header } from "../components/common/Headers/Headers";
+import Link from "../components/common/Link/Link";
 import Loading from "../components/common/Loading/Loading";
+import {
+  Modal,
+  ModalWrapperTransparent,
+} from "../components/common/Modals/Modals";
 import Layout from "../components/layout/Layout/Layout";
 import MiniStatsDisplay from "../components/stats/MiniStatsDisplay/MiniStatsDisplay";
 import StatsGrid from "../components/stats/StatsGrid/StatsGrid";
@@ -21,18 +28,36 @@ const Stats = () => {
     queryFn: () => callAPI<Session>(`/sessions/${currentSession?.id}`, "GET"),
   });
 
+  console.log(data);
+
   if (error !== null) return <span>Something went wrong</span>;
   if (isLoading || data === undefined) return <Loading />;
 
   return (
     <Layout name="Stats">
-      <StatsGrid>
-        <MiniStatsDisplay data={data.data} categories={data.categories} />
-        <WeekDataBar data={data.data} categories={data.categories} />
+      {data.data.length > 0 && (
+        <StatsGrid>
+          <MiniStatsDisplay data={data.data} categories={data.categories} />
+          <WeekDataBar data={data.data} categories={data.categories} />
 
-        <WeekComparisonBar data={data.data} categories={data.categories} />
-        <WeekProgressLine data={data.data} categories={data.categories} />
-      </StatsGrid>
+          <WeekComparisonBar data={data.data} categories={data.categories} />
+          <WeekProgressLine data={data.data} categories={data.categories} />
+        </StatsGrid>
+      )}
+      {data.data.length === 0 && (
+        <ModalWrapperTransparent noPointerEvents>
+          <Modal>
+            <Container paddingX="lg" gap="lg" style={{ maxWidth: "30rem" }}>
+              <Header variant="secondary">
+                Start entering your data to view stats
+              </Header>
+              <Link style={{ fontSize: "1.2rem" }} to="/calendar?tab=Day">
+                Enter day data
+              </Link>
+            </Container>
+          </Modal>
+        </ModalWrapperTransparent>
+      )}
     </Layout>
   );
 };
