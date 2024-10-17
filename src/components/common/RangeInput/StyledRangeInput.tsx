@@ -7,8 +7,10 @@ type RangeInputProps<TFieldValues extends FieldValues> = {
   form: UseFormReturn<TFieldValues>;
   min: number;
   max: number;
+  initialValue?: number;
   step?: number;
-  color?: string;
+  fieldColor?: string;
+  thumbColor?: string;
 };
 
 const StyledRangeInput = <TFieldValues extends FieldValues>({
@@ -16,8 +18,10 @@ const StyledRangeInput = <TFieldValues extends FieldValues>({
   form,
   min,
   max,
+  initialValue,
   step = 1,
-  color = "var(--text-primary-soft)",
+  fieldColor = "var(--text-primary-soft)",
+  thumbColor = "var(--text-primary-soft)",
 }: RangeInputProps<TFieldValues>) => {
   const [inputFocus, setInputFocus] = useState(false);
   const [currentValue, setCurrentValue] = useState(min);
@@ -27,13 +31,23 @@ const StyledRangeInput = <TFieldValues extends FieldValues>({
       name={name}
       control={form.control}
       render={({
-        field: { onChange, onBlur, ref, value = min },
+        field: {
+          onChange,
+          onBlur,
+          ref,
+          value = initialValue ? initialValue : min,
+        },
         fieldState: { error },
       }) => (
         <div className={styles.rangeField}>
           <div
             className={styles.rangeWrapper}
-            style={{ "--field-color": color } as React.CSSProperties}
+            style={
+              {
+                "--field-color": fieldColor,
+                "--thumb-color": thumbColor,
+              } as React.CSSProperties
+            }
           >
             <input
               type="range"

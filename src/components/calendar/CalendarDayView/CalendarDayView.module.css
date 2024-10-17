@@ -1,9 +1,9 @@
 .calendarDay {
-  height: clamp(40rem, 80vh, 70rem);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
 }
 
 /* Header styles */
@@ -80,31 +80,45 @@
   border-top: none;
   flex: 1;
   box-sizing: border-box;
+  padding: 3rem 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem 4rem;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.categoryWrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Add flex display */
+  justify-content: center; /* Center horizontally */
 }
 
 .category {
-  flex: 1;
   display: flex;
-  min-height: 5rem;
+  gap: 1rem;
+  align-items: center;
 }
 
 .categoryName {
-  padding: 0 2rem;
-  background-color: rgb(from var(--hex) r g b / 0.3);
-  width: 7rem;
-  display: flex;
-  align-items: center;
+  padding: 1rem 4rem 1rem 1.5rem;
+  background-color: rgb(from var(--gray-light) r g b / 0.3);
+  border-radius: 8px;
   font-weight: 600;
+  font-size: 0.9rem;
   color: var(--gray-dark);
-  border-left: solid 6px var(--hex);
+  cursor: pointer;
+  border-right: solid 5px var(--hex);
+  flex: 1;
 }
 
 .categoryImportance {
-  padding: 0 2rem;
-  width: 5rem;
-  border: solid 0.5px var(--border-light);
+  padding: 1rem 1rem;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,13 +127,25 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--gray);
+  background-color: rgb(from var(--gray-light) r g b / 0.3);
 }
 
 .categoryResult {
-  padding: 0 2rem;
-  border: solid 0.5px var(--border-light);
-  flex: 1;
+  padding: 0.5rem 0;
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+@media (min-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: fit-content;
+  }
+}
+
+@media (min-width: 1300px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

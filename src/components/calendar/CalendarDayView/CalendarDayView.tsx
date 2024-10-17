@@ -10,7 +10,7 @@ import { DayStatus, ListDaysReturn, UpdateDayParams } from "../../../types/Day";
 import { callAPI } from "../../../utils/apiService";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import Loading from "../../common/Loading/Loading";
-import RangeInput from "../../common/RangeInput/RangeInput";
+import StyledRangeInput from "../../common/RangeInput/StyledRangeInput";
 import styles from "./CalendarDayView.module.css";
 
 type CalendarDayViewProps = {
@@ -164,43 +164,49 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
 
         {/* Main */}
         <main className={styles.day}>
-          {currentSession.categories.map((category, index) => {
-            const startValue =
-              currentDate.toISOString() in days
-                ? days[currentDate.toISOString()].score.find(
-                    (categoryScore) => categoryScore.category === category.id,
-                  )?.score
-                : 0;
-            return (
-              <div
-                key={category.id}
-                className={styles.category}
-                style={{ "--hex": category.color.hex } as CSSProperties}
-              >
-                <div className={styles.categoryName}>{category.name}</div>
-                <div className={styles.categoryImportance}>
-                  <span>Importance</span>
-                  <span>{category.importance}</span>
+          <div className={styles.grid}>
+            {currentSession.categories.map((category, index) => {
+              const startValue =
+                currentDate.toISOString() in days
+                  ? days[currentDate.toISOString()].score.find(
+                      (categoryScore) => categoryScore.category === category.id,
+                    )?.score
+                  : 0;
+              return (
+                <div
+                  key={category.id}
+                  className={styles.categoryWrapper}
+                  style={{ "--hex": category.color.hex } as CSSProperties}
+                >
+                  <div className={styles.category}>
+                    <div className={styles.categoryName}>{category.name}</div>
+                    <div className={styles.categoryImportance}>
+                      <span>X - {category.importance}</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.categoryResult}>
+                    <StyledRangeInput
+                      form={form}
+                      name={`categories.${index}.score`}
+                      min={0}
+                      max={10}
+                      step={1}
+                      fieldColor="var(--gray-light)"
+                      thumbColor="var(--gray-mid)"
+                      initialValue={startValue}
+                    />
+                    {/* Automatically set category field to category.id */}
+                    <input
+                      type="hidden"
+                      {...form.register(`categories.${index}.category`)}
+                      value={category.id} // Hidden input to store category id
+                    />
+                  </div>
                 </div>
-                <div className={styles.categoryResult}>
-                  <RangeInput
-                    form={form}
-                    name={`categories.${index}.score`}
-                    min={0}
-                    max={10}
-                    step={1}
-                    initialValue={startValue}
-                  />
-                  {/* Automatically set category field to category.id */}
-                  <input
-                    type="hidden"
-                    {...form.register(`categories.${index}.category`)}
-                    value={category.id} // Hidden input to store category id
-                  />
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </main>
       </div>
     </form>
