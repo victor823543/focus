@@ -26,7 +26,7 @@ const GoogleLoginButton: React.FC = () => {
   });
 
   const handleGoogleLoginSuccess = (response: any) => {
-    const googleToken = response.credential;
+    const googleToken = response.access_token;
     mutation.mutate(googleToken);
   };
 
