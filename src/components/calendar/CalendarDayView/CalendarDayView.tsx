@@ -1,14 +1,21 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useCalendar } from "../../../hooks/useCalendar";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { DayStatus, ListDaysReturn, UpdateDayParams } from "../../../types/Day";
 import { callAPI } from "../../../utils/apiService";
+import { to1Dec } from "../../../utils/functions";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
+import { StaticCircularProgress } from "../../common/CircularProgress/CircularProgress";
+import { Header } from "../../common/Headers/Headers";
 import Loading from "../../common/Loading/Loading";
 import StyledRangeInput from "../../common/RangeInput/StyledRangeInput";
 import styles from "./CalendarDayView.module.css";
@@ -24,6 +31,7 @@ const createDaySchema = yup.object().shape({
     yup.object().shape({
       category: yup.string().required(),
       score: yup.number().min(0).max(10).required().default(0),
+      importance: yup.number().min(1).max(3),
     }),
   ),
 });
@@ -35,22 +43,41 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
   const { currentDate, goToNextDay, goToPrevDay, getDateStatus } =
     useCalendar();
   const { currentSession } = useSelectSession();
+
+  // Handle constants
+  const thisDay = useMemo(
+    () => days[currentDate.toISOString()],
+    [days, currentDate],
+  );
+  const maxScore = useMemo(
+    () =>
+      thisDay ? thisDay.maxScore : currentSession ? currentSession.maxScore : 0,
+    [thisDay, currentSession],
+  );
+  const currentDateString = currentDate.toISOString();
+
+  // State for score
   const [totalScore, setTotalScore] = useState(
-    currentDate.toISOString() in days
-      ? Math.round(days[currentDate.toISOString()].totalScore)
+    currentDateString in days
+      ? Math.round(
+          thisDay.score.reduce(
+            (total, category) => total + (category?.score || 0),
+            0,
+          ),
+        )
       : 0,
+  );
+  const [calculatedScore, setCalculatedScore] = useState(
+    currentDateString in days ? Math.round(thisDay.totalScore) : 0,
   );
 
   // Handle Date Status
   const [dateStatus, setDateStatus] = useState<DayStatus>(
-    getDateStatus(currentDate, currentDate.toISOString() in days),
+    getDateStatus(currentDate, currentDateString in days),
   );
 
   useEffect(
-    () =>
-      setDateStatus(
-        getDateStatus(currentDate, currentDate.toISOString() in days),
-      ),
+    () => setDateStatus(getDateStatus(currentDate, currentDateString in days)),
     [currentDate],
   );
 
@@ -62,14 +89,21 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
     resolver: yupResolver(createDaySchema),
     defaultValues: {
       session: currentSession?.id,
-      date: currentDate.toISOString(),
+      date: currentDateString,
       categories:
-        currentDate.toISOString() in days
-          ? days[currentDate.toISOString()].score.map((category) => ({
+        currentDateString in days
+          ? thisDay.score.map((category) => ({
               category: category.category,
               score: category.score,
+              importance: category.importance,
             }))
-          : [],
+          : currentSession
+            ? currentSession.categories.map((category) => ({
+                category: category.name,
+                score: 0,
+                importance: category.importance,
+              }))
+            : [],
     },
   });
 
@@ -107,7 +141,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
     if (dateStatus === DayStatus.HasResult) {
       updateDayMutation.mutate({
         categoryScore: params.categories || [],
-        dayId: days[currentDate.toISOString()].id,
+        dayId: thisDay.id,
       });
     } else {
       createDayMutation.mutate(params);
@@ -125,6 +159,13 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
             0,
           ),
         );
+        setCalculatedScore(
+          currentCategories.reduce(
+            (total, category) =>
+              total + (category?.score || 0) * (category?.importance || 1),
+            0,
+          ),
+        );
       }
     });
 
@@ -134,10 +175,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
   if (!currentSession) return <Loading />;
 
   return (
-    <form
-      key={currentDate.toISOString()}
-      onSubmit={form.handleSubmit(handleSubmit)}
-    >
+    <form key={currentDateString} onSubmit={form.handleSubmit(handleSubmit)}>
       <div className={styles.calendarDay}>
         {/* Navigation Header */}
         <header className={styles.header}>
@@ -155,131 +193,165 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
         {/* Secondary header */}
         {![DayStatus.After, DayStatus.Before].includes(dateStatus) && (
           <div className={styles.secHeader}>
-            <SecondaryHeaderContent
-              status={dateStatus}
-              totalScore={totalScore}
-            />
+            <div className={styles.score}>
+              <h2>Day Score</h2>
+              <div className={styles.scoreContainer}>
+                <div className={styles.scoreTextWrapper}>
+                  <p>
+                    <strong>Total:</strong>
+                    <span>{totalScore}</span>
+                  </p>
+                  <p>
+                    <strong>Calculated:</strong>
+                    <span>{calculatedScore}</span>
+                  </p>
+                </div>
+                <div className={styles.progressCircleWrapper}>
+                  <StaticCircularProgress
+                    size={50}
+                    strokeWidth={2}
+                    backgroundColor="var(--gray-x-light)"
+                    color="var(--primary-color)"
+                    pathLength={to1Dec(calculatedScore / maxScore)}
+                  >
+                    <div className={styles.circleContent}>
+                      {to1Dec((calculatedScore / maxScore) * 100)}
+                    </div>
+                  </StaticCircularProgress>
+                </div>
+              </div>
+            </div>
+
+            <StatusBox status={dateStatus} />
           </div>
         )}
 
-        {/* Main */}
+        {/* Main section */}
         <main className={styles.day}>
-          <div className={styles.grid}>
-            {currentSession.categories.map((category, index) => {
-              const startValue =
-                currentDate.toISOString() in days
-                  ? days[currentDate.toISOString()].score.find(
-                      (categoryScore) => categoryScore.category === category.id,
-                    )?.score
-                  : 0;
-              return (
-                <div
-                  key={category.id}
-                  className={styles.categoryWrapper}
-                  style={{ "--hex": category.color.hex } as CSSProperties}
-                >
-                  <div className={styles.category}>
-                    <div className={styles.categoryName}>{category.name}</div>
-                    <div className={styles.categoryImportance}>
-                      <span>X - {category.importance}</span>
+          {/* Display form if date is in session */}
+          {![DayStatus.After, DayStatus.Before].includes(dateStatus) && (
+            <div className={styles.grid}>
+              {currentSession.categories.map((category, index) => {
+                const startValue =
+                  currentDateString in days
+                    ? thisDay.score.find(
+                        (categoryScore) =>
+                          categoryScore.category === category.id,
+                      )?.score
+                    : 0;
+                return (
+                  <div
+                    key={category.id}
+                    className={styles.categoryWrapper}
+                    style={{ "--hex": category.color.hex } as CSSProperties}
+                  >
+                    <div className={styles.category}>
+                      <div className={styles.categoryName}>{category.name}</div>
+                      <div className={styles.categoryImportance}>
+                        <span>X - {category.importance}</span>
+                      </div>
+                    </div>
+
+                    <div className={styles.categoryResult}>
+                      <StyledRangeInput
+                        form={form}
+                        name={`categories.${index}.score`}
+                        min={0}
+                        max={10}
+                        step={1}
+                        fieldColor="var(--gray-light)"
+                        thumbColor="var(--gray-mid)"
+                        initialValue={startValue}
+                      />
+                      {/* Automatically set category field to category.id */}
+                      <input
+                        type="hidden"
+                        {...form.register(`categories.${index}.category`)}
+                        value={category.id} // Hidden input to store category id
+                      />
                     </div>
                   </div>
+                );
+              })}
+            </div>
+          )}
 
-                  <div className={styles.categoryResult}>
-                    <StyledRangeInput
-                      form={form}
-                      name={`categories.${index}.score`}
-                      min={0}
-                      max={10}
-                      step={1}
-                      fieldColor="var(--gray-light)"
-                      thumbColor="var(--gray-mid)"
-                      initialValue={startValue}
-                    />
-                    {/* Automatically set category field to category.id */}
-                    <input
-                      type="hidden"
-                      {...form.register(`categories.${index}.category`)}
-                      value={category.id} // Hidden input to store category id
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* Display info if date not in session */}
+          {[DayStatus.After, DayStatus.Before].includes(dateStatus) && (
+            <div className={styles.info}>
+              <Header variant="secondary" style={{ fontSize: "1.5rem" }}>
+                {dateStatus === DayStatus.After
+                  ? "This day is after the current date."
+                  : "This day is before the span of your session."}
+              </Header>
+            </div>
+          )}
         </main>
       </div>
     </form>
   );
 };
 
-const SecondaryHeaderContent = ({
-  status,
-  totalScore,
-}: {
-  status: DayStatus;
-  totalScore: number;
-}) => {
+// Status box component rendering a different box based of the status of current date
+const StatusBox = ({ status }: { status: DayStatus }) => {
   switch (status) {
     case DayStatus.MissingResult:
       return (
-        <>
-          <div className={styles.leftSection}>
-            <p className={styles.totalScore}>Total Score: {totalScore}</p>
-          </div>
-          <div className={styles.centerSection}>
-            <p className={styles.missingData}>Missing Data</p>
-          </div>
-          <div className={styles.rightSection}>
-            <CustomizableButton
-              size="sm"
-              type="submit"
-              variant="opaque"
-              className={styles.submit}
-            >
+        <div className={`${styles.status} ${styles.missingData}`}>
+          <h2>Result is missing</h2>
+          <CustomizableButton
+            size="sm"
+            type="submit"
+            variant="primary"
+            className={styles.submit}
+          >
+            <div>
               Submit
-            </CustomizableButton>
-          </div>
-        </>
+              <span className={styles.iconWrapper}>
+                <CheckIcon strokeWidth={2} />
+              </span>
+            </div>
+          </CustomizableButton>
+        </div>
       );
     case DayStatus.WaitingResult:
       return (
-        <>
-          <div className={styles.leftSection}>
-            <p className={styles.totalScore}>Total Score: {totalScore} </p>
-          </div>
-          <div className={styles.centerSection}>
-            <p className={styles.waitingData}>Enter your Score</p>
-          </div>
-          <div className={styles.rightSection}>
+        <div className={`${styles.status} ${styles.waitingResult}`}>
+          <h2>Waiting for data</h2>
+          <div className={styles.btnWrapper}>
             <CustomizableButton
               size="sm"
               type="submit"
-              variant="opaque"
+              variant="primary"
               className={styles.submit}
             >
-              Submit
+              <div>
+                Submit
+                <span className={styles.iconWrapper}>
+                  <CheckIcon strokeWidth={2} />
+                </span>
+              </div>
             </CustomizableButton>
           </div>
-        </>
+        </div>
       );
     case DayStatus.HasResult:
       return (
-        <>
-          <div className={styles.leftSection}>
-            <p className={styles.totalScore}>Total Score: {totalScore} </p>
-          </div>
-          <div className={styles.rightSection}>
-            <CustomizableButton
-              size="sm"
-              type="submit"
-              variant="opaque"
-              className={styles.submit}
-            >
+        <div className={styles.hasResult}>
+          <CustomizableButton
+            size="sm"
+            type="submit"
+            variant="primary"
+            className={styles.submit}
+          >
+            <div>
               Update
-            </CustomizableButton>
-          </div>
-        </>
+              <span className={styles.iconWrapper}>
+                <CheckIcon strokeWidth={2} />
+              </span>
+            </div>
+          </CustomizableButton>
+        </div>
       );
   }
 };
