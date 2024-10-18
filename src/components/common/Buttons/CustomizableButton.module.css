@@ -51,7 +51,7 @@
 }
 
 .wide:hover {
-  background-color: hsl(from var(--btn-primary) h s calc(l - 10));
+  background-color: var(--btn-primary-hover);
 }
 
 .default:hover {
@@ -59,7 +59,7 @@
 }
 
 .primary:hover {
-  background-color: hsl(from var(--btn-primary) h s calc(l - 10));
+  background-color: var(--btn-primary-hover);
 }
 
 .secondary {
@@ -69,7 +69,7 @@
 }
 
 .secondary:hover {
-  background-color: hsl(from var(--btn-secondary) h s calc(l - 10));
+  background-color: var(--btn-secondary-hover);
 }
 
 .opaque {
