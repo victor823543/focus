@@ -11,7 +11,7 @@ import { callAPI } from "../utils/apiService";
 
 const Dashboard = () => {
   const createSession = useCreateSession();
-  const { selectSession, currentSession } = useSelectSession();
+  const { selectSession, selectSessions, currentSession } = useSelectSession();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["sessions"],
@@ -32,6 +32,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (data && data.length > 0) {
       selectSession(data[0]);
+      selectSessions(data);
     }
   }, [data]);
 

@@ -98,6 +98,8 @@ type StyledRangeInputNoForm = {
   color?: string;
   startValue?: number;
   onDragEnd: (value: number) => void;
+  fieldColor?: string;
+  thumbColor?: string;
 };
 
 export const StyledRangeInputNoForm: React.FC<StyledRangeInputNoForm> = ({
@@ -107,6 +109,8 @@ export const StyledRangeInputNoForm: React.FC<StyledRangeInputNoForm> = ({
   color = "var(--text-primary-soft)",
   startValue,
   onDragEnd,
+  fieldColor = "var(--text-primary-soft)",
+  thumbColor = "var(--text-primary-soft)",
 }) => {
   const [inputFocus, setInputFocus] = useState(false);
   const [value, setValue] = useState(startValue || min);
@@ -120,7 +124,12 @@ export const StyledRangeInputNoForm: React.FC<StyledRangeInputNoForm> = ({
     <div className={styles.rangeField}>
       <div
         className={styles.rangeWrapper}
-        style={{ "--field-color": color } as React.CSSProperties}
+        style={
+          {
+            "--field-color": fieldColor,
+            "--thumb-color": thumbColor,
+          } as React.CSSProperties
+        }
       >
         <input
           type="range"
