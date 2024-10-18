@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import useLogout from "../../../hooks/useLogout";
@@ -12,6 +12,9 @@ import { Header } from "../../common/Headers/Headers";
 import { ModalWrapper, WarningModal } from "../../common/Modals/Modals";
 import { Paragraph } from "../../common/Paragraphs/Paragraphs";
 import BasicTextField from "../../common/TextField/BasicTextField";
+import SettingsField, {
+  SettingsContainer,
+} from "../SettingsField/SettingsField";
 import styles from "./AccountSettings.module.css";
 
 const updateAccountSchema = yup.object().shape({
@@ -107,7 +110,7 @@ const AccountSettings = () => {
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
-      <div className={styles.settingsContainer}>
+      <SettingsContainer>
         <SettingsField
           title="Account"
           description="Here you can manage you account"
@@ -150,7 +153,7 @@ const AccountSettings = () => {
           </div>
         </SettingsField>
         <SettingsField>
-          <div className={styles.btnContainer}>
+          <div>
             <CustomizableButton
               type="submit"
               disabled={disableUpdate}
@@ -164,7 +167,7 @@ const AccountSettings = () => {
           title="Delete Account"
           description="Permanently delete your account and all its data"
         >
-          <div className={styles.btnContainer}>
+          <div>
             <CustomizableButton
               onClick={() => setShowDeleteModal(true)}
               type="button"
@@ -174,7 +177,8 @@ const AccountSettings = () => {
             </CustomizableButton>
           </div>
         </SettingsField>
-      </div>
+      </SettingsContainer>
+
       {showDeleteModal && (
         <ModalWrapper onClick={() => setShowDeleteModal(false)}>
           <WarningModal>
@@ -209,32 +213,6 @@ const AccountSettings = () => {
         </ModalWrapper>
       )}
     </form>
-  );
-};
-
-type SettingsFieldProps = {
-  title?: string;
-  description?: string;
-  children?: React.ReactNode;
-};
-
-const SettingsField: React.FC<SettingsFieldProps> = ({
-  children,
-  title,
-  description,
-}) => {
-  return (
-    <div className={styles.field}>
-      {title && <h2 className={styles.h2}>{title}</h2>}
-      {description && <p className={styles.p}>{description}</p>}
-      {children && (
-        <div
-          className={`${styles.fieldContent} ${description || title ? styles.margin : ""}`}
-        >
-          {children}
-        </div>
-      )}
-    </div>
   );
 };
 

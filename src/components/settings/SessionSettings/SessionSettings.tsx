@@ -7,13 +7,14 @@ import useSelectSession from "../../../hooks/useSelectSession";
 import { Session, UpdateSessionResponse } from "../../../types/Session";
 import { callAPI } from "../../../utils/apiService";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
-import { Container } from "../../common/Containers/Containers";
 import DateInput from "../../common/DateInput/DateInput";
-import { Header } from "../../common/Headers/Headers";
 import Loading from "../../common/Loading/Loading";
-import { Paragraph } from "../../common/Paragraphs/Paragraphs";
-import TextField from "../../common/TextField/TextField";
+import BasicTextField from "../../common/TextField/BasicTextField";
 import CategorySelection from "../CategorySelection/CategorySelection";
+import SettingsField, {
+  SettingsContainer,
+} from "../SettingsField/SettingsField";
+import styles from "./SessionSettings.module.css";
 
 const configureSessionSchema = yup.object().shape({
   title: yup.string(),
@@ -73,36 +74,48 @@ const SessionSettings = () => {
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
-      <Container>
-        <Header variant="secondary">Configure your session</Header>
-        <Container flex="start">
-          <Paragraph>Session title</Paragraph>
-          <TextField
-            form={form}
-            name="title"
-            placeholder="Update Title"
-            type="text"
-          />
-        </Container>
-
-        <Container direction="row" gap="lg">
-          <Container>
-            <Paragraph>Start Date</Paragraph>
-            <DateInput form={form} name="start" />
-          </Container>
-          <Container>
-            <Paragraph>End Date (Optional)</Paragraph>
-            <DateInput form={form} name="end" />
-          </Container>
-        </Container>
-
-        <Container>
-          <Paragraph>Selected Categories</Paragraph>
+      <SettingsContainer>
+        <SettingsField
+          title="Session"
+          description="Edit your Session settings"
+        />
+        <SettingsField title="Session Title">
+          <label className={styles.label} htmlFor="title">
+            Session Title
+          </label>
+          <BasicTextField key="title" form={form} name="title" type="text" />
+        </SettingsField>
+        <SettingsField
+          title="Start Date"
+          description="Change the start date of your session."
+        >
+          <div className={styles.dateWrapper}>
+            <label className={styles.label} htmlFor="start">
+              Start Date
+            </label>
+            <DateInput form={form} name="start" key="start" />
+          </div>
+        </SettingsField>
+        <SettingsField
+          title="End Date (optional)"
+          description="Change the end date of your session."
+        >
+          <div className={styles.dateWrapper}>
+            <label className={styles.label} htmlFor="end">
+              End Date
+            </label>
+            <DateInput form={form} name="end" key="end" />
+          </div>
+        </SettingsField>
+        <SettingsField title="Categories" description="Edit your Categories">
           <CategorySelection form={form} name="categories" />
-        </Container>
-
-        <CustomizableButton type="submit">Update Session</CustomizableButton>
-      </Container>
+        </SettingsField>
+        <SettingsField>
+          <CustomizableButton type="submit" variant="primary">
+            Update Session
+          </CustomizableButton>
+        </SettingsField>
+      </SettingsContainer>
     </form>
   );
 };

@@ -59,7 +59,7 @@ const CategorySelection = ({
         ))}
       </div>
 
-      <CustomizableButton onClick={addParam} variant="primary">
+      <CustomizableButton onClick={addParam} variant="opaque">
         Select categories
       </CustomizableButton>
 
