@@ -3,9 +3,14 @@ import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import useLogout from "../../../hooks/useLogout";
 import { useAuth } from "../../../provider/authProvider";
 import { callAPI } from "../../../utils/apiService";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
+import { Container } from "../../common/Containers/Containers";
+import { Header } from "../../common/Headers/Headers";
+import { ModalWrapper, WarningModal } from "../../common/Modals/Modals";
+import { Paragraph } from "../../common/Paragraphs/Paragraphs";
 import BasicTextField from "../../common/TextField/BasicTextField";
 import styles from "./AccountSettings.module.css";
 
@@ -40,6 +45,8 @@ export type UpdateAccountFormFields = yup.InferType<typeof updateAccountSchema>;
 const AccountSettings = () => {
   const { user, setToken } = useAuth();
   const [disableUpdate, setDisableUpdate] = useState(true);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const logout = useLogout();
   const form = useForm<UpdateAccountFormFields>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -73,7 +80,7 @@ const AccountSettings = () => {
     return () => subscription.unsubscribe();
   }, [form.watch(), form, user]);
 
-  const configureMutation = useMutation({
+  const updateMutation = useMutation({
     mutationFn: (params: UpdateAccountFormFields) =>
       callAPI<{ token: string }>(`/users/update`, "PUT", {
         username: params.username,
@@ -84,8 +91,18 @@ const AccountSettings = () => {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: () => callAPI(`/users`, "DELETE"),
+    onSuccess: () => {
+      logout();
+    },
+    onError: (err) => {
+      console.log(err.message);
+    },
+  });
+
   const handleSubmit = (params: UpdateAccountFormFields) => {
-    configureMutation.mutate(params);
+    updateMutation.mutate(params);
   };
 
   return (
@@ -134,12 +151,63 @@ const AccountSettings = () => {
         </SettingsField>
         <SettingsField>
           <div className={styles.btnContainer}>
-            <CustomizableButton disabled={disableUpdate} variant="primary">
+            <CustomizableButton
+              type="submit"
+              disabled={disableUpdate}
+              variant="primary"
+            >
               Save Changes
             </CustomizableButton>
           </div>
         </SettingsField>
+        <SettingsField
+          title="Delete Account"
+          description="Permanently delete your account and all its data"
+        >
+          <div className={styles.btnContainer}>
+            <CustomizableButton
+              onClick={() => setShowDeleteModal(true)}
+              type="button"
+              variant="warning"
+            >
+              Delete Account
+            </CustomizableButton>
+          </div>
+        </SettingsField>
       </div>
+      {showDeleteModal && (
+        <ModalWrapper onClick={() => setShowDeleteModal(false)}>
+          <WarningModal>
+            <Container gap="lg" style={{ maxWidth: "30rem" }}>
+              <Header
+                variant="secondary"
+                style={{ color: "var(--gray-x-dark)" }}
+              >
+                Delete your Account?
+              </Header>
+              <Paragraph>
+                Deleting your account is irreversible and you will lose all your
+                data for all you sessions.
+              </Paragraph>
+              <div className={styles.btnContainer}>
+                <CustomizableButton
+                  type="button"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </CustomizableButton>
+                <CustomizableButton
+                  onClick={() => deleteMutation.mutate()}
+                  type="button"
+                  variant="strong-warning"
+                >
+                  Delete
+                </CustomizableButton>
+              </div>
+            </Container>
+          </WarningModal>
+        </ModalWrapper>
+      )}
     </form>
   );
 };

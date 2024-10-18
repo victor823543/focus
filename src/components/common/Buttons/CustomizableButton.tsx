@@ -6,7 +6,9 @@ export type ButtonVariants =
   | "primary"
   | "secondary"
   | "opaque"
-  | "wide";
+  | "wide"
+  | "warning"
+  | "strong-warning";
 export type ButtonSize = "sm" | "base" | "lg" | "xl";
 
 export interface CustomizableButtonProps

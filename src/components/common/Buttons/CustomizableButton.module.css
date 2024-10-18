@@ -82,3 +82,23 @@
 .opaque:hover {
   background-color: hsla(214, 30%, 91%, 0.6);
 }
+
+.warning {
+  background-color: var(--red-x-light);
+  color: var(--red-dark);
+  border: none;
+}
+
+.warning:hover {
+  background-color: var(--red-light);
+}
+
+.strong-warning {
+  background-color: var(--red-dark);
+  color: white;
+  border: none;
+}
+
+.strong-warning:hover {
+  opacity: 0.85;
+}

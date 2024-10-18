@@ -203,7 +203,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
                   </p>
                   <p>
                     <strong>Calculated:</strong>
-                    <span>{calculatedScore}</span>
+                    <span>{to1Dec(calculatedScore)}</span>
                   </p>
                 </div>
                 <div className={styles.progressCircleWrapper}>

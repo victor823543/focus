@@ -45,3 +45,9 @@
   width: 80%;
   max-width: 30rem;
 }
+
+.btnContainer {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
