@@ -11,6 +11,8 @@ import {
   Cog6ToothIcon,
   TagIcon,
 } from "@heroicons/react/24/solid";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useLogout from "../../../hooks/useLogout";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { useAuth } from "../../../provider/authProvider";
@@ -51,20 +53,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const logout = useLogout();
   const { user, setToken } = useAuth();
   const { currentSession } = useSelectSession();
+  const [showSessionDropdown, setShowSessionDropdown] = useState(false);
+
   return (
     <div
       className={`${styles.sidebar} ${sidebarOpen ? styles.open : styles.closed}`}
     >
       <div className={styles.topContent}>
-        <div className={styles.sessionDisplay}>
+        <div
+          className={styles.sessionDisplay}
+          onClick={() => setShowSessionDropdown(!showSessionDropdown)}
+        >
           <div className={styles.sessionIconWrapper}>
             <DocumentChartBarIcon />
           </div>
           <span>{currentSession ? currentSession.title : "Session"}</span>
+          {showSessionDropdown && (
+            <SessionDropdown
+              show={showSessionDropdown}
+              setShow={setShowSessionDropdown}
+            />
+          )}
         </div>
       </div>
       <ul className={styles.ul}>
-        {links.map((content, index) => (
+        {links.map((content) => (
           <li key={content.title} className={styles.li}>
             <SidebarLink
               content={content}
@@ -86,6 +99,81 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className={styles.closeBtn} onClick={() => setSidebarOpen(false)}>
         <XMarkIcon />
       </div>
+    </div>
+  );
+};
+
+type SessionDropdownProps = {
+  show: boolean;
+  setShow: (bool: boolean) => void;
+};
+
+const SessionDropdown: React.FC<SessionDropdownProps> = ({ show, setShow }) => {
+  const { currentSession, selectSession, sessions } = useSelectSession();
+  const navigate = useNavigate();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    if (show) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [show]);
+
+  return (
+    <div className={styles.sessionDropdown} ref={dropdownRef}>
+      <div className={styles.currentSessionWrapper}>
+        <div className={`${styles.sessionOption} ${styles.currentSession}`}>
+          {currentSession ? currentSession.title : "Session"}
+        </div>
+      </div>
+
+      {sessions && sessions.length > 1 ? (
+        [...sessions]
+          .filter((session) => session.id !== currentSession?.id)
+          .map((session) => (
+            <div
+              key={session.id}
+              className={styles.sessionOption}
+              onClick={() => {
+                selectSession(session);
+              }}
+            >
+              {session.title}
+            </div>
+          ))
+      ) : (
+        <div
+          className={styles.sessionOption}
+          onClick={() => navigate("/configuration")}
+        >
+          Add new Session
+        </div>
+      )}
+      {sessions && sessions.length > 1 && (
+        <div className={styles.addSessionWrapper}>
+          <div
+            className={`${styles.sessionOption} ${styles.addSession}`}
+            onClick={() => navigate("/configuration")}
+          >
+            Add new Session
+          </div>
+        </div>
+      )}
     </div>
   );
 };

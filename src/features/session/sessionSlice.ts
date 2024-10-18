@@ -3,30 +3,40 @@ import { CreateSessionResponse } from "../../types/Session";
 
 interface SessionState {
   selected: CreateSessionResponse | null;
+  sessions: CreateSessionResponse[];
 }
 
 const initialState: SessionState = {
   selected: null,
+  sessions: [],
 };
 
 const sessionSlice = createSlice({
   name: "session",
   initialState,
   reducers: {
-    setSelected: (state, action: PayloadAction<CreateSessionResponse>) => {
+    setSelected: (
+      state,
+      action: PayloadAction<CreateSessionResponse | null>,
+    ) => {
       state.selected = action.payload;
     },
     clearSessionState: (state) => {
-      return initialState;
+      Object.assign(state, initialState);
+    },
+    setSessions: (state, action: PayloadAction<CreateSessionResponse[]>) => {
+      state.sessions = action.payload;
     },
   },
   selectors: {
     selectCurrentSession: (session) => session.selected,
+    selectSessions: (session) => session.sessions,
   },
 });
 
-export const { setSelected, clearSessionState } = sessionSlice.actions;
+export const { setSelected, clearSessionState, setSessions } =
+  sessionSlice.actions;
 
-export const { selectCurrentSession } = sessionSlice.selectors;
+export const { selectCurrentSession, selectSessions } = sessionSlice.selectors;
 
 export default sessionSlice;

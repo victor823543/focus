@@ -1,14 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { clearSessionState } from "../../../features/session/sessionSlice";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { Session, UpdateSessionResponse } from "../../../types/Session";
 import { callAPI } from "../../../utils/apiService";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
+import { Container } from "../../common/Containers/Containers";
 import DateInput from "../../common/DateInput/DateInput";
+import { Header } from "../../common/Headers/Headers";
 import Loading from "../../common/Loading/Loading";
+import { ModalWrapper, WarningModal } from "../../common/Modals/Modals";
+import { Paragraph } from "../../common/Paragraphs/Paragraphs";
 import BasicTextField from "../../common/TextField/BasicTextField";
 import CategorySelection from "../CategorySelection/CategorySelection";
 import SettingsField, {
@@ -27,7 +34,13 @@ const configureSessionSchema = yup.object().shape({
 export type ConfigureFormFields = yup.InferType<typeof configureSessionSchema>;
 
 const SessionSettings = () => {
-  const { selectSession, currentSession } = useSelectSession();
+  const { selectSession, currentSession, sessions } = useSelectSession();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const { data, isLoading, error } = useQuery({
     enabled: !!currentSession,
     queryKey: ["session", currentSession?.id],
@@ -62,6 +75,25 @@ const SessionSettings = () => {
       ),
     onSuccess: (response) => {
       selectSession(response);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => callAPI(`/sessions/${currentSession?.id}`, "DELETE"),
+    onSuccess: () => {
+      console.log("Session deleted");
+      console.log(sessions.length);
+      if (sessions.length > 1) {
+        selectSession(sessions[0]);
+        navigate(`/dashboard`);
+      } else {
+        queryClient.clear();
+        dispatch(clearSessionState());
+        navigate(`/configuration`);
+      }
+    },
+    onError: (err) => {
+      console.log(err.message);
     },
   });
 
@@ -121,7 +153,54 @@ const SessionSettings = () => {
             Update Session
           </CustomizableButton>
         </SettingsField>
+        <SettingsField
+          title="Delete Session"
+          description="Permanently delete your account and all its data"
+        >
+          <div>
+            <CustomizableButton
+              onClick={() => setShowDeleteModal(true)}
+              type="button"
+              variant="warning"
+            >
+              Delete Session
+            </CustomizableButton>
+          </div>
+        </SettingsField>
       </SettingsContainer>
+      {showDeleteModal && (
+        <ModalWrapper onClick={() => setShowDeleteModal(false)}>
+          <WarningModal>
+            <Container gap="lg" style={{ maxWidth: "30rem" }}>
+              <Header
+                variant="secondary"
+                style={{ color: "var(--gray-x-dark)" }}
+              >
+                Delete your Session?
+              </Header>
+              <Paragraph>
+                Deleting a session is irreversible and you will lose all it's
+                data.
+              </Paragraph>
+              <div className={styles.btnContainer}>
+                <CustomizableButton
+                  type="button"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </CustomizableButton>
+                <CustomizableButton
+                  onClick={() => deleteMutation.mutate()}
+                  type="button"
+                  variant="strong-warning"
+                >
+                  Delete
+                </CustomizableButton>
+              </div>
+            </Container>
+          </WarningModal>
+        </ModalWrapper>
+      )}
     </form>
   );
 };
