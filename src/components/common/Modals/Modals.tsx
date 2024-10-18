@@ -92,3 +92,10 @@ export const Modal = createModal({
   padding: "2rem",
   boxShadow: "var(--shadow-lg)",
 });
+
+export const WarningModal = createModal({
+  borderRadius: ".75rem",
+  backgroundColor: "var(--red)",
+  padding: "2rem",
+  boxShadow: "var(--shadow-lg)",
+});

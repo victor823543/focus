@@ -1,0 +1,33 @@
+.input {
+  outline: none;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-radius: 6px;
+  border: solid 1px var(--border-light);
+  font-size: 1rem;
+  color: var(--field-color);
+  background-color: var(--gray-2x-light);
+}
+
+.input::placeholder {
+  opacity: 0.7;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.errorIcon {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--error);
+}
+
+.errorText {
+  margin-left: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--error);
+}

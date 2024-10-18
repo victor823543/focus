@@ -1,0 +1,11 @@
+.label {
+  color: var(--gray);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.dateWrapper {
+  display: flex;
+  flex-direction: column;
+}

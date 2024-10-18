@@ -1,5 +1,6 @@
 import { Controller, FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { dateToInputFormat } from "../../../utils/functions";
+import styles from "./DateInput.module.css";
 
 type DateInputProps<TFieldValues extends FieldValues> = {
   name: Path<TFieldValues>;
@@ -20,6 +21,7 @@ const DateInput = <TFieldValues extends FieldValues>({
       }) => (
         <>
           <input
+            className={styles.input}
             ref={ref}
             id={name}
             type="date"

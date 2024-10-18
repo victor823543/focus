@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: calc(100vh - 4rem);
+  padding-top: 0.5rem;
+  box-sizing: border-box;
+}
+
+.viewWrapper {
+  width: 100%;
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 786px) {
+  .main {
+    padding: 0.5rem 1rem;
+  }
+}

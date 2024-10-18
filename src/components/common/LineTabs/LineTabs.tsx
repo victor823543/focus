@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./LineTabs.module.css";
 
 type LineTabsProps = {
-  tabs: string[];
+  tabs: { label: string; id: string }[];
   selected: string;
   setSelected: (tab: string) => void;
 };
@@ -10,15 +10,15 @@ type LineTabsProps = {
 const LineTabs: React.FC<LineTabsProps> = ({ tabs, selected, setSelected }) => {
   return (
     <div className={styles.tabs}>
-      {tabs.map((label) => (
+      {tabs.map((tab) => (
         <div
-          key={label}
-          onClick={() => setSelected(label)}
-          className={`${styles.tab} ${selected === label ? styles.selected : ""}`}
+          key={tab.id}
+          onClick={() => setSelected(tab.id)}
+          className={`${styles.tab} ${selected === tab.id ? styles.selected : ""}`}
         >
-          <span>{label}</span>
+          <span>{tab.label}</span>
           <div className={`${styles.line} ${styles.outline}`}></div>
-          {selected === label && (
+          {selected === tab.id && (
             <div className={`${styles.line} ${styles.foreground}`}></div>
           )}
         </div>
