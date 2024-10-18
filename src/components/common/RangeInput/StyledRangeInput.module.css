@@ -29,7 +29,7 @@
   appearance: none;
   width: 20px;
   height: 20px;
-  background-color: var(--field-color);
+  background-color: var(--thumb-color);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
@@ -39,7 +39,7 @@
 .rangeInput::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background-color: var(--field-color);
+  background-color: var(--thumb-color);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
@@ -55,7 +55,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 12px;
-  color: var(--field-color);
+  color: var(--thumb-color);
   transition:
     transform 0.3s,
     opacity 0.3s;
