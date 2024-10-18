@@ -3,7 +3,11 @@ import { useHandleSearchParam } from "../../../hooks/useHandleSearchParam";
 import LineTabs from "../../common/LineTabs/LineTabs";
 import styles from "./CalendarMain.module.css";
 
-const tabs = ["Day", "Week", "Month"];
+const tabs = [
+  { label: "Day", id: "day" },
+  { label: "Week", id: "week" },
+  { label: "Month", id: "month" },
+];
 
 type CalendarMainProps = {
   dayView: React.ReactNode;
@@ -18,7 +22,7 @@ const CalendarMain: React.FC<CalendarMainProps> = ({
 }) => {
   const { addParam, currentValue, setParam } = useHandleSearchParam(
     "tab",
-    "Month",
+    "month",
   );
 
   useEffect(() => addParam, []);
@@ -27,13 +31,13 @@ const CalendarMain: React.FC<CalendarMainProps> = ({
     <main className={styles.main}>
       <LineTabs
         tabs={tabs}
-        selected={currentValue || "Month"}
+        selected={currentValue || "month"}
         setSelected={(tab: string) => setParam(tab)}
       />
       <div className={styles.viewWrapper}>
-        {currentValue === "Day" && dayView}
-        {currentValue === "Week" && weekView}
-        {currentValue === "Month" && monthView}
+        {currentValue === "day" && dayView}
+        {currentValue === "week" && weekView}
+        {currentValue === "month" && monthView}
       </div>
     </main>
   );
