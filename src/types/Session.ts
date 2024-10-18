@@ -7,6 +7,7 @@ export type CreateSessionResponse = {
   start: string;
   end: string | null;
   categories: Array<Category>;
+  maxScore: number;
 };
 
 export type ListSessionsResponse = CreateSessionResponse[];

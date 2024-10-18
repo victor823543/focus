@@ -10,28 +10,31 @@
   --primary-color-2x-dark: #065f46;
   --primary-color-3x-dark: #064e3b;
   --primary-color-4x-dark: #022c22;
+  --primary-color-light-tr: rgba(110, 231, 183, 0.5);
 
   --secondary-color: #60a5fa;
 
-  --slate: hsl(215, 16%, 47%);
+  --slate: #65758b;
   --slate-3x-light: #f8fafc;
   --slate-2x-light: #f1f5f9;
   --slate-x-light: #e2e8f0;
   --slate-light: #e1e7ef;
-  --slate-dark: hsl(215, 25%, 27%);
-  --slate-x-dark: hsl(222, 47%, 11%);
+  --slate-dark: #344256;
+  --slate-x-dark: #0f1729;
 
   --gray-2x-light: #fafafa;
   --gray-x-light: #f3f4f6;
   --gray-m-light: #e5e7eb;
   --gray-light: #d1d5db;
+  --gray-mid: #9ca3af;
   --gray: #6b7280;
   --gray-dark: #384252;
   --gray-x-dark: #111827;
   --gray-2x-dark: #030711;
+  --gray-light-tr: rgba(209, 213, 219, 0.3);
 
   --primary-text: black;
-  --secondary-text: hsl(215, 25%, 27%);
+  --secondary-text: #344256;
 
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
@@ -39,12 +42,15 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
 
-  --border-light: hsl(from var(--gray) h s l / 0.3);
-  --border: hsl(from var(--gray-dark) h s l / 0.4);
-  --border-dark: hsl(from var(--gray-dark) h s l / 0.6);
+  --border-light: rgba(107, 114, 128, 0.3);
+  --border: rgba(56, 66, 82, 0.4);
+  --border-dark: rgba(56, 66, 82, 0.6);
 
   --btn-primary: #10b981; /* emerald-500 */
+  --btn-primary-hover: #059669;
+  --btn-primary-dark: #047857;
   --btn-secondary: #0ea5e9; /* sky-500 */
+  --btn-secondary-hover: #0284c7;
 
   --text-primary: #1f2937;
   --text-primary-soft: #6b7280;
@@ -67,17 +73,25 @@
   --blue-2x-light: #dbeafe;
   --blue-mid: #3b82f6;
   --blue-dark: #2563eb;
+  --blue-light-tr: rgba(147, 197, 253, 0.5);
 
   --purple: #c084fc;
   --purple-2x-light: #f3e8ff;
   --purple-dark: #9333ea;
+  --purple-light: #d8b4fe;
+  --purple-light-tr: rgba(216, 180, 254, 0.5);
 
   --red: #f87171;
+  --red-mid: #ef4444;
   --red-2x-light: #fee2e2;
   --red-dark: #b91c1c;
+  --red-light: #fca5a5;
+  --red-x-light: #fecaca;
 
   --cyan: #22d3ee;
   --orange: #fb923c;
+  --orange-light: #fdba74;
+  --orange-light-tr: rgba(253, 186, 116, 0.5);
 
   --amber: #fbbf24;
   --amber-2x-light: #fef3c7;

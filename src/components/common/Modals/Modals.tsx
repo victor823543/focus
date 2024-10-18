@@ -10,17 +10,27 @@ type ModalWrapperStylingProps = {
 
 type ModalWrapperProps = React.HTMLProps<HTMLDivElement> & {
   noSidebar?: boolean;
+  noPointerEvents?: boolean;
 };
 
 const createModalWrapper =
   ({ blur, darken }: ModalWrapperStylingProps): React.FC<ModalWrapperProps> =>
-  ({ children, style, className, noSidebar = false, ...rest }) => {
+  ({
+    children,
+    style,
+    className,
+    noSidebar = false,
+    noPointerEvents = false,
+    ...rest
+  }) => {
+    const pointerEvents = noPointerEvents ? "none" : "auto";
     return (
       <div
         style={{
           ...style,
           backdropFilter: `blur(${blur})`,
-          backgroundColor: `rgb(from var(--gray-2x-dark) r g b / ${darken})`,
+          backgroundColor: `rgba(3, 7, 17, ${darken})`,
+          pointerEvents,
         }}
         className={`${className} ${styles.modalWrapper} ${noSidebar ? "" : styles.marginLeft}`}
         {...rest}
@@ -79,6 +89,13 @@ const createModal =
 export const Modal = createModal({
   borderRadius: "2rem",
   backgroundColor: "var(--gray-2x-light)",
+  padding: "2rem",
+  boxShadow: "var(--shadow-lg)",
+});
+
+export const WarningModal = createModal({
+  borderRadius: ".75rem",
+  backgroundColor: "var(--red)",
   padding: "2rem",
   boxShadow: "var(--shadow-lg)",
 });

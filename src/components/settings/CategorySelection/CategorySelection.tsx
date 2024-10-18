@@ -6,13 +6,13 @@ import { useHandleSearchParam } from "../../../hooks/useHandleSearchParam";
 import { Category } from "../../../types/Category";
 import { callAPI } from "../../../utils/apiService";
 import { formatUnixDate } from "../../../utils/formatUnixDate";
-import { ConfigureFormFields } from "../../../views/Settings";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { Container } from "../../common/Containers/Containers";
 import { Header } from "../../common/Headers/Headers";
 import Loading from "../../common/Loading/Loading";
 import { Modal, ModalWrapperBlur } from "../../common/Modals/Modals";
 import { Paragraph } from "../../common/Paragraphs/Paragraphs";
+import { ConfigureFormFields } from "../SessionSettings/SessionSettings";
 import styles from "./CategorySelection.module.css";
 
 type CategorySelectionProps<TFieldValues extends FieldValues> = {
@@ -59,7 +59,7 @@ const CategorySelection = ({
         ))}
       </div>
 
-      <CustomizableButton onClick={addParam} variant="primary">
+      <CustomizableButton onClick={addParam} variant="opaque">
         Select categories
       </CustomizableButton>
 

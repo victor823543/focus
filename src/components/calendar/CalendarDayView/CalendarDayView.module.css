@@ -1,9 +1,9 @@
 .calendarDay {
-  height: clamp(40rem, 80vh, 70rem);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
 }
 
 /* Header styles */
@@ -26,51 +26,122 @@
 .arrowContainer {
   width: 2rem;
   color: var(--gray);
+  cursor: pointer;
 }
 
 /* Sec header styles */
 .secHeader {
-  height: 2rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   gap: 3rem;
   padding: 0.5rem 2rem;
-  border: solid 1px var(--border-light);
+  border: solid 0.5px var(--border-light);
   border-top: none;
-  border-bottom: solid 0.5px var(--border-light);
+  border-bottom: none;
   background-color: var(--slate-3x-light);
 }
 
-.leftSection,
-.rightSection {
-  flex-shrink: 1;
-}
-
-.centerSection {
-  flex: 1;
+.score {
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 1.25rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  background-color: var(--gray-m-light);
+  min-width: min(15rem, 30%);
 }
 
-.secHeader p {
+.score h2 {
+  font-size: 1.2rem;
+  padding-bottom: 0.25rem;
+  border-bottom: solid 1px var(--border-light);
   font-weight: 600;
 }
 
+.scoreContainer {
+  margin-top: 0.75rem;
+  display: flex;
+}
+
+.scoreTextWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+  bottom: 3px;
+}
+
+.scoreTextWrapper p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  gap: 1rem;
+}
+
+.scoreTextWrapper strong {
+  font-weight: 500;
+}
+
+.scoreTextWrapper span {
+  font-weight: 300;
+}
+
+.progressCircleWrapper {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+}
+
+.circleContent {
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.status {
+  border-radius: 8px;
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.status h2 {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: solid 1px var(--border-light);
+  font-weight: 600;
+  padding-left: 1.5rem;
+}
+
 .missingData {
-  color: var(--error);
+  color: var(--red-mid);
 }
 
-.waitingData {
-  color: hsl(from var(--primary-color) h s calc(l - 15));
+.waitingResult {
+  color: var(--primary-color-dark);
 }
 
-.totalScore {
-  color: var(--gray);
+.hasResult {
+  margin-top: 1.25rem;
 }
 
 .submit {
   margin-left: auto;
+  height: fit-content;
+  padding: 0.25rem 0.75rem 0.25rem 1rem;
+}
+
+.submit > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.iconWrapper {
+  width: 2rem;
 }
 
 /* Main styles */
@@ -80,31 +151,45 @@
   border-top: none;
   flex: 1;
   box-sizing: border-box;
+  padding: 3rem 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem 4rem;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.categoryWrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Add flex display */
+  justify-content: center; /* Center horizontally */
 }
 
 .category {
-  flex: 1;
   display: flex;
-  min-height: 5rem;
+  gap: 1rem;
+  align-items: center;
 }
 
 .categoryName {
-  padding: 0 2rem;
-  background-color: rgb(from var(--hex) r g b / 0.3);
-  width: 7rem;
-  display: flex;
-  align-items: center;
+  padding: 1rem 4rem 1rem 1.5rem;
+  background-color: var(--gray-light-tr);
+  border-radius: 8px;
   font-weight: 600;
+  font-size: 0.9rem;
   color: var(--gray-dark);
-  border-left: solid 6px var(--hex);
+  cursor: pointer;
+  border-right: solid 5px var(--hex);
+  flex: 1;
 }
 
 .categoryImportance {
-  padding: 0 2rem;
-  width: 5rem;
-  border: solid 0.5px var(--border-light);
+  padding: 1rem 1rem;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,13 +198,33 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--gray);
+  background-color: var(--gray-light-tr);
 }
 
 .categoryResult {
-  padding: 0 2rem;
-  border: solid 0.5px var(--border-light);
-  flex: 1;
+  padding: 0.5rem 0;
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+.info {
+  padding: 3rem;
+  background-color: var(--gray-light-tr);
+  border-radius: 8px;
+  max-width: 23rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: fit-content;
+  }
+}
+
+@media (min-width: 1300px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

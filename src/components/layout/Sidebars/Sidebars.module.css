@@ -92,6 +92,54 @@
   color: var(--gray-x-dark);
 }
 
+.currentSessionWrapper {
+  padding-bottom: 0.5rem;
+  border-bottom: solid 1px var(--border-light);
+  margin-bottom: 0.5rem;
+}
+
+.addSessionWrapper {
+  padding-top: 0.5rem;
+  border-top: solid 1px var(--border-light);
+  margin-top: 0.5rem;
+}
+
+.sessionDropdown {
+  position: absolute;
+  width: 100%;
+  top: 105%;
+  left: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--gray-2x-light);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-md);
+  border: solid 1px var(--border-light);
+}
+
+.sessionOption {
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: var(--gray-2x-light);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.currentSession {
+  background-color: var(--primary-color);
+}
+
+.sessionOption:hover {
+  background-color: var(--gray-light);
+}
+
+.currentSession:hover {
+  background-color: var(--primary-color-dark);
+}
+
 @media (max-width: 1023px) {
   .sidebar {
     transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);

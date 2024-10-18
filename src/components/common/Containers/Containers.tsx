@@ -30,6 +30,7 @@ const gapConvert = {
 
 export const Container: React.FC<ContainerProps> = ({
   children,
+  style,
   flex = "align",
   direction = "col",
   paddingX = "sm",
@@ -43,7 +44,7 @@ export const Container: React.FC<ContainerProps> = ({
 
   return (
     <div
-      style={{ padding, gap: gapConvert[gap] }}
+      style={{ padding, gap: gapConvert[gap], ...style }}
       className={`${styles.container} ${styles[`flex-${flex}`]}
         ${styles[direction]}
         ${center ? styles.center : ""}

@@ -115,6 +115,7 @@ const MiniStatsDisplay: React.FC<WeekDataBarProps> = ({ data, categories }) => {
             description="Total score this week"
             difPercent={Math.round((thisWeekTotal / pastWeekTotal - 1) * 100)}
             color="var(--blue)"
+            bgColor="var(--blue-light-tr)"
             icon={<RectangleStackIcon />}
           />
           <MiniStats
@@ -122,6 +123,7 @@ const MiniStatsDisplay: React.FC<WeekDataBarProps> = ({ data, categories }) => {
             description={`Best category: ${bestCategoryThisWeek.category}`}
             difPercent={Math.round(bestCategoryComparison)}
             color="var(--primary-color)"
+            bgColor="var(--primary-color-light-tr)"
             icon={<HandThumbUpIcon />}
           />
           <MiniStats
@@ -129,6 +131,7 @@ const MiniStatsDisplay: React.FC<WeekDataBarProps> = ({ data, categories }) => {
             description={`Worst category: ${worstCategoryThisWeek.category}`}
             difPercent={Math.round(worstCategoryComparison)}
             color="var(--orange)"
+            bgColor="var(--orange-light-tr)"
             icon={<HandThumbDownIcon />}
           />
           <MiniStats
@@ -136,6 +139,7 @@ const MiniStatsDisplay: React.FC<WeekDataBarProps> = ({ data, categories }) => {
             description={`Highest increase: ${categoryIncrease.category}`}
             difPercent={Math.round(categoryIncrease.percentage)}
             color="var(--purple)"
+            bgColor="var(--purple-light-tr)"
             icon={<ArrowTrendingUpIcon />}
           />
         </div>
@@ -149,6 +153,7 @@ type MiniStatsProps = {
   description: string;
   difPercent: number;
   color: string;
+  bgColor: string;
   icon: React.ReactNode;
 };
 
@@ -157,11 +162,14 @@ const MiniStats: React.FC<MiniStatsProps> = ({
   description,
   difPercent,
   color,
+  bgColor,
   icon,
 }) => {
   return (
     <div
-      style={{ "--hex": color } as React.CSSProperties}
+      style={
+        { "--box-color": color, "--box-bg": bgColor } as React.CSSProperties
+      }
       className={`${styles.box}`}
     >
       <div className={styles.iconContainer}>{icon}</div>
