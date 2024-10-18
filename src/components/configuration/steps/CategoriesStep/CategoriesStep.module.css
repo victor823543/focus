@@ -16,7 +16,7 @@
 
 .category {
   padding: 1rem 4rem 1rem 1.5rem;
-  background-color: rgb(from var(--gray-light) r g b / 0.3);
+  background-color: var(--gray-light-tr);
   border-radius: 8px;
   font-weight: 500;
   font-size: 0.9rem;
@@ -26,6 +26,7 @@
 }
 
 .selected {
+  background-color: rgba(110, 231, 183, 0.6); /* fallback for older browsers */
   background-color: rgb(from var(--primary-color-light) r g b / 0.6);
   outline: solid 2px var(--primary-color);
   border: none;
@@ -54,11 +55,13 @@
   height: 100%;
   display: grid;
   place-content: center;
+  background-color: rgba(3, 7, 17, 0.1); /* fallback for older browsers */
   background-color: rgb(from var(--gray-2x-dark) r g b / 0.1);
 }
 
 .colorPickerModal {
   padding: 2rem;
+  background-color: rgba(17, 24, 39, 0.9); /* fallback for older browsers */
   background-color: rgb(from var(--gray-x-dark) r g b / 0.9);
   border-radius: 8px;
   width: fit-content;

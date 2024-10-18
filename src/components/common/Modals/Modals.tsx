@@ -29,7 +29,7 @@ const createModalWrapper =
         style={{
           ...style,
           backdropFilter: `blur(${blur})`,
-          backgroundColor: `rgb(from var(--gray-2x-dark) r g b / ${darken})`,
+          backgroundColor: `rgba(3, 7, 17, ${darken})`,
           pointerEvents,
         }}
         className={`${className} ${styles.modalWrapper} ${noSidebar ? "" : styles.marginLeft}`}

@@ -14,7 +14,8 @@
   overflow: hidden;
   width: calc(100% - 32px);
   pointer-events: none;
-  color: rgb(from var(--field-color) r g b / 0.8);
+  color: var(--field-color);
+  opacity: 0.8;
   font-size: 1rem;
   height: 100%;
   display: flex;
