@@ -15,11 +15,14 @@ const sessionSlice = createSlice({
   name: "session",
   initialState,
   reducers: {
-    setSelected: (state, action: PayloadAction<CreateSessionResponse>) => {
+    setSelected: (
+      state,
+      action: PayloadAction<CreateSessionResponse | null>,
+    ) => {
       state.selected = action.payload;
     },
     clearSessionState: (state) => {
-      return initialState;
+      Object.assign(state, initialState);
     },
     setSessions: (state, action: PayloadAction<CreateSessionResponse[]>) => {
       state.sessions = action.payload;

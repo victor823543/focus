@@ -8,7 +8,7 @@ import {
 import { CreateSessionResponse } from "../types/Session";
 
 type UseSelectSessionReturn = {
-  selectSession: (session: CreateSessionResponse) => void;
+  selectSession: (session: CreateSessionResponse | null) => void;
   selectSessions: (sessions: CreateSessionResponse[]) => void;
   currentSession: CreateSessionResponse | null;
   sessions: CreateSessionResponse[];
@@ -21,7 +21,7 @@ const useSelectSession = (): UseSelectSessionReturn => {
   const sessions = useSelector((state: RootState) => state.session.sessions);
   const dispatch: AppDispatch = useDispatch();
 
-  const selectSession = (session: CreateSessionResponse) =>
+  const selectSession = (session: CreateSessionResponse | null) =>
     dispatch(setSelected(session));
 
   const selectSessions = (sessions: CreateSessionResponse[]) =>
