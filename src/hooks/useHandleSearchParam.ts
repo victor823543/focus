@@ -19,22 +19,25 @@ export const useHandleSearchParam = (
 
   const addParam = () => {
     if (!hasParam) {
-      searchParams.set(param, value);
-      setSearchParams(searchParams);
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set(param, value);
+      setSearchParams(newSearchParams);
     }
   };
 
   const setParam = (newValue: string) => {
     if (hasParam) {
-      searchParams.set(param, newValue);
-      setSearchParams(searchParams);
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set(param, newValue);
+      setSearchParams(newSearchParams);
     }
   };
 
   const removeParam = () => {
     if (hasParam) {
-      searchParams.delete(param);
-      setSearchParams(searchParams);
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete(param);
+      setSearchParams(newSearchParams);
     }
   };
 
