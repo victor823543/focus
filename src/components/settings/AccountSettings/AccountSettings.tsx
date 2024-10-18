@@ -119,7 +119,12 @@ const AccountSettings = () => {
           <label className={styles.label} htmlFor="username">
             Username
           </label>
-          <BasicTextField key="username" name="username" form={form} />
+          <BasicTextField
+            key="username"
+            name="username"
+            form={form}
+            className={styles.input}
+          />
         </SettingsField>
         <SettingsField title="Password" description="Update your password">
           <div className={styles.passwordFields}>
