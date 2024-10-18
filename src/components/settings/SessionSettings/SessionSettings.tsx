@@ -83,7 +83,13 @@ const SessionSettings = () => {
           <label className={styles.label} htmlFor="title">
             Session Title
           </label>
-          <BasicTextField key="title" form={form} name="title" type="text" />
+          <BasicTextField
+            key="title"
+            form={form}
+            name="title"
+            type="text"
+            placeholder="Title"
+          />
         </SettingsField>
         <SettingsField
           title="Start Date"

@@ -10,6 +10,7 @@ type BasicTextFieldProps<TFieldValues extends FieldValues> = {
   form: UseFormReturn<TFieldValues>;
   color?: string;
   className?: string;
+  placeholder?: string;
   onChangeCallback?: () => void;
 };
 
@@ -20,6 +21,7 @@ const BasicTextField = <TFieldValues extends FieldValues>({
   form,
   color = "var(--text-primary-soft)",
   className = "",
+  placeholder = "",
   onChangeCallback,
 }: BasicTextFieldProps<TFieldValues>) => {
   const [inputFocus, setInputFocus] = useState(false);
@@ -40,7 +42,7 @@ const BasicTextField = <TFieldValues extends FieldValues>({
             id={name}
             ref={ref}
             value={value}
-            placeholder=""
+            placeholder={placeholder}
             onChange={(e) => {
               onChange(e.target.value),
                 onChangeCallback ? onChangeCallback() : undefined;

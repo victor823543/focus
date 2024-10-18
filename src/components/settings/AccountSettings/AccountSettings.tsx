@@ -125,6 +125,7 @@ const AccountSettings = () => {
           <BasicTextField
             key="username"
             name="username"
+            placeholder="Username"
             form={form}
             className={styles.input}
           />
@@ -141,6 +142,7 @@ const AccountSettings = () => {
                 form={form}
                 type="password"
                 autoComplete="new-password"
+                placeholder="********"
                 className={styles.passwordInput}
                 onChangeCallback={() => form.trigger("rePassword")}
               />
@@ -155,6 +157,7 @@ const AccountSettings = () => {
                 form={form}
                 type="password"
                 autoComplete="new-password"
+                placeholder="********"
                 className={styles.passwordInput}
               />
             </div>
