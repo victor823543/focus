@@ -115,6 +115,9 @@ const AccountSettings = () => {
           title="Account"
           description="Here you can manage you account"
         />
+        <SettingsField title="Email" description="You cannot change your email">
+          <p className={styles.label}>Email: {user?.email}</p>
+        </SettingsField>
         <SettingsField title="Username" description="Update your username">
           <label className={styles.label} htmlFor="username">
             Username
