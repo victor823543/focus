@@ -13,4 +13,4 @@ services:
   frontend:
     image: victor823543/focus-frontend:latest
     ports:
-      - "3000:3000"
+      - "80:80"
