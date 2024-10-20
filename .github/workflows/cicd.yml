@@ -46,6 +46,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
       - name: Set up Docker Compose
         run: docker-compose up -d
         env:
