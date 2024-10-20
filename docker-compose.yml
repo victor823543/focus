@@ -9,7 +9,6 @@ services:
       MONGO_URI: "mongodb+srv://victor:${MONGO_PASSWORD}@focuscluster0.tr9g7.mongodb.net/testing_db?retryWrites=true&w=majority&appName=FocusCluster0"
       ACCESS_TOKEN_SECRET: "${ACCESS_TOKEN}"
       NODE_ENV: "test"
-    command: ["sh", "-c", "NODE_ENV=test node ./dist/index.js"]
 
   frontend:
     image: victor823543/focus-frontend:latest
