@@ -79,7 +79,7 @@ const CategoriesStep = () => {
 
   return (
     <Container className={styles.container} gap="lg">
-      <Header variant="config" center>
+      <Header data-cy="categories-title" variant="config" center>
         Now choose your categories
       </Header>
       <Paragraph className={styles.p}>
@@ -105,6 +105,7 @@ const CategoriesStep = () => {
                   ? () => removeConfigCategory(category)
                   : () => addConfigCategory(category)
               }
+              data-cy={`category-${category.name}`}
             >
               {category.name}
             </div>

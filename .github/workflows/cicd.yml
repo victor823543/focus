@@ -1,9 +1,14 @@
-name: Deploy React frontend
+name: React Frontend CI/CD
 
 on:
   push:
     branches:
       - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
 
 jobs:
   build:
@@ -18,8 +23,52 @@ jobs:
       - name: Publish Image to Docker Hub
         run: docker push victor823543/focus-frontend:latest
 
-  deploy:
+  test:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set up Docker Compose
+        run: docker-compose up -d
+        env:
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Wait for frontend to be ready
+        run: npx wait-on http://localhost:3000
+
+      - name: Wait for backend to be ready
+        run: npx wait-on http://localhost:4000
+
+      - name: Install Cypress
+        run: npm install --save-dev cypress
+
+      - name: Run E2E tests
+        run: npx cypress run --config baseUrl=http://localhost:3000
+
+  deploy:
+    needs:
+      - build
+      - test
+    if: github.ref == 'refs/heads/main'
     runs-on: self-hosted
     steps:
       - name: Pull image from Docker Hub

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Study",
+    "importance": 1,
+    "color": {
+      "name": "Gray",
+      "hex": "#9ca3af"
+    }
+  },
+  {
+    "name": "Sleep",
+    "importance": 1,
+    "color": {
+      "name": "Gray",
+      "hex": "#9ca3af"
+    }
+  },
+  {
+    "name": "Read",
+    "importance": 1,
+    "color": {
+      "name": "Gray",
+      "hex": "#9ca3af"
+    }
+  }
+]
