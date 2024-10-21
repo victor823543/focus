@@ -9,8 +9,8 @@ describe("Login Functionality", () => {
       cy.dataCy("password").type(testUser.password);
     });
     cy.dataCy("submit").click();
-
-    cy.url().should("include", "/dashboard");
+    cy.window().its("localStorage.token").should("exist");
+    cy.url().should("include", "/configuration");
   });
 
   it("should navigate to the signup page", () => {
