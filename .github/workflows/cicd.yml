@@ -30,14 +30,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "23"
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Get GitHub Actions runner IP
         run: echo "RUNNER_IP=$(curl -s ifconfig.me)" >> $GITHUB_ENV
 
@@ -73,18 +65,14 @@ jobs:
       - name: Wait for backend to be ready
         run: npx wait-on --timeout 30000 http://localhost:4000/api/health
 
-      - name: Check running containers
-        run: docker ps -a
-
-      - name: Check backend health
-        run: |
-          curl --retry 5 --retry-delay 5 http://localhost:4000/api/health || echo "Backend not ready"
-
-      - name: Install Cypress
-        run: npm install --save-dev cypress
-
-      - name: Run E2E tests
-        run: npx cypress run --headed --browser chrome --config baseUrl=http://localhost:80
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: docker-compose up -d
+          wait-on: "http://localhost:80, http://localhost:4000/api/health"
+          wait-on-timeout: 60
+          runTests: true
+          env: BASE_URL=http://localhost:80,MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }},ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
 
       - name: Remove GitHub Actions runner IP from MongoDB Atlas
         if: always()
