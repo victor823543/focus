@@ -84,7 +84,7 @@ jobs:
         run: npm install --save-dev cypress
 
       - name: Run E2E tests
-        run: npx cypress run --config baseUrl=http://localhost:80
+        run: npx cypress run --headed --browser chrome --config baseUrl=http://localhost:80
 
       - name: Remove GitHub Actions runner IP from MongoDB Atlas
         if: always()
@@ -99,6 +99,10 @@ jobs:
       - name: Output Backend Logs (on failure)
         if: failure()
         run: docker-compose logs backend
+
+      - name: Output Frontend Logs (on failure)
+        if: failure()
+        run: docker-compose logs frontend
 
   deploy:
     needs:

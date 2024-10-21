@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    baseUrl: "https://localhost:5173",
+    baseUrl: "http://localhost:80",
     chromeWebSecurity: false,
     defaultCommandTimeout: 30000, // 30 seconds
     requestTimeout: 30000, // 30 seconds
