@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "vite --mode development",
+    "start": "vite --mode production",
     "build": "tsc --skipLibCheck && vite build",
     "preview": "vite preview",
     "test": "vitest run",
