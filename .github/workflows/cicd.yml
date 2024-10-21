@@ -48,7 +48,12 @@ jobs:
           --header "Accept: application/json" \
           --header "Content-Type: application/json" \
           --request POST \
-          --data "{\"cidrBlock\": \"${{ env.RUNNER_IP }}/32\", \"comment\": \"GitHub Actions Runner\"}" \
+          --data '[
+            {
+              "ipAddress": "${{ env.RUNNER_IP }}",
+              "comment": "GitHub Actions Runner"
+            }
+          ]' \
           "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.MONGO_PROJECT_ID }}/accessList"
 
       - name: Set up Docker
