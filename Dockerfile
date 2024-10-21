@@ -1,5 +1,5 @@
 # Step 1: Build the app using Node.js
-FROM --platform=linux/amd64 node:lts-alpine AS build
+FROM node:lts-alpine AS build
 
 WORKDIR /app
 
