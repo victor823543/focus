@@ -9,8 +9,3 @@ services:
       MONGO_URI: "mongodb+srv://victor:${MONGO_PASSWORD}@focuscluster0.tr9g7.mongodb.net/testing_db?retryWrites=true&w=majority&appName=FocusCluster0"
       ACCESS_TOKEN_SECRET: "${ACCESS_TOKEN}"
       ACTIVE_DB: "test"
-
-  frontend:
-    image: victor823543/focus-frontend:latest
-    ports:
-      - "80:80"
