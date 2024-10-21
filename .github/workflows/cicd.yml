@@ -38,6 +38,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Get GitHub Actions runner IP
+        run: echo "RUNNER_IP=$(curl -s ifconfig.me)" >> $GITHUB_ENV
+
+      - name: Whitelist GitHub Actions runner IP in MongoDB Atlas
+        run: |
+          curl --user "${{ secrets.MONGODB_PUBLIC_KEY }}:${{ secrets.MONGODB_PRIVATE_KEY }}" \
+          --digest \
+          --header "Accept: application/json" \
+          --header "Content-Type: application/json" \
+          --request POST \
+          --data "{\"cidrBlock\": \"${{ env.RUNNER_IP }}/32\", \"comment\": \"GitHub Actions Runner\"}" \
+          "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.MONGO_PROJECT_ID }}/accessList"
+
       - name: Set up Docker
         run: |
           sudo apt-get update
@@ -53,7 +66,7 @@ jobs:
         run: npx wait-on --timeout 30000 http://localhost:80
 
       - name: Wait for backend to be ready
-        run: npx wait-on --timeout 60000 http://localhost:4000/api/health
+        run: npx wait-on --timeout 30000 http://localhost:4000/api/health
 
       - name: Check running containers
         run: docker ps -a
@@ -67,6 +80,16 @@ jobs:
 
       - name: Run E2E tests
         run: npx cypress run --config baseUrl=http://localhost:80
+
+      - name: Remove GitHub Actions runner IP from MongoDB Atlas
+        if: always()
+        run: |
+          curl --user "${{ secrets.MONGODB_PUBLIC_KEY }}:${{ secrets.MONGODB_PRIVATE_KEY }}" \
+          --digest \
+          --header "Accept: application/json" \
+          --header "Content-Type: application/json" \
+          --request DELETE \
+          "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.MONGO_PROJECT_ID }}/accessList/${{ env.RUNNER_IP }}"
 
       - name: Output Backend Logs (on failure)
         if: failure()
