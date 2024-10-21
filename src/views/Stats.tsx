@@ -51,7 +51,7 @@ const Stats = () => {
               <Header variant="secondary">
                 Start entering your data to view stats
               </Header>
-              <Link style={{ fontSize: "1.2rem" }} to="/calendar?tab=Day">
+              <Link style={{ fontSize: "1.2rem" }} to="/calendar?tab=day">
                 Enter day data
               </Link>
             </Container>

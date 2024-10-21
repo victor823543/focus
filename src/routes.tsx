@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthenticatedRoute } from "./components/layout/AuthenticatedRoute";
-import { ConfiguredRoute } from "./components/layout/ConfiguredRoute";
+import ConfiguredRoute from "./components/layout/ConfiguredRoute";
 import Calendar from "./views/Calendar";
 import Categories from "./views/Categories";
 import Configuration from "./views/Configuration";

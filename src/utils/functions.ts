@@ -65,6 +65,16 @@ export function filterByDateRange(arr: Day[], start: Date, end: Date) {
   return result;
 }
 
+export function resetToMidnight(date: Date): Date {
+  // Create a new Date object to avoid mutating the original date
+  const newDate = new Date(date);
+
+  // Set hours, minutes, seconds, and milliseconds to 0
+  newDate.setHours(0, 0, 0, 0);
+
+  return newDate;
+}
+
 // Functions for numbers
 export const to1Dec = (number: number) => Math.round(number * 10) / 10;
 

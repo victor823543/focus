@@ -25,7 +25,7 @@ const CalendarMain: React.FC<CalendarMainProps> = ({
     "month",
   );
 
-  useEffect(() => addParam, []);
+  useEffect(() => addParam(), []);
 
   return (
     <main className={styles.main}>

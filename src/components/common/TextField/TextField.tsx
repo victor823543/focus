@@ -12,6 +12,7 @@ type TextFieldProps<TFieldValues extends FieldValues> = {
   form: UseFormReturn<TFieldValues>;
   placeholder: string;
   color?: string;
+  dataCy?: string;
 };
 
 const TextField = <TFieldValues extends FieldValues>({
@@ -21,6 +22,7 @@ const TextField = <TFieldValues extends FieldValues>({
   form,
   placeholder,
   color = "var(--text-primary-soft)",
+  dataCy,
 }: TextFieldProps<TFieldValues>) => {
   const [inputFocus, setInputFocus] = useState(false);
 
@@ -62,6 +64,7 @@ const TextField = <TFieldValues extends FieldValues>({
               spellCheck="false"
               autoCorrect="off"
               className={styles.input}
+              data-cy={dataCy}
             />
           </div>
           {error && (

@@ -5,16 +5,22 @@ type SettingsFieldProps = {
   title?: string;
   description?: string;
   children?: React.ReactNode;
+  dataCy?: string;
 };
 
 const SettingsField: React.FC<SettingsFieldProps> = ({
   children,
   title,
   description,
+  dataCy,
 }) => {
   return (
     <div className={styles.field}>
-      {title && <h2 className={styles.h2}>{title}</h2>}
+      {title && (
+        <h2 data-cy={dataCy} className={styles.h2}>
+          {title}
+        </h2>
+      )}
       {description && <p className={styles.p}>{description}</p>}
       {children && (
         <div
