@@ -62,14 +62,16 @@ jobs:
       #   - name: Run E2E tests
       #     run: npx cypress run --headed --browser chrome --config baseUrl=http://localhost:80
 
+      - name: Pass env variables to frontend
+        run: |
+          echo "VITE_API_ADDRESS=${{ secrets.API_ADDRESS }}" >> .env
+          echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           build: npm run build
           start: npm start
-        env:
-          CYPRESS_VITE_API_ADDRESS: ${{ secrets.API_ADDRESS }}
-          CYPRESS_VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
 
       - name: Remove GitHub Actions runner IP from MongoDB Atlas
         if: always()
