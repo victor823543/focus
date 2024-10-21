@@ -65,9 +65,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          build: npm run build -- --env VITE_API_ADDRESS=${{ secrets.API_ADDRESS }},VITE_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          build: npm run build
           start: npm start
-          env: VITE_API_ADDRESS=${{ secrets.API_ADDRESS }},VITE_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+        env:
+          CYPRESS_VITE_API_ADDRESS: ${{ secrets.API_ADDRESS }}
+          CYPRESS_VITE_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
 
       - name: Remove GitHub Actions runner IP from MongoDB Atlas
         if: always()
