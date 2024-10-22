@@ -5,7 +5,7 @@
   inset: 0;
   /* background-color: var(--slate-3x-light); */
   background-color: white;
-  width: 17rem;
+  width: var(--sidebar-width);
   pointer-events: auto;
 }
 
