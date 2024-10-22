@@ -1,6 +1,7 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import alertSlice from "../features/alert/alertSlice";
 import calendarSlice from "../features/calendar/calendarSlice";
 import configurationSlice from "../features/configuration/configurationSlice";
 import daySlice from "../features/day/daySlice";
@@ -14,6 +15,7 @@ const rootReducer = combineSlices(
   calendarSlice,
   daySlice,
   configurationSlice,
+  alertSlice,
 );
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
