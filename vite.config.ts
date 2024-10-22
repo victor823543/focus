@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
+      host: "0.0.0.0",
       ...(isProduction
         ? { open: true } // Open browser on server start in production
         : {

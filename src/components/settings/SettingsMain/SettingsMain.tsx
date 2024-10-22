@@ -22,7 +22,7 @@ const SettingsMain: React.FC<SettingsMainProps> = ({
     "account",
   );
 
-  useEffect(() => addParam, []);
+  useEffect(() => addParam(), []);
 
   return (
     <main className={styles.main}>

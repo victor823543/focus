@@ -1,0 +1,25 @@
+{
+  "categories": [
+    {
+      "name": "Work",
+      "color": { "name": "Gray", "hex": "#9ca3af" },
+      "importance": 1
+    },
+    {
+      "name": "Study",
+      "color": { "name": "Green", "hex": "#4ade80" },
+      "importance": 1.5
+    },
+    {
+      "name": "Sleep",
+      "color": { "name": "Teal", "hex": "#2dd4bf" },
+      "importance": 2
+    }
+  ],
+  "title": "Test Session",
+  "user": {
+    "email": "testuser@example.com",
+    "username": "testuser",
+    "password": "Password123"
+  }
+}

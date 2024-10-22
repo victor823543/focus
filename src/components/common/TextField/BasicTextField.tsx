@@ -12,6 +12,7 @@ type BasicTextFieldProps<TFieldValues extends FieldValues> = {
   className?: string;
   placeholder?: string;
   onChangeCallback?: () => void;
+  dataCy?: string;
 };
 
 const BasicTextField = <TFieldValues extends FieldValues>({
@@ -23,6 +24,7 @@ const BasicTextField = <TFieldValues extends FieldValues>({
   className = "",
   placeholder = "",
   onChangeCallback,
+  dataCy,
 }: BasicTextFieldProps<TFieldValues>) => {
   const [inputFocus, setInputFocus] = useState(false);
 
@@ -57,6 +59,7 @@ const BasicTextField = <TFieldValues extends FieldValues>({
             spellCheck="false"
             autoCorrect="off"
             className={`${styles.input} ${className}`}
+            data-cy={dataCy}
           />
           {error && (
             <div className={styles.error}>
