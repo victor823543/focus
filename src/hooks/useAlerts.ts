@@ -1,5 +1,12 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { AppDispatch } from "../app/store";
+import {
+  clearGlobalAlerts,
+  pushGlobalAlert,
+  removeGlobalAlert,
+} from "../features/alert/alertSlice";
 
 export type Alert = {
   id: string;
@@ -8,6 +15,7 @@ export type Alert = {
   link?: AlertLink;
   closeable: boolean;
   duration?: number;
+  global: boolean;
 };
 
 export type AlertLink = {
@@ -24,6 +32,7 @@ export enum AlertType {
 
 export const useAlerts = (defaultAlert?: Alert) => {
   const { state } = useLocation();
+  const dispatch: AppDispatch = useDispatch();
 
   const defaults: Array<Alert> = defaultAlert ? [defaultAlert] : [];
 
@@ -35,18 +44,23 @@ export const useAlerts = (defaultAlert?: Alert) => {
   const [alerts, setAlerts] = useState<Array<Alert>>(defaults);
 
   const pushAlert = (item: Alert) => {
-    setAlerts((prev) => [...prev, item]);
+    if (item.global) {
+      dispatch(pushGlobalAlert(convertToSerializable(item)));
+    } else {
+      setAlerts((prev) => [...prev, item]);
+    }
   };
 
   const removeAlert = (item: Alert) => {
-    setAlerts((prev) => prev.filter((warn) => warn !== item));
+    if (item.global) {
+      dispatch(removeGlobalAlert(convertToSerializable(item)));
+    } else {
+      setAlerts((prev) => prev.filter((alert) => alert !== item));
+    }
   };
 
-  const clearAlerts = (type?: AlertType) => {
-    if (type !== undefined) {
-      return setAlerts((prev) => prev.filter((warn) => warn.type !== type));
-    }
-
+  const clearAlerts = () => {
+    dispatch(clearGlobalAlerts());
     setAlerts([]);
   };
 
@@ -65,6 +79,7 @@ class AlertBase {
   link?: AlertLink;
   closeable: boolean;
   duration?: number;
+  global: boolean;
 
   constructor(
     type: AlertType,
@@ -72,6 +87,7 @@ class AlertBase {
     link?: AlertLink,
     closeable: boolean = true,
     duration?: number,
+    global: boolean = false,
   ) {
     this.id = crypto.randomUUID();
     this.type = type;
@@ -79,6 +95,7 @@ class AlertBase {
     this.link = link;
     this.closeable = closeable;
     this.duration = duration;
+    this.global = global;
   }
 }
 
@@ -86,31 +103,45 @@ type OptionalAlertOptions = {
   link?: AlertLink;
   closeable?: boolean;
   duration?: number;
+  global?: boolean;
 };
 
 export class WarningAlert extends AlertBase {
   constructor(
     message: string,
-    { link, closeable, duration }: OptionalAlertOptions = {},
+    { link, closeable, duration, global }: OptionalAlertOptions = {},
   ) {
-    super(AlertType.Warning, message, link, closeable, duration);
+    super(AlertType.Warning, message, link, closeable, duration, global);
   }
 }
 
 export class ErrorAlert extends AlertBase {
   constructor(
     message: string,
-    { link, closeable, duration }: OptionalAlertOptions = {},
+    { link, closeable, duration, global }: OptionalAlertOptions = {},
   ) {
-    super(AlertType.Error, message, link, closeable, duration);
+    super(AlertType.Error, message, link, closeable, duration, global);
   }
 }
 
 export class SuccessAlert extends AlertBase {
   constructor(
     message: string,
-    { link, closeable, duration }: OptionalAlertOptions = {},
+    { link, closeable, duration, global }: OptionalAlertOptions = {},
   ) {
-    super(AlertType.Success, message, link, closeable, duration);
+    super(AlertType.Success, message, link, closeable, duration, global);
   }
 }
+
+const convertToSerializable = (alert: Alert): Alert => {
+  const serializableAlert = {
+    ...alert,
+    id: alert.id,
+    type: alert.type,
+    message: alert.message,
+    link: alert.link ? { ...alert.link } : undefined,
+    closeable: alert.closeable,
+    global: alert.global,
+  };
+  return serializableAlert;
+};

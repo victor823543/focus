@@ -97,7 +97,10 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ pushAlert }) => {
     onSuccess: (response) => {
       setToken(response.token);
       pushAlert(
-        new SuccessAlert("Account updated successfully", { duration: 4 }),
+        new SuccessAlert("Account updated successfully", {
+          duration: 4,
+          global: true,
+        }),
       );
       console.log("Account updated successfully");
     },

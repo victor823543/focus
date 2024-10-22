@@ -4,8 +4,11 @@ import {
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/solid";
 import classNames from "classnames";
-import { SVGProps, useEffect } from "react";
+import { SVGProps, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "../../../app/store";
+import { selectGlobalAlerts } from "../../../features/alert/alertSlice";
 import { Alert, AlertLink, AlertType } from "../../../hooks/useAlerts";
 import styles from "./Alerts.module.css";
 
@@ -98,6 +101,11 @@ const Alerts: React.FC<AlertsProps> = ({
   onClose,
   onDurationEnd,
 }) => {
+  const globalAlerts = useSelector((state: RootState) =>
+    selectGlobalAlerts(state),
+  );
+
+  const alerts = useMemo(() => list.concat(globalAlerts), [list, globalAlerts]);
   return (
     <div
       className={classNames(
@@ -107,7 +115,7 @@ const Alerts: React.FC<AlertsProps> = ({
       )}
     >
       <div className={styles.alertList}>
-        {list
+        {alerts
           .filter((item) => item.type === AlertType.Error)
           .map((item) => (
             <ErrorAlert
@@ -120,7 +128,7 @@ const Alerts: React.FC<AlertsProps> = ({
               onDurationEnd={() => onDurationEnd?.(item)}
             />
           ))}
-        {list
+        {alerts
           .filter((item) => item.type === AlertType.Warning)
           .map((item) => (
             <WarningAlert
@@ -133,7 +141,7 @@ const Alerts: React.FC<AlertsProps> = ({
               onDurationEnd={() => onDurationEnd?.(item)}
             />
           ))}
-        {list
+        {alerts
           .filter((item) => item.type === AlertType.Success)
           .map((item) => (
             <SuccessAlert
