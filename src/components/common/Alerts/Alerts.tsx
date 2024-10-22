@@ -13,22 +13,25 @@ type AlertProps = {
   message: string;
   link?: AlertLink;
   closeable: boolean;
+  duration?: number;
   onClose?: () => void;
   onDurationEnd?: () => void;
 };
 
 type AlertStylingProps = {
   variant: AlertType;
-  duration?: number;
   Icon: React.FC<SVGProps<SVGElement>>;
 };
 
-const createAlertComponent = ({
-  variant,
-  duration,
-  Icon,
-}: AlertStylingProps) => {
-  return ({ message, link, closeable, onClose, onDurationEnd }: AlertProps) => {
+const createAlertComponent = ({ variant, Icon }: AlertStylingProps) => {
+  return ({
+    message,
+    link,
+    closeable,
+    duration,
+    onClose,
+    onDurationEnd,
+  }: AlertProps) => {
     useEffect(() => {
       if (duration) {
         const timer = setTimeout(() => {
@@ -79,7 +82,6 @@ const ErrorAlert = createAlertComponent({
 
 const SuccessAlert = createAlertComponent({
   variant: AlertType.Success,
-  duration: 5,
   Icon: CheckCircleIcon as React.FC<SVGProps<SVGElement>>,
 });
 
@@ -113,6 +115,7 @@ const Alerts: React.FC<AlertsProps> = ({
               message={item.message}
               link={item.link}
               closeable={item.closeable}
+              duration={item.duration}
               onClose={() => onClose?.(item)}
               onDurationEnd={() => onDurationEnd?.(item)}
             />
@@ -125,7 +128,9 @@ const Alerts: React.FC<AlertsProps> = ({
               message={item.message}
               link={item.link}
               closeable={item.closeable}
+              duration={item.duration}
               onClose={() => onClose?.(item)}
+              onDurationEnd={() => onDurationEnd?.(item)}
             />
           ))}
         {list
@@ -136,6 +141,7 @@ const Alerts: React.FC<AlertsProps> = ({
               message={item.message}
               link={item.link}
               closeable={item.closeable}
+              duration={item.duration}
               onClose={() => onClose?.(item)}
               onDurationEnd={() => onDurationEnd?.(item)}
             />

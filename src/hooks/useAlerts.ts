@@ -7,6 +7,7 @@ export type Alert = {
   message: string;
   link?: AlertLink;
   closeable: boolean;
+  duration?: number;
 };
 
 export type AlertLink = {
@@ -63,40 +64,53 @@ class AlertBase {
   message: string;
   link?: AlertLink;
   closeable: boolean;
+  duration?: number;
 
   constructor(
     type: AlertType,
     message: string,
     link?: AlertLink,
     closeable: boolean = true,
+    duration?: number,
   ) {
     this.id = crypto.randomUUID();
     this.type = type;
     this.message = message;
     this.link = link;
     this.closeable = closeable;
+    this.duration = duration;
   }
 }
 
 type OptionalAlertOptions = {
   link?: AlertLink;
   closeable?: boolean;
+  duration?: number;
 };
 
 export class WarningAlert extends AlertBase {
-  constructor(message: string, { link, closeable }: OptionalAlertOptions = {}) {
-    super(AlertType.Warning, message, link, closeable);
+  constructor(
+    message: string,
+    { link, closeable, duration }: OptionalAlertOptions = {},
+  ) {
+    super(AlertType.Warning, message, link, closeable, duration);
   }
 }
 
 export class ErrorAlert extends AlertBase {
-  constructor(message: string, { link, closeable }: OptionalAlertOptions = {}) {
-    super(AlertType.Error, message, link, closeable);
+  constructor(
+    message: string,
+    { link, closeable, duration }: OptionalAlertOptions = {},
+  ) {
+    super(AlertType.Error, message, link, closeable, duration);
   }
 }
 
 export class SuccessAlert extends AlertBase {
-  constructor(message: string, { link, closeable }: OptionalAlertOptions = {}) {
-    super(AlertType.Success, message, link, closeable);
+  constructor(
+    message: string,
+    { link, closeable, duration }: OptionalAlertOptions = {},
+  ) {
+    super(AlertType.Success, message, link, closeable, duration);
   }
 }

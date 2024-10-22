@@ -57,8 +57,10 @@ const Login = () => {
           pushAlert(new ErrorAlert(err.message));
         } else {
           pushAlert(new ErrorAlert("An error occurred. Please try again."));
+          console.log(err);
         }
       } else {
+        pushAlert(new ErrorAlert("An error occurred. Please try again."));
         console.log(err);
       }
     },
