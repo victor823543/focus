@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { clearSessionState } from "../../../features/session/sessionSlice";
+import { Alert, SuccessAlert } from "../../../hooks/useAlerts";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { Session, UpdateSessionResponse } from "../../../types/Session";
 import { callAPI } from "../../../utils/apiService";
@@ -33,7 +34,11 @@ const configureSessionSchema = yup.object().shape({
 
 export type ConfigureFormFields = yup.InferType<typeof configureSessionSchema>;
 
-const SessionSettings = () => {
+type SessionSettingsProps = {
+  pushAlert: (item: Alert) => void;
+};
+
+const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
   const { selectSession, currentSession, sessions } = useSelectSession();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -75,6 +80,7 @@ const SessionSettings = () => {
       ),
     onSuccess: (response) => {
       selectSession(response);
+      pushAlert(new SuccessAlert("Session updated", { duration: 4 }));
     },
   });
 

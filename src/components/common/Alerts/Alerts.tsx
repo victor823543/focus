@@ -38,7 +38,7 @@ const createAlertComponent = ({ variant, Icon }: AlertStylingProps) => {
           if (onDurationEnd !== undefined) {
             onDurationEnd();
           }
-        }, duration);
+        }, duration * 1000);
         return () => clearTimeout(timer);
       }
     }, [duration]);

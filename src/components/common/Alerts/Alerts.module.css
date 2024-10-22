@@ -135,6 +135,6 @@
   .hasSidebar {
     top: 1rem;
     padding-left: var(--sidebar-width);
-    max-width: 48rem;
+    max-width: 40rem;
   }
 }

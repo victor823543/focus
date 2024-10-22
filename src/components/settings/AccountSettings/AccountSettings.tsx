@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { Alert, ErrorAlert, SuccessAlert } from "../../../hooks/useAlerts";
 import useLogout from "../../../hooks/useLogout";
 import { useAuth } from "../../../provider/authProvider";
 import { callAPI } from "../../../utils/apiService";
@@ -45,7 +46,11 @@ const updateAccountSchema = yup.object().shape({
 
 export type UpdateAccountFormFields = yup.InferType<typeof updateAccountSchema>;
 
-const AccountSettings = () => {
+type AccountSettingsProps = {
+  pushAlert: (item: Alert) => void;
+};
+
+const AccountSettings: React.FC<AccountSettingsProps> = ({ pushAlert }) => {
   const { user, setToken } = useAuth();
   const [disableUpdate, setDisableUpdate] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -91,6 +96,14 @@ const AccountSettings = () => {
       }),
     onSuccess: (response) => {
       setToken(response.token);
+      pushAlert(
+        new SuccessAlert("Account updated successfully", { duration: 4 }),
+      );
+      console.log("Account updated successfully");
+    },
+    onError: (err: Error) => {
+      pushAlert(new ErrorAlert("An error occurred. Please try again."));
+      console.log(err.message);
     },
   });
 

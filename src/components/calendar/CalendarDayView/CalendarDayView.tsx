@@ -8,11 +8,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { CSSProperties, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { SuccessAlert, useAlerts } from "../../../hooks/useAlerts";
 import { useCalendar } from "../../../hooks/useCalendar";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { DayStatus, ListDaysReturn, UpdateDayParams } from "../../../types/Day";
 import { callAPI } from "../../../utils/apiService";
 import { to1Dec } from "../../../utils/functions";
+import Alerts from "../../common/Alerts/Alerts";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { StaticCircularProgress } from "../../common/CircularProgress/CircularProgress";
 import { Header } from "../../common/Headers/Headers";
@@ -39,6 +41,7 @@ const createDaySchema = yup.object().shape({
 export type CreateDayFormFields = yup.InferType<typeof createDaySchema>;
 
 const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
+  const { alerts, pushAlert, removeAlert } = useAlerts();
   const queryClient = useQueryClient();
   const { currentDate, goToNextDay, goToPrevDay, getDateStatus } =
     useCalendar();
@@ -118,6 +121,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       queryClient.invalidateQueries({
         queryKey: ["session", currentSession?.id],
       });
+      pushAlert(new SuccessAlert("Day created successfully", { duration: 4 }));
     },
     onError: (err) => console.log(err.message),
   });
@@ -133,6 +137,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       queryClient.invalidateQueries({
         queryKey: ["session", currentSession?.id],
       });
+      pushAlert(new SuccessAlert("Day updated successfully", { duration: 4 }));
     },
   });
 
@@ -288,6 +293,11 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
           )}
         </main>
       </div>
+      <Alerts
+        list={alerts}
+        onClose={(item) => removeAlert(item)}
+        onDurationEnd={(item) => removeAlert(item)}
+      />
     </form>
   );
 };
