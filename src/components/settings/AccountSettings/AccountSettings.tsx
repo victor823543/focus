@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { Alert, ErrorAlert, SuccessAlert } from "../../../hooks/useAlerts";
 import useLogout from "../../../hooks/useLogout";
 import { useAuth } from "../../../provider/authProvider";
 import { callAPI } from "../../../utils/apiService";
@@ -45,7 +46,11 @@ const updateAccountSchema = yup.object().shape({
 
 export type UpdateAccountFormFields = yup.InferType<typeof updateAccountSchema>;
 
-const AccountSettings = () => {
+type AccountSettingsProps = {
+  pushAlert: (item: Alert) => void;
+};
+
+const AccountSettings: React.FC<AccountSettingsProps> = ({ pushAlert }) => {
   const { user, setToken } = useAuth();
   const [disableUpdate, setDisableUpdate] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -91,6 +96,17 @@ const AccountSettings = () => {
       }),
     onSuccess: (response) => {
       setToken(response.token);
+      pushAlert(
+        new SuccessAlert("Account updated successfully", {
+          duration: 4,
+          global: true,
+        }),
+      );
+      console.log("Account updated successfully");
+    },
+    onError: (err: Error) => {
+      pushAlert(new ErrorAlert("An error occurred. Please try again."));
+      console.log(err.message);
     },
   });
 
@@ -114,9 +130,12 @@ const AccountSettings = () => {
         <SettingsField
           title="Account"
           description="Here you can manage you account"
+          dataCy="account-settings-title"
         />
         <SettingsField title="Email" description="You cannot change your email">
-          <p className={styles.label}>Email: {user?.email}</p>
+          <p data-cy="email" className={styles.label}>
+            Email: {user?.email}
+          </p>
         </SettingsField>
         <SettingsField title="Username" description="Update your username">
           <label className={styles.label} htmlFor="username">
@@ -128,6 +147,7 @@ const AccountSettings = () => {
             placeholder="Username"
             form={form}
             className={styles.input}
+            dataCy="username"
           />
         </SettingsField>
         <SettingsField title="Password" description="Update your password">
@@ -145,6 +165,7 @@ const AccountSettings = () => {
                 placeholder="********"
                 className={styles.passwordInput}
                 onChangeCallback={() => form.trigger("rePassword")}
+                dataCy="password"
               />
             </div>
             <div>
@@ -159,6 +180,7 @@ const AccountSettings = () => {
                 autoComplete="new-password"
                 placeholder="********"
                 className={styles.passwordInput}
+                dataCy="rePassword"
               />
             </div>
           </div>
@@ -169,6 +191,7 @@ const AccountSettings = () => {
               type="submit"
               disabled={disableUpdate}
               variant="primary"
+              data-cy="submit"
             >
               Save Changes
             </CustomizableButton>
@@ -183,6 +206,7 @@ const AccountSettings = () => {
               onClick={() => setShowDeleteModal(true)}
               type="button"
               variant="warning"
+              data-cy="delete-account"
             >
               Delete Account
             </CustomizableButton>
@@ -197,8 +221,9 @@ const AccountSettings = () => {
               <Header
                 variant="secondary"
                 style={{ color: "var(--gray-x-dark)" }}
+                data-cy="warning-modal-header"
               >
-                Delete your Account?
+                Are you sure?
               </Header>
               <Paragraph>
                 Deleting your account is irreversible and you will lose all your
@@ -208,6 +233,7 @@ const AccountSettings = () => {
                 <CustomizableButton
                   type="button"
                   onClick={() => setShowDeleteModal(false)}
+                  data-cy="cancel-delete"
                 >
                   Cancel
                 </CustomizableButton>
@@ -215,6 +241,7 @@ const AccountSettings = () => {
                   onClick={() => deleteMutation.mutate()}
                   type="button"
                   variant="strong-warning"
+                  data-cy="confirm-delete"
                 >
                   Delete
                 </CustomizableButton>

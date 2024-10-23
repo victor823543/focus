@@ -85,7 +85,7 @@
 
 .warning {
   background-color: var(--red-x-light);
-  color: var(--red-dark);
+  color: var(--red-x-dark);
   border: none;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .strong-warning {
-  background-color: var(--red-dark);
+  background-color: var(--red-x-dark);
   color: white;
   border: none;
 }

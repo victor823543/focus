@@ -22,15 +22,15 @@ if (container) {
 
   root.render(
     <React.StrictMode>
-      <AuthProvider>
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
               <Routes />
-            </QueryClientProvider>
-          </Provider>
-        </GoogleOAuthProvider>
-      </AuthProvider>
+            </AuthProvider>
+          </QueryClientProvider>
+        </Provider>
+      </GoogleOAuthProvider>
     </React.StrictMode>,
   );
 } else {

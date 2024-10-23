@@ -1,7 +1,10 @@
+import { Category } from "./Category";
+
 export type Day = {
   id: string;
   session: string;
   date: string;
+  categories: Array<Category>;
   score: Array<CategoryScore>;
   totalScore: number;
   maxScore: number;

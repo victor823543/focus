@@ -1,10 +1,9 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import React, { CSSProperties } from "react";
+import { useNavigate } from "react-router-dom";
 import { useHandleSearchParam } from "../../../hooks/useHandleSearchParam";
 import { Category } from "../../../types/Category";
 import { formatUnixDate } from "../../../utils/formatUnixDate";
-import { Container } from "../../common/Containers/Containers";
-import { Header } from "../../common/Headers/Headers";
 import { Paragraph } from "../../common/Paragraphs/Paragraphs";
 import styles from "./UserCategories.module.css";
 
@@ -14,11 +13,10 @@ type UserCategoriesProps = {
 
 const UserCategories: React.FC<UserCategoriesProps> = ({ categories }) => {
   const { addParam } = useHandleSearchParam("create");
+  const navigate = useNavigate();
   return (
-    <Container gap="xl">
-      <Header as="h2" variant="secondary" style={{ marginBottom: ".5rem" }}>
-        Your Categories
-      </Header>
+    <div>
+      <h1 className={styles.h1}>Your Categories</h1>
       <div className={styles.wrapper}>
         <div
           className={`${styles.categoryDisplay} ${styles.addNew}`}
@@ -33,7 +31,8 @@ const UserCategories: React.FC<UserCategoriesProps> = ({ categories }) => {
           <div
             key={category.id}
             className={styles.categoryDisplay}
-            style={{ "--hex": category.color.hex } as CSSProperties}
+            style={{ "--hex": category.color.main } as CSSProperties}
+            onClick={() => navigate(`/categories/${category.id}`)}
           >
             <Paragraph variant="bold">{category.name}</Paragraph>
             <Paragraph variant="secondary">
@@ -46,7 +45,7 @@ const UserCategories: React.FC<UserCategoriesProps> = ({ categories }) => {
           </div>
         ))}
       </div>
-    </Container>
+    </div>
   );
 };
 

@@ -42,6 +42,7 @@ const ConfigurationLayout: React.FC<ConfigurationLayoutProps> = ({
                 onClick={prevStep}
                 type="button"
                 variant="opaque"
+                data-cy="back-button"
               >
                 Back
               </CustomizableButton>
@@ -52,6 +53,7 @@ const ConfigurationLayout: React.FC<ConfigurationLayoutProps> = ({
                 disabled={!validatedSteps[step]}
                 onClick={nextStep}
                 variant="primary"
+                data-cy="next-button"
               >
                 Next
               </CustomizableButton>
@@ -61,6 +63,7 @@ const ConfigurationLayout: React.FC<ConfigurationLayoutProps> = ({
                 disabled={!validatedSteps[step]}
                 variant="primary"
                 type={"submit"}
+                data-cy="create-button"
               >
                 Create
               </CustomizableButton>

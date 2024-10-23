@@ -23,7 +23,7 @@ const InfoPopupContent: React.FC<InfoPopupContentProps> = ({ info }) => {
               variant="missing"
               title="Missing data"
               text="Enter result"
-              href="calendar?tab=Day"
+              href="calendar?tab=day"
               icon={<ExclamationCircleIcon />}
             />
           </>
@@ -35,7 +35,7 @@ const InfoPopupContent: React.FC<InfoPopupContentProps> = ({ info }) => {
               variant="waiting"
               title="Waiting for today's data"
               text="Enter result"
-              href="calendar?tab=Day"
+              href="calendar?tab=day"
               icon={<PencilSquareIcon />}
             />
           </>

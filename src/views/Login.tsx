@@ -3,10 +3,13 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import Alerts from "../components/common/Alerts/Alerts";
 import LoginForm from "../components/signup/LoginForm/LoginForm";
 import SignupLayout from "../components/signup/SignupLayout/SignupLayout";
+import { ErrorAlert, useAlerts } from "../hooks/useAlerts";
 import { useAuth } from "../provider/authProvider";
-import { callAPI } from "../utils/apiService";
+import { ErrorCode } from "../types/StatusCode";
+import { callAPI, ControlledError } from "../utils/apiService";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email().required("Email cannot be empty."),
@@ -20,8 +23,9 @@ type LoginResponse = {
 };
 
 const Login = () => {
-  const { setToken } = useAuth();
+  const { setToken, reloadUserStatus, userStatus } = useAuth();
   const navigate = useNavigate();
+  const { alerts, pushAlert, removeAlert } = useAlerts();
 
   const form = useForm<LoginFormFields>({
     mode: "onChange",
@@ -40,12 +44,27 @@ const Login = () => {
         email,
         password,
       }),
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       setToken(response.token);
-      navigate("/dashboard");
+      const newUserStatus = await reloadUserStatus();
+      if (newUserStatus === "Configured") navigate("/dashboard");
+      else navigate("/configuration");
     },
     onError: (err: Error) => {
-      console.log(err);
+      if (err instanceof ControlledError) {
+        if (
+          err.status === ErrorCode.NO_RESULT ||
+          err.status === ErrorCode.BAD_REQUEST
+        ) {
+          pushAlert(new ErrorAlert(err.message));
+        } else {
+          pushAlert(new ErrorAlert("An error occurred. Please try again."));
+          console.log(err);
+        }
+      } else {
+        pushAlert(new ErrorAlert("An error occurred. Please try again."));
+        console.log(err);
+      }
     },
   });
 
@@ -56,6 +75,12 @@ const Login = () => {
   return (
     <SignupLayout>
       <LoginForm form={form} handleSubmit={handleSubmit} />
+      <Alerts
+        list={alerts}
+        onClose={(item) => removeAlert(item)}
+        onDurationEnd={(item) => removeAlert(item)}
+        hasSidebar={false}
+      />
     </SignupLayout>
   );
 };

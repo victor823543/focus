@@ -1,12 +1,98 @@
-name: Deploy React frontend
+name: React Frontend CI/CD
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+      - development
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Get GitHub Actions runner IP
+        run: echo "RUNNER_IP=$(curl -s ifconfig.me)" >> $GITHUB_ENV
+
+      - name: Whitelist GitHub Actions runner IP in MongoDB Atlas
+        run: |
+          curl --user "${{ secrets.MONGODB_PUBLIC_KEY }}:${{ secrets.MONGODB_PRIVATE_KEY }}" \
+          --digest \
+          --header "Accept: application/json" \
+          --header "Content-Type: application/json" \
+          --request POST \
+          --data '[
+            {
+              "ipAddress": "${{ env.RUNNER_IP }}",
+              "comment": "GitHub Actions Runner"
+            }
+          ]' \
+          "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.MONGO_PROJECT_ID }}/accessList"
+
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Set up Docker Compose
+        run: docker-compose up -d
+        env:
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Wait for backend to be ready
+        run: npx wait-on --timeout 30000 http://localhost:4000/api/health
+
+      - name: Check running containers
+        run: docker ps -a
+
+      - name: Check backend health
+        run: |
+          curl --retry 5 --retry-delay 5 http://localhost:4000/api/health || echo "Backend not ready"
+
+      #   - name: Install Cypress
+      #     run: npm install --save-dev cypress
+
+      #   - name: Run E2E tests
+      #     run: npx cypress run --headed --browser chrome --config baseUrl=http://localhost:80
+
+      - name: Pass env variables to frontend
+        run: |
+          echo "VITE_API_ADDRESS=http://localhost:4000/api" >> .env
+          echo "VITE_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm start
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Remove GitHub Actions runner IP from MongoDB Atlas
+        if: always()
+        run: |
+          curl --user "${{ secrets.MONGODB_PUBLIC_KEY }}:${{ secrets.MONGODB_PRIVATE_KEY }}" \
+          --digest \
+          --header "Accept: application/json" \
+          --header "Content-Type: application/json" \
+          --request DELETE \
+          "https://cloud.mongodb.com/api/atlas/v1.0/groups/${{ secrets.MONGO_PROJECT_ID }}/accessList/${{ env.RUNNER_IP }}"
+
+      - name: Output Backend Logs (on failure)
+        if: failure()
+        run: docker-compose logs backend
+
   build:
+    needs: test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
@@ -19,7 +105,10 @@ jobs:
         run: docker push victor823543/focus-frontend:latest
 
   deploy:
-    needs: build
+    needs:
+      - build
+      - test
+    if: github.ref == 'refs/heads/main'
     runs-on: self-hosted
     steps:
       - name: Pull image from Docker Hub

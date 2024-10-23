@@ -30,13 +30,21 @@ const ColorPicker = <TFieldValues extends FieldValues>({
       control={form.control}
       name={name}
       render={({
-        field: { value = { name: "Gray", hex: "#9ca3af" }, onChange },
+        field: {
+          value = {
+            name: "Gray",
+            main: "#9ca3af",
+            light: "#e5e7eb",
+            dark: "#374151",
+          },
+          onChange,
+        },
       }) => (
         <div className={styles.colorPicker}>
           {data.map((color) => (
             <div
               key={color.name}
-              style={{ "--hex": color.hex } as CSSProperties}
+              style={{ "--hex": color.main } as CSSProperties}
               className={`${styles.colorItem} ${value.name === color.name ? styles.selected : ""}`}
               onClick={() => {
                 onChange(color), callback ? callback(color) : undefined;
@@ -73,7 +81,7 @@ export const ColorPickerNoForm: React.FC<ColorPickerNoFormProps> = ({
       {data.map((color) => (
         <div
           key={color.name}
-          style={{ "--hex": color.hex } as CSSProperties}
+          style={{ "--hex": color.main } as CSSProperties}
           className={`${styles.colorItem} ${selected === color.name ? styles.selected : ""}`}
           onClick={() => {
             callback(color);

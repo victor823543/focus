@@ -37,7 +37,7 @@ function convertDataToChart(
           scoreType === "normal"
             ? categoryScore.score
             : to1Dec(categoryScore.calculatedScore);
-        dayObj[category.name + "Color"] = category.color.hex;
+        dayObj[category.name + "Color"] = category.color.main;
       }
     });
     return dayObj;
@@ -111,7 +111,8 @@ const WeekDataBar: React.FC<WeekDataBarProps> = ({ data, categories }) => {
 
 function setColor(id: string | number, categories: Category[]) {
   const color =
-    categories.find((category) => id === category.name)?.color.hex || "#676767";
+    categories.find((category) => id === category.name)?.color.main ||
+    "#676767";
   return `hsl(from ${color} h s calc(l + 10))`;
 }
 
