@@ -5,14 +5,18 @@ import UserCategories from "../components/categories/UserCategories/UserCategori
 import Loading from "../components/common/Loading/Loading";
 import Layout from "../components/layout/Layout/Layout";
 import { useHandleSearchParam } from "../hooks/useHandleSearchParam";
+import useSelectSession from "../hooks/useSelectSession";
 import { Category } from "../types/Category";
 import { callAPI } from "../utils/apiService";
 
 const Categories = () => {
   const { hasParam } = useHandleSearchParam("create");
+  const { currentSession } = useSelectSession();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => callAPI<Array<Category>>("/categories", "GET"),
+    queryKey: ["categories", currentSession?.id],
+    enabled: !!currentSession,
+    queryFn: () =>
+      callAPI<Array<Category>>(`/categories/list/${currentSession?.id}`, "GET"),
   });
 
   if (error !== null) return <span>Something went wrong</span>;

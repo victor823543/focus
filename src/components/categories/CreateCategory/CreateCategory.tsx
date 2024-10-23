@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useHandleSearchParam } from "../../../hooks/useHandleSearchParam";
+import useSelectSession from "../../../hooks/useSelectSession";
 import { callAPI } from "../../../utils/apiService";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { Container } from "../../common/Containers/Containers";
@@ -19,6 +21,7 @@ const createCategorySchema = yup.object().shape({
     .max(10, "Maximum 10 characters")
     .required("You must name your category."),
   importance: yup.number().required().default(1),
+  session: yup.string().required(),
   color: yup
     .object({
       name: yup.string().required(),
@@ -35,6 +38,7 @@ export type CategoryFormFields = yup.InferType<typeof createCategorySchema>;
 
 const CreateCategory = () => {
   const { removeParam } = useHandleSearchParam("create");
+  const { currentSession } = useSelectSession();
 
   const queryClient = useQueryClient();
 
@@ -43,13 +47,31 @@ const CreateCategory = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(createCategorySchema),
+    defaultValues: {
+      name: "",
+      importance: 1,
+      session: currentSession ? currentSession.id : "", // Set session initially if available
+      color: { name: "Gray", hex: "#9ca3af" }, // Default color value
+    },
   });
+
+  // Reset the form when currentSession changes
+  useEffect(() => {
+    if (currentSession) {
+      form.reset({
+        ...form.getValues(), // Keep existing values for other fields
+        session: currentSession.id, // Update session field
+      });
+    }
+  }, [currentSession, form]);
 
   const createMutation = useMutation({
     mutationFn: (params: CategoryFormFields) =>
       callAPI("/categories/create", "POST", params),
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({
+        queryKey: ["categories", currentSession?.id],
+      });
       removeParam();
     },
   });

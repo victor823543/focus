@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CSSProperties, useMemo, useState } from "react";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { useHandleSearchParam } from "../../../hooks/useHandleSearchParam";
+import useSelectSession from "../../../hooks/useSelectSession";
 import { Category } from "../../../types/Category";
 import { callAPI } from "../../../utils/apiService";
 import { formatUnixDate } from "../../../utils/formatUnixDate";
@@ -25,9 +26,11 @@ const CategorySelection = ({
   form,
 }: CategorySelectionProps<ConfigureFormFields>) => {
   const { hasParam, addParam, removeParam } = useHandleSearchParam("selecting");
+  const { currentSession } = useSelectSession();
   const { data, isLoading, error } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => callAPI<Array<Category>>("/categories", "GET"),
+    queryKey: ["categories", currentSession?.id],
+    queryFn: () =>
+      callAPI<Array<Category>>(`/categories/list/${currentSession?.id}`, "GET"),
   });
 
   const handleFinishedSelecting = (ids: string[]) => {
