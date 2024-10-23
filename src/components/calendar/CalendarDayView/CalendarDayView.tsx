@@ -52,6 +52,10 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
     () => days[currentDate.toISOString()],
     [days, currentDate],
   );
+  const dayCategories = useMemo(
+    () => (thisDay ? thisDay.categories : currentSession?.categories || []),
+    [thisDay, currentSession],
+  );
   const maxScore = useMemo(
     () =>
       thisDay ? thisDay.maxScore : currentSession ? currentSession.maxScore : 0,
@@ -100,13 +104,11 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
               score: category.score,
               importance: category.importance,
             }))
-          : currentSession
-            ? currentSession.categories.map((category) => ({
-                category: category.name,
-                score: 0,
-                importance: category.importance,
-              }))
-            : [],
+          : dayCategories.map((category) => ({
+              category: category.name,
+              score: 0,
+              importance: category.importance,
+            })),
     },
   });
 
@@ -236,7 +238,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
           {/* Display form if date is in session */}
           {![DayStatus.After, DayStatus.Before].includes(dateStatus) && (
             <div className={styles.grid}>
-              {currentSession.categories.map((category, index) => {
+              {dayCategories.map((category, index) => {
                 const startValue =
                   currentDateString in days
                     ? thisDay.score.find(
