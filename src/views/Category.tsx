@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import CategoryHeaderSection from "../components/categories/CategoryHeaderSection/CategoryHeaderSection";
 import CategoryLayout from "../components/categories/CategoryLayout/CategoryLayout";
+import CategoryStatsContent from "../components/categories/CategoryStatsContent/CategoryStatsContent";
+import CategoryStatsSection from "../components/categories/CategoryStatsSection/CategoryStatsSection";
 import { BreadcrumbItem } from "../components/common/Breadcrumbs/Breadcrumbs";
 import Loading from "../components/common/Loading/Loading";
 import Layout from "../components/layout/Layout/Layout";
-import { Category as CategoryT } from "../types/Category";
+import { GetCategoryResponse } from "../types/Category";
 import { callAPI } from "../utils/apiService";
 
 const Category = () => {
@@ -13,12 +15,12 @@ const Category = () => {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["category", id],
-    queryFn: () => callAPI<CategoryT>(`/categories/get/${id}`, "GET"),
+    queryFn: () => callAPI<GetCategoryResponse>(`/categories/get/${id}`, "GET"),
   });
 
   const breadcrumbs: BreadcrumbItem[] = [
     { name: "Categories", href: "/categories" },
-    { name: "Category", href: `/categories/${id}` },
+    { name: "Category", href: `/categories/${id}?tab=week` },
   ];
 
   if (error !== null) return <span>Something went wrong</span>;
@@ -27,12 +29,45 @@ const Category = () => {
   return (
     <Layout name="Categories">
       <CategoryLayout
+        style={
+          {
+            "--category-main": data.category.color.main,
+            "--category-light": data.category.color.light,
+            "--category-dark": data.category.color.dark,
+          } as React.CSSProperties
+        }
         breadcrumbs={breadcrumbs}
         sections={[
           <CategoryHeaderSection
-            title={data.name}
-            color={data.color}
-            importance={data.importance}
+            title={data.category.name}
+            color={data.category.color}
+            importance={data.category.importance}
+          />,
+          <CategoryStatsSection
+            weekView={
+              <CategoryStatsContent
+                category={data.category}
+                timePeriod="week"
+                stats={data.stats.thisWeek}
+                dateStats={data.dateStats.thisWeek}
+              />
+            }
+            monthView={
+              <CategoryStatsContent
+                category={data.category}
+                timePeriod="month"
+                stats={data.stats.thisMonth}
+                dateStats={data.dateStats.thisMonth}
+              />
+            }
+            allTimeView={
+              <CategoryStatsContent
+                category={data.category}
+                timePeriod="all-time"
+                stats={data.stats.allTime}
+                dateStats={data.dateStats.allTime}
+              />
+            }
           />,
         ]}
       />

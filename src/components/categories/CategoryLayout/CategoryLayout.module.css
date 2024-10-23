@@ -1,7 +1,7 @@
 .sectionsContainer > * + * {
-  border-top: solid 2px var(--primary-color);
+  border-top: solid 2px var(--category-main);
 }
 
 .section {
-  padding: 3rem 0;
+  padding: 5rem 0;
 }

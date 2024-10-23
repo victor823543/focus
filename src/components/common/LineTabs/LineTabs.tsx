@@ -5,9 +5,15 @@ type LineTabsProps = {
   tabs: { label: string; id: string }[];
   selected: string;
   setSelected: (tab: string) => void;
+  color?: string;
 };
 
-const LineTabs: React.FC<LineTabsProps> = ({ tabs, selected, setSelected }) => {
+const LineTabs: React.FC<LineTabsProps> = ({
+  tabs,
+  selected,
+  setSelected,
+  color,
+}) => {
   return (
     <div className={styles.tabs}>
       {tabs.map((tab) => (
@@ -19,7 +25,10 @@ const LineTabs: React.FC<LineTabsProps> = ({ tabs, selected, setSelected }) => {
           <span>{tab.label}</span>
           <div className={`${styles.line} ${styles.outline}`}></div>
           {selected === tab.id && (
-            <div className={`${styles.line} ${styles.foreground}`}></div>
+            <div
+              style={color ? { backgroundColor: color } : {}}
+              className={`${styles.line} ${styles.foreground}`}
+            ></div>
           )}
         </div>
       ))}
