@@ -25,13 +25,26 @@ const createCategorySchema = yup.object().shape({
   color: yup
     .object({
       name: yup.string().required(),
-      hex: yup
+      main: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      light: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      dark: yup
         .string()
         .matches(/^#([0-9A-F]{3}){1,2}$/i)
         .required(),
     })
     .required()
-    .default({ name: "Gray", hex: "#9ca3af" }),
+    .default({
+      name: "Gray",
+      main: "#9ca3af",
+      light: "#e5e7eb",
+      dark: "#374151",
+    }),
 });
 
 export type CategoryFormFields = yup.InferType<typeof createCategorySchema>;
@@ -51,7 +64,12 @@ const CreateCategory = () => {
       name: "",
       importance: 1,
       session: currentSession ? currentSession.id : "", // Set session initially if available
-      color: { name: "Gray", hex: "#9ca3af" }, // Default color value
+      color: {
+        name: "Gray",
+        main: "#9ca3af",
+        light: "#e5e7eb",
+        dark: "#374151",
+      }, // Default color value
     },
   });
 
