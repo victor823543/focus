@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import CategoriesGrid from "../components/categories/CategoriesGrid/CategoriesGrid";
+import CategoryLayout from "../components/categories/CategoryLayout/CategoryLayout";
 import CreateCategory from "../components/categories/CreateCategory/CreateCategory";
 import UserCategories from "../components/categories/UserCategories/UserCategories";
 import Loading from "../components/common/Loading/Loading";
@@ -19,15 +20,22 @@ const Categories = () => {
       callAPI<Array<Category>>(`/categories/list/${currentSession?.id}`, "GET"),
   });
 
+  const breadcrumbs = [{ name: "Categories", href: "/categories" }];
+
   if (error !== null) return <span>Something went wrong</span>;
   if (isLoading || data === undefined) return <Loading />;
 
   return (
     <Layout name="Categories">
       {hasParam && <CreateCategory />}
-      <CategoriesGrid>
-        <UserCategories categories={data} />
-      </CategoriesGrid>
+      <CategoryLayout
+        breadcrumbs={breadcrumbs}
+        sections={[
+          <CategoriesGrid>
+            <UserCategories categories={data} />
+          </CategoriesGrid>,
+        ]}
+      />
     </Layout>
   );
 };

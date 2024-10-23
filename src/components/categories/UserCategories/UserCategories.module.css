@@ -5,6 +5,17 @@
   justify-content: center;
 }
 
+.h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--gray-x-dark);
+  padding-right: 1.5rem;
+  padding-bottom: 5px;
+  border-bottom: solid 3px var(--primary-color);
+  width: fit-content;
+  margin-bottom: 3rem;
+}
+
 .categoryDisplay {
   position: relative;
   display: flex;
@@ -13,20 +24,27 @@
   overflow: hidden;
   width: 6rem;
   height: 8rem;
-  border-radius: 1.5rem;
+  border-radius: 8px;
   padding: 1rem 1rem 2rem;
   background-color: var(--gray-light-tr); /* fallback for older browsers */
-  background-color: hsl(from var(--hex) h s calc(l + 5) / 0.15);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.categoryDisplay:hover {
+  background-color: var(--gray-light);
+  transform: scale(1.05);
 }
 
 .addNew {
   --hex: var(--gray-light);
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
 .addNew:hover {
-  background-color: var(--slate-x-light);
+  background-color: var(--gray-light);
 }
 
 .iconWrapper {
@@ -40,4 +58,10 @@
   width: 100%;
   height: 0.5rem;
   background-color: var(--hex);
+}
+
+@media (min-width: 480px) {
+  .wrapper {
+    justify-content: start;
+  }
 }

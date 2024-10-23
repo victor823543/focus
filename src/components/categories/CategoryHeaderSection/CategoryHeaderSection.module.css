@@ -1,0 +1,30 @@
+.h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--gray-x-dark);
+  padding-right: 1.5rem;
+  padding-bottom: 5px;
+  border-bottom: solid 3px var(--hex);
+  width: fit-content;
+  margin-bottom: 2rem;
+}
+
+.infoBox {
+  padding: 1rem 4rem 1rem 1.5rem;
+  background-color: var(--gray-light-tr);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--gray-dark);
+  cursor: pointer;
+  border-right: solid 5px var(--hex);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.strong {
+  font-size: 1rem;
+  color: var(--gray-x-dark);
+}

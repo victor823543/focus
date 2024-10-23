@@ -1,0 +1,7 @@
+.sectionsContainer > * + * {
+  border-top: solid 2px var(--primary-color);
+}
+
+.section {
+  padding: 3rem 0;
+}
