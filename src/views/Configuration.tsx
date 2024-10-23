@@ -89,8 +89,8 @@ const Configuration = () => {
     mutationFn: (params: ConfigureFormFields) =>
       callAPI<CreateSessionResponse>(`/sessions/configure`, "POST", params),
     onSuccess: async (response) => {
-      selectSession(response);
       await reloadUserStatus();
+      selectSession(response);
       navigate("/dashboard");
     },
     onError: (error) => console.log(error),

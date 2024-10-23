@@ -31,7 +31,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      selectSession(data[0]);
+      if (!currentSession) {
+        selectSession(data[0]);
+      }
       selectSessions(data);
     }
   }, [data]);

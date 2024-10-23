@@ -19,7 +19,7 @@ type AuthContextProps = {
   setToken: (newToken: string | null) => void;
   setStatus: (newStatus: UserStatus) => void;
   signNewToken: () => Promise<void>;
-  reloadUserStatus: () => Promise<void>;
+  reloadUserStatus: () => Promise<UserStatus>;
 } | null;
 
 type AuthProviderProps = {
@@ -61,7 +61,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     callAPI<User>("/users/validate-token", "POST")
       .then((response) => {
         setUser(response);
-        setUserStatus(UserStatus.Authenticated);
       })
       .catch(() => {
         setUser(null);
@@ -103,40 +102,60 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Effect to handle session selection based on fetched data
   useEffect(() => {
+    // If sessions are still loading, keep the user in the loading state
     if (isLoading) {
       setUserStatus(UserStatus.Loading);
+      return;
     }
 
+    // If we have session data and at least one session exists, the user is configured
     if (data && data.length > 0) {
       setUserStatus(UserStatus.Configured);
       if (!currentSession) {
         selectSession(data[0]); // Automatically select the first session if none is selected
       }
       selectSessions(data);
+      return;
     }
 
-    if ((!data || data.length === 0) && user) {
+    // If no sessions exist but we have a validated user, set them as authenticated
+    if (user && (!data || data.length === 0)) {
       setUserStatus(UserStatus.Authenticated);
+      return;
     }
-  }, [data, isLoading, currentSession, user]);
+
+    // If there's no token, or no valid user, unauthenticated
+    if (!token || !user) {
+      setUserStatus(UserStatus.Unauthenticated);
+    }
+  }, [
+    data,
+    isLoading,
+    currentSession,
+    user,
+    token,
+    selectSession,
+    selectSessions,
+  ]);
 
   // Function to refetch sessions and update status with promise
   const reloadUserStatus = () => {
     setUserStatus(UserStatus.Loading);
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<UserStatus>((resolve) => {
       refetch()
         .then((result) => {
           if (result.data && result.data.length > 0) {
             setUserStatus(UserStatus.Configured);
+            resolve(UserStatus.Configured);
           } else {
             setUserStatus(UserStatus.Authenticated);
+            resolve(UserStatus.Authenticated);
           }
-          resolve();
         })
         .catch((error) => {
           setUserStatus(UserStatus.Unauthenticated);
-          reject(error);
+          resolve(UserStatus.Unauthenticated);
         });
     });
   };
@@ -151,7 +170,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       reloadUserStatus,
       signNewToken,
     }),
-    [token, user, signNewToken],
+    [token, user, signNewToken, userStatus],
   );
 
   return (

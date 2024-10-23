@@ -46,8 +46,8 @@ const Login = () => {
       }),
     onSuccess: async (response) => {
       setToken(response.token);
-      await reloadUserStatus();
-      if (userStatus === "Configured") navigate("/dashboard");
+      const newUserStatus = await reloadUserStatus();
+      if (newUserStatus === "Configured") navigate("/dashboard");
       else navigate("/configuration");
     },
     onError: (err: Error) => {
