@@ -54,7 +54,7 @@ const Signup = () => {
       }),
     onSuccess: (response) => {
       setToken(response.token);
-      navigate("/dashboard");
+      navigate("/configuration");
     },
     onError: (err: Error) => {
       if (err instanceof ControlledError) {

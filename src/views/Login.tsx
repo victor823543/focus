@@ -23,7 +23,7 @@ type LoginResponse = {
 };
 
 const Login = () => {
-  const { setToken } = useAuth();
+  const { setToken, reloadUserStatus, userStatus } = useAuth();
   const navigate = useNavigate();
   const { alerts, pushAlert, removeAlert } = useAlerts();
 
@@ -44,9 +44,11 @@ const Login = () => {
         email,
         password,
       }),
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       setToken(response.token);
-      navigate("/dashboard");
+      const newUserStatus = await reloadUserStatus();
+      if (newUserStatus === "Configured") navigate("/dashboard");
+      else navigate("/configuration");
     },
     onError: (err: Error) => {
       if (err instanceof ControlledError) {

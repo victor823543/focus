@@ -11,6 +11,7 @@ import ImportanceStep from "../components/configuration/steps/ImportanceStep/Imp
 import WelcomeStep from "../components/configuration/steps/WelcomeStep/WelcomeStep";
 import useConfigureCategories from "../hooks/useConfigureCategories";
 import useSelectSession from "../hooks/useSelectSession";
+import { useAuth } from "../provider/authProvider";
 import { CreateSessionResponse } from "../types/Session";
 import { callAPI } from "../utils/apiService";
 
@@ -66,6 +67,7 @@ const Configuration = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const { currentConfigCategories } = useConfigureCategories();
   const { selectSession } = useSelectSession();
+  const { reloadUserStatus } = useAuth();
   const [validatedSteps, setValidatedSteps] = useState<ValidatedSteps>({
     0: false,
     1: false,
@@ -86,7 +88,8 @@ const Configuration = () => {
   const configureMutation = useMutation({
     mutationFn: (params: ConfigureFormFields) =>
       callAPI<CreateSessionResponse>(`/sessions/configure`, "POST", params),
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
+      await reloadUserStatus();
       selectSession(response);
       navigate("/dashboard");
     },
