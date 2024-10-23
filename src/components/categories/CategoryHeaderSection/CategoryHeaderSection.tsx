@@ -20,7 +20,7 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
   return (
     <div
       className={styles.container}
-      style={{ "--hex": color.hex } as React.CSSProperties}
+      style={{ "--hex": color.main } as React.CSSProperties}
     >
       <div className={styles.title}>
         <h1 className={styles.h1}>{title}</h1>

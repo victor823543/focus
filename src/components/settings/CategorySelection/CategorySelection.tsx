@@ -54,7 +54,7 @@ const CategorySelection = ({
         {selectedCategories.map((category) => (
           <div
             key={category.id}
-            style={{ "--hex": category.color.hex } as CSSProperties}
+            style={{ "--hex": category.color.main } as CSSProperties}
             className={styles.categoryBox}
           >
             {category.name}
@@ -115,7 +115,7 @@ const CategorySelectionModal: React.FC<CategorySelectionModalProps> = ({
               <div
                 key={category.id}
                 className={`${styles.categoryDisplay} ${selected.includes(category.id) ? styles.selected : ""}`}
-                style={{ "--hex": category.color.hex } as CSSProperties}
+                style={{ "--hex": category.color.main } as CSSProperties}
                 onClick={() => handleCategoryClick(category.id)}
               >
                 <Paragraph variant="bold">{category.name}</Paragraph>

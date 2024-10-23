@@ -31,7 +31,7 @@ const UserCategories: React.FC<UserCategoriesProps> = ({ categories }) => {
           <div
             key={category.id}
             className={styles.categoryDisplay}
-            style={{ "--hex": category.color.hex } as CSSProperties}
+            style={{ "--hex": category.color.main } as CSSProperties}
             onClick={() => navigate(`/categories/${category.id}`)}
           >
             <Paragraph variant="bold">{category.name}</Paragraph>

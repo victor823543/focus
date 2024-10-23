@@ -193,7 +193,7 @@ const WeekProgressLine: React.FC<WeekProgressLineProps> = ({
 
 function setColor(id: string, categories: Category[]) {
   const color =
-    categories.find((category) => id === category.name)?.color.hex ||
+    categories.find((category) => id === category.name)?.color.main ||
     "var(--primary-color)";
   return `hsl(from ${color} h s calc(l + 10))`;
 }

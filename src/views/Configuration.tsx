@@ -21,7 +21,15 @@ const categorySchema = yup.object({
   color: yup
     .object({
       name: yup.string().required(),
-      hex: yup
+      main: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      light: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      dark: yup
         .string()
         .matches(/^#([0-9A-F]{3}){1,2}$/i)
         .required(),

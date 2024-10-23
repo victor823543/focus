@@ -3,17 +3,19 @@ export type Category = {
   user: string;
   name: string;
   importance: number;
-  color: { name: string; hex: string };
+  color: Color;
   timestamp: number;
 };
 
 export type CreateCategoryParams = {
   name: string;
   importance: number;
-  color: { name: string; hex: string };
+  color: Color;
 };
 
 export type Color = {
   name: string;
-  hex: string;
+  main: string;
+  light: string;
+  dark: string;
 };
