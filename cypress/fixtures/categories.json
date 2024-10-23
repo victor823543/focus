@@ -4,7 +4,9 @@
     "importance": 1,
     "color": {
       "name": "Gray",
-      "hex": "#9ca3af"
+      "main": "#9ca3af",
+      "light": "#e5e7eb",
+      "dark": "#374151"
     }
   },
   {
@@ -12,7 +14,9 @@
     "importance": 1,
     "color": {
       "name": "Gray",
-      "hex": "#9ca3af"
+      "main": "#9ca3af",
+      "light": "#e5e7eb",
+      "dark": "#374151"
     }
   },
   {
@@ -20,7 +24,9 @@
     "importance": 1,
     "color": {
       "name": "Gray",
-      "hex": "#9ca3af"
+      "main": "#9ca3af",
+      "light": "#e5e7eb",
+      "dark": "#374151"
     }
   }
 ]

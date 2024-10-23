@@ -2,17 +2,32 @@
   "categories": [
     {
       "name": "Work",
-      "color": { "name": "Gray", "hex": "#9ca3af" },
+      "color": {
+        "name": "Gray",
+        "main": "#9ca3af",
+        "light": "#e5e7eb",
+        "dark": "#374151"
+      },
       "importance": 1
     },
     {
       "name": "Study",
-      "color": { "name": "Green", "hex": "#4ade80" },
+      "color": {
+        "name": "Green",
+        "light": "#bbf7d0",
+        "main": "#4ade80",
+        "dark": "#15803d"
+      },
       "importance": 1.5
     },
     {
       "name": "Sleep",
-      "color": { "name": "Teal", "hex": "#2dd4bf" },
+      "color": {
+        "name": "Teal",
+        "main": "#2dd4bf",
+        "light": "#99f6e4",
+        "dark": "#0f766e"
+      },
       "importance": 2
     }
   ],
