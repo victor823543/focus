@@ -250,7 +250,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
                   <div
                     key={category.id}
                     className={styles.categoryWrapper}
-                    style={{ "--hex": category.color.hex } as CSSProperties}
+                    style={{ "--hex": category.color.main } as CSSProperties}
                   >
                     <div className={styles.category}>
                       <div className={styles.categoryName}>{category.name}</div>

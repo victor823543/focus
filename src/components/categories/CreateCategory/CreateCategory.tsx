@@ -1,15 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useHandleSearchParam } from "../../../hooks/useHandleSearchParam";
+import useSelectSession from "../../../hooks/useSelectSession";
 import { callAPI } from "../../../utils/apiService";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { Container } from "../../common/Containers/Containers";
 import { Header } from "../../common/Headers/Headers";
 import Label from "../../common/Label/Label";
 import { Modal, ModalWrapperBlur } from "../../common/Modals/Modals";
-import RangeInput from "../../common/RangeInput/RangeInput";
+import StyledRangeInput from "../../common/RangeInput/StyledRangeInput";
 import TextField from "../../common/TextField/TextField";
 import ColorPicker from "../ColorPicker/ColorPicker";
 
@@ -19,22 +21,37 @@ const createCategorySchema = yup.object().shape({
     .max(10, "Maximum 10 characters")
     .required("You must name your category."),
   importance: yup.number().required().default(1),
+  session: yup.string().required(),
   color: yup
     .object({
       name: yup.string().required(),
-      hex: yup
+      main: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      light: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      dark: yup
         .string()
         .matches(/^#([0-9A-F]{3}){1,2}$/i)
         .required(),
     })
     .required()
-    .default({ name: "Gray", hex: "#9ca3af" }),
+    .default({
+      name: "Gray",
+      main: "#9ca3af",
+      light: "#e5e7eb",
+      dark: "#374151",
+    }),
 });
 
 export type CategoryFormFields = yup.InferType<typeof createCategorySchema>;
 
 const CreateCategory = () => {
   const { removeParam } = useHandleSearchParam("create");
+  const { currentSession } = useSelectSession();
 
   const queryClient = useQueryClient();
 
@@ -43,13 +60,36 @@ const CreateCategory = () => {
     reValidateMode: "onChange",
     criteriaMode: "all",
     resolver: yupResolver(createCategorySchema),
+    defaultValues: {
+      name: "",
+      importance: 1,
+      session: currentSession ? currentSession.id : "", // Set session initially if available
+      color: {
+        name: "Gray",
+        main: "#9ca3af",
+        light: "#e5e7eb",
+        dark: "#374151",
+      }, // Default color value
+    },
   });
+
+  // Reset the form when currentSession changes
+  useEffect(() => {
+    if (currentSession) {
+      form.reset({
+        ...form.getValues(), // Keep existing values for other fields
+        session: currentSession.id, // Update session field
+      });
+    }
+  }, [currentSession, form]);
 
   const createMutation = useMutation({
     mutationFn: (params: CategoryFormFields) =>
       callAPI("/categories/create", "POST", params),
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({
+        queryKey: ["categories", currentSession?.id],
+      });
       removeParam();
     },
   });
@@ -72,12 +112,14 @@ const CreateCategory = () => {
             </Container>
             <Container gap="lg">
               <Label htmlFor="importance">Importance</Label>
-              <RangeInput
+              <StyledRangeInput
                 form={form}
                 name="importance"
-                min={0.1}
+                min={1}
                 max={3}
                 step={0.1}
+                fieldColor="var(--primary-color-light)"
+                thumbColor="var(--primary-color-mid)"
               />
             </Container>
             <Container gap="lg">

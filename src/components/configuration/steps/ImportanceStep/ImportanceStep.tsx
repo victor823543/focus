@@ -51,7 +51,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
               className={styles.formWrapper}
               style={
                 {
-                  "--category-color": category.color?.hex,
+                  "--category-color": category.color?.main,
                 } as React.CSSProperties
               }
             >
@@ -59,7 +59,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
                 <div className={styles.category}>{category.name}</div>
                 <div
                   className={styles.colorBox}
-                  style={{ backgroundColor: category.color?.hex }}
+                  style={{ backgroundColor: category.color?.main }}
                   onClick={() => setShowColorPicker(index)}
                 ></div>
               </div>

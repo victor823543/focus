@@ -24,19 +24,34 @@ const createCategorySchema = yup.object().shape({
   color: yup
     .object({
       name: yup.string().required(),
-      hex: yup
+      main: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      light: yup
+        .string()
+        .matches(/^#([0-9A-F]{3}){1,2}$/i)
+        .required(),
+      dark: yup
         .string()
         .matches(/^#([0-9A-F]{3}){1,2}$/i)
         .required(),
     })
     .required()
-    .default({ name: "Gray", hex: "#9ca3af" }),
+    .default({
+      name: "Gray",
+      main: "#9ca3af",
+      light: "#d1d5db",
+      dark: "#6b7280",
+    }),
 });
 
 const defaultValues = {
   color: {
     name: "Gray",
-    hex: "#9ca3af",
+    main: "#9ca3af",
+    light: "#d1d5db",
+    dark: "#6b7280",
   },
   importance: 1,
 };
@@ -97,7 +112,7 @@ const CategoriesStep = () => {
               className={`${styles.category} ${selected ? styles.selected : ""}`}
               style={
                 {
-                  "--category-color": category.color?.hex,
+                  "--category-color": category.color?.main,
                 } as React.CSSProperties
               }
               onClick={
@@ -123,7 +138,7 @@ const CategoriesStep = () => {
           />
           <div
             className={styles.colorBox}
-            style={{ backgroundColor: form.watch("color.hex") }}
+            style={{ backgroundColor: form.watch("color.main") }}
             onClick={() => setShowColorPicker((prev) => !prev)}
           ></div>
           {showColorPicker && (

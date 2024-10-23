@@ -3,6 +3,7 @@ import { AuthenticatedRoute } from "./components/layout/AuthenticatedRoute";
 import ConfiguredRoute from "./components/layout/ConfiguredRoute";
 import Calendar from "./views/Calendar";
 import Categories from "./views/Categories";
+import Category from "./views/Category";
 import Configuration from "./views/Configuration";
 import Dashboard from "./views/Dashboard";
 import LandingPage from "./views/LandingPage";
@@ -63,6 +64,10 @@ const Routes = () => {
         {
           path: "/categories",
           element: <Categories />,
+        },
+        {
+          path: "/categories/:id",
+          element: <Category />,
         },
         {
           path: "/settings",

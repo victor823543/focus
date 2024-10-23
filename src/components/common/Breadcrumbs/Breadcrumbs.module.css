@@ -1,0 +1,46 @@
+.ol {
+  all: unset;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.homeLink {
+  all: unset;
+  color: var(--gray-mid);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.homeLink:hover {
+  color: var(--gray);
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.li {
+  all: unset;
+  display: flex;
+  align-items: center;
+}
+
+.chevron {
+  color: var(--gray-mid);
+}
+
+.link {
+  all: unset;
+  color: var(--gray);
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: var(--gray-dark);
+}
