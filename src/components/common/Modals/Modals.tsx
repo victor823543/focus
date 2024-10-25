@@ -87,9 +87,9 @@ const createModal =
   };
 
 export const Modal = createModal({
-  borderRadius: "2rem",
-  backgroundColor: "var(--gray-2x-light)",
-  padding: "2rem",
+  borderRadius: "8px",
+  backgroundColor: "var(--gray-x-light)",
+  padding: "2rem 4rem",
   boxShadow: "var(--shadow-lg)",
 });
 
