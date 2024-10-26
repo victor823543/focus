@@ -12,6 +12,7 @@ import Alerts from "../../common/Alerts/Alerts";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { ModalWrapperStrong } from "../../common/Modals/Modals";
 import TextArea from "../../common/TextArea/TextArea";
+import ColorPicker from "../ColorPicker/ColorPicker";
 import styles from "./CategoryHeaderSection.module.css";
 
 const categorySchema = yup.object({
@@ -72,7 +73,7 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
     resolver: yupResolver(categorySchema),
     defaultValues: {
       description: description || "",
-      color: null,
+      color: color,
     },
   });
 
@@ -88,7 +89,6 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
   });
 
   const handleSubmit = (data: CategoryFormFields) => {
-    console.log("Submitting", data);
     categoryMutation.mutate(data);
   };
 
@@ -123,7 +123,10 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
             </div>
           </div>
 
-          <div className={styles.infoContainer}>
+          <div
+            className={`${styles.infoContainer} ${styles.colorInfoContainer}`}
+            onClick={() => setParam("color")}
+          >
             <div className={styles.infoBox} style={{ width: "100%" }}>
               Color palette
             </div>
@@ -192,6 +195,21 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
                 color="var(--gray-dark)"
                 className={styles.textArea}
               />
+              <CustomizableButton type="submit" className={styles.submit}>
+                Save
+              </CustomizableButton>
+            </div>
+          </ModalWrapperStrong>
+        </form>
+      )}
+      {currentValue === "color" && (
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <ModalWrapperStrong onClick={() => removeParam()}>
+            <div onClick={(e) => e.stopPropagation()} className={styles.modal}>
+              <div className={styles.colorPickerWrapper}>
+                <ColorPicker form={form} name="color" />
+              </div>
+
               <CustomizableButton type="submit" className={styles.submit}>
                 Save
               </CustomizableButton>
