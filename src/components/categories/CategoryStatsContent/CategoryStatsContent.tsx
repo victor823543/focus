@@ -85,40 +85,45 @@ const CategoryLineChart: React.FC<{
   max: number;
   color: string;
 }> = ({ chartData, max, color }) => {
+  const hasData = chartData[0].data.length > 0;
   return (
-    <div className={styles.chartContainer}>
-      <ResponsiveLine
-        data={chartData}
-        margin={{ top: 20, right: 20, bottom: 35, left: 30 }}
-        curve="cardinal"
-        xScale={{ type: "point" }}
-        yScale={{
-          type: "linear",
-          min: 0,
-          max: max,
-          stacked: false,
-        }}
-        enableGridX={false}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 10,
-          tickRotation: 0,
-          legendOffset: 36,
-        }}
-        axisLeft={{
-          tickSize: 0,
-          tickPadding: 10,
-          tickRotation: 0,
-        }}
-        colors={() => color}
-        lineWidth={3}
-        enablePoints={false}
-        useMesh={true}
-        enableSlices="x"
-        theme={chartTheme}
-      />
+    <div className={`${styles.chartContainer} ${!hasData ? styles.empty : ""}`}>
+      {hasData && (
+        <ResponsiveLine
+          data={chartData}
+          margin={{ top: 20, right: 20, bottom: 35, left: 30 }}
+          curve="cardinal"
+          xScale={{ type: "point" }}
+          yScale={{
+            type: "linear",
+            min: 0,
+            max: max,
+            stacked: false,
+          }}
+          enableGridX={false}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickSize: 0,
+            tickPadding: 10,
+            tickRotation: 0,
+            legendOffset: 36,
+          }}
+          axisLeft={{
+            tickSize: 0,
+            tickPadding: 10,
+            tickRotation: 0,
+          }}
+          colors={() => color}
+          lineWidth={3}
+          enablePoints={false}
+          useMesh={true}
+          enableSlices="x"
+          theme={chartTheme}
+          enableArea={true}
+        />
+      )}
+      {!hasData && <p className={styles.noData}>No data available</p>}
     </div>
   );
 };

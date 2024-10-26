@@ -37,8 +37,7 @@
 .progressDisplay {
   width: fit-content;
   margin: 0 auto;
-  background-color: rgba(209, 213, 219, 0.6); /* fallback for older browsers */
-  background-color: rgb(from var(--gray-light) r g b / 0.6);
+  background-color: rgba(209, 213, 219, 0.6);
   backdrop-filter: blur(4px);
   border-radius: 4rem;
   padding: 1.5rem;

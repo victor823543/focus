@@ -26,7 +26,7 @@ export const useHandleSearchParam = (
   };
 
   const setParam = (newValue: string) => {
-    if (hasParam) {
+    if (param) {
       const newSearchParams = new URLSearchParams(searchParams.toString());
       newSearchParams.set(param, newValue);
       setSearchParams(newSearchParams);

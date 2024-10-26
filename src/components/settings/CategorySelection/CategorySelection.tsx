@@ -1,4 +1,3 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { CSSProperties, useMemo, useState } from "react";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
@@ -54,7 +53,11 @@ const CategorySelection = ({
         {selectedCategories.map((category) => (
           <div
             key={category.id}
-            style={{ "--hex": category.color.main } as CSSProperties}
+            style={
+              {
+                "--hex": category.color.main,
+              } as CSSProperties
+            }
             className={styles.categoryBox}
           >
             {category.name}
@@ -83,7 +86,7 @@ type CategorySelectionModalProps = {
   selectedIds: string[];
 };
 
-const CategorySelectionModal: React.FC<CategorySelectionModalProps> = ({
+export const CategorySelectionModal: React.FC<CategorySelectionModalProps> = ({
   categories,
   handleFinishedSelecting,
   selectedIds,
@@ -105,17 +108,16 @@ const CategorySelectionModal: React.FC<CategorySelectionModalProps> = ({
             Select Categories
           </Header>
           <div className={styles.wrapper}>
-            <div className={`${styles.categoryDisplay} ${styles.addNew}`}>
-              <div className={styles.iconWrapper}>
-                <PlusIcon strokeWidth={2} />
-                <Paragraph variant="bold">Add New</Paragraph>
-              </div>
-            </div>
             {categories.map((category) => (
               <div
                 key={category.id}
                 className={`${styles.categoryDisplay} ${selected.includes(category.id) ? styles.selected : ""}`}
-                style={{ "--hex": category.color.main } as CSSProperties}
+                style={
+                  {
+                    "--hex": category.color.main,
+                    "--hex-light": category.color.light,
+                  } as CSSProperties
+                }
                 onClick={() => handleCategoryClick(category.id)}
               >
                 <Paragraph variant="bold">{category.name}</Paragraph>

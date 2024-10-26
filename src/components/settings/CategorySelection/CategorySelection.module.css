@@ -18,10 +18,10 @@
   overflow: hidden;
   width: 6rem;
   height: 8rem;
-  border-radius: 1.5rem;
+  border-radius: 8px;
   padding: 1rem 1rem 2rem;
-  background-color: var(--gray-x-light);
-  opacity: 0.5;
+  background-color: var(--gray-light-tr);
+  opacity: 0.3;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -35,13 +35,8 @@
   scale: 1.1;
 }
 
-.addNew:hover {
-  background-color: var(--gray-2x-light);
-}
-
 .selected {
-  background-color: var(--gray-light); /* fallback for older browsers */
-  background-color: hsl(from var(--hex) h s calc(l + 5) / 0.15);
+  background-color: var(--gray-light-tr); /* fallback for older browsers */
   opacity: 1;
 }
 

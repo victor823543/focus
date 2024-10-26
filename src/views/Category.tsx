@@ -42,6 +42,9 @@ const Category = () => {
             title={data.category.name}
             color={data.category.color}
             importance={data.category.importance}
+            createdAt={new Date(data.category.timestamp * 1000)}
+            id={data.category.id}
+            description={data.category?.description}
           />,
           <CategoryStatsSection
             weekView={

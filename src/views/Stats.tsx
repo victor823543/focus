@@ -3,10 +3,7 @@ import { Container } from "../components/common/Containers/Containers";
 import { Header } from "../components/common/Headers/Headers";
 import Link from "../components/common/Link/Link";
 import Loading from "../components/common/Loading/Loading";
-import {
-  Modal,
-  ModalWrapperTransparent,
-} from "../components/common/Modals/Modals";
+import { Modal, ModalWrapperBlur } from "../components/common/Modals/Modals";
 import Layout from "../components/layout/Layout/Layout";
 import MiniStatsDisplay from "../components/stats/MiniStatsDisplay/MiniStatsDisplay";
 import StatsGrid from "../components/stats/StatsGrid/StatsGrid";
@@ -45,7 +42,7 @@ const Stats = () => {
         </StatsGrid>
       )}
       {data.data.length === 0 && (
-        <ModalWrapperTransparent noPointerEvents>
+        <ModalWrapperBlur noPointerEvents>
           <Modal>
             <Container paddingX="lg" gap="lg" style={{ maxWidth: "30rem" }}>
               <Header variant="secondary">
@@ -56,7 +53,7 @@ const Stats = () => {
               </Link>
             </Container>
           </Modal>
-        </ModalWrapperTransparent>
+        </ModalWrapperBlur>
       )}
     </Layout>
   );
