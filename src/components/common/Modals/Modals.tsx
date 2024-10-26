@@ -55,6 +55,11 @@ export const ModalWrapperBlur = createModalWrapper({
   blur: "4px",
 });
 
+export const ModalWrapperStrong = createModalWrapper({
+  darken: ".3",
+  blur: "8px",
+});
+
 interface ModalProps extends React.HTMLProps<HTMLDivElement> {}
 
 type ModalStylingProps = {
