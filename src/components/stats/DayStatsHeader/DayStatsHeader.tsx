@@ -34,7 +34,9 @@ const DayStatsHeader: React.FC<DayStatsHeaderProps> = ({ sessionInfo }) => {
             <div className={styles.infoBox}>
               <span>Best day yet:</span>
               <span>
-                {formatDate(new Date(sessionInfo.bestDay.date), "short")}
+                {sessionInfo.bestDay
+                  ? formatDate(new Date(sessionInfo.bestDay.date), "short")
+                  : "N/A"}
               </span>
             </div>
             <div className={styles.bar}></div>
@@ -43,7 +45,9 @@ const DayStatsHeader: React.FC<DayStatsHeaderProps> = ({ sessionInfo }) => {
             <div className={styles.infoBox}>
               <span>Worst day yet:</span>
               <span>
-                {formatDate(new Date(sessionInfo.worstDay.date), "short")}
+                {sessionInfo.worstDay
+                  ? formatDate(new Date(sessionInfo.worstDay.date), "short")
+                  : "N/A"}
               </span>
             </div>
             <div className={styles.bar}></div>

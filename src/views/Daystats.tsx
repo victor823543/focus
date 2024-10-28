@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { BreadcrumbItem } from "../components/common/Breadcrumbs/Breadcrumbs";
 import Loading from "../components/common/Loading/Loading";
 import Layout from "../components/layout/Layout/Layout";
@@ -23,13 +23,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const Daystats = () => {
   const { currentSession } = useSelectSession();
-  const { currentValue, addParam, setParam } = useHandleSearchParam(
+  const { currentValue, addParam } = useHandleSearchParam(
     "date",
     toYMD(new Date()),
-  );
-  const selectedDate = useMemo(
-    () => new Date(currentValue || new Date()),
-    [currentValue],
   );
 
   useEffect(() => addParam(), []);
