@@ -70,8 +70,7 @@
   }
 
   .sidebarWrapper.open {
-    background-color: rgba(15, 23, 41, 0.25); /* fallback for older browsers */
-    background-color: rgb(from var(--slate-x-dark) r g b / 0.25);
+    background-color: rgba(15, 23, 41, 0.25); /* --slate-x-dark */
   }
 
   .sidebarWrapper.closed {
