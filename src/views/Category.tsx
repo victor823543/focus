@@ -53,6 +53,7 @@ const Category = () => {
                 timePeriod="week"
                 stats={data.stats.thisWeek}
                 dateStats={data.dateStats.thisWeek}
+                totalDays={data.totalDays}
               />
             }
             monthView={
@@ -61,6 +62,7 @@ const Category = () => {
                 timePeriod="month"
                 stats={data.stats.thisMonth}
                 dateStats={data.dateStats.thisMonth}
+                totalDays={data.totalDays}
               />
             }
             allTimeView={
@@ -69,6 +71,7 @@ const Category = () => {
                 timePeriod="all-time"
                 stats={data.stats.allTime}
                 dateStats={data.dateStats.allTime}
+                totalDays={data.totalDays}
               />
             }
           />,
