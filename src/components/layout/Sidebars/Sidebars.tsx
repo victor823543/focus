@@ -36,8 +36,13 @@ const links: LinkItem[] = [
   { title: "Stats", href: "/stats", Icon: ChartBarIcon },
   { title: "Categories", href: "/categories", Icon: TagIcon },
   { title: "Settings", href: "/settings", Icon: Cog6ToothIcon },
-  { title: "Log out", href: "#", Icon: ArrowRightStartOnRectangleIcon },
 ];
+
+const logoutContent: LinkItem = {
+  title: "Log out",
+  href: "#",
+  Icon: ArrowRightStartOnRectangleIcon,
+};
 
 type SidebarProps = {
   selected: string;
@@ -85,10 +90,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
             />
           </li>
         ))}
+        <li key={logoutContent.title} className={styles.li} onClick={logout}>
+          <SidebarLink
+            content={logoutContent}
+            selected={selected === logoutContent.title}
+          />
+        </li>
       </ul>
       {user && (
         <div className={styles.bottomContent}>
-          <div className={styles.userDisplay} onClick={logout}>
+          <div className={styles.userDisplay}>
             <div className={styles.iconWrapper}>
               <UserCircleIcon />
             </div>

@@ -36,7 +36,7 @@
 }
 
 .selected {
-  background-color: var(--gray-light-tr); /* fallback for older browsers */
+  background-color: var(--gray-light-tr);
   opacity: 1;
 }
 

@@ -54,4 +54,5 @@ export type GetCategoryResponse = {
   stats: CategoryStats;
   category: Category;
   dateStats: CategoryDateStats;
+  totalDays: number;
 };

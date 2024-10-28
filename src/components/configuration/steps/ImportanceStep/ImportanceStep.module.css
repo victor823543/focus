@@ -47,15 +47,13 @@
   height: 100%;
   display: grid;
   place-content: center;
-  background-color: rgba(3, 7, 17, 0.1); /* fallback for older browsers */
-  background-color: rgb(from var(--gray-2x-dark) r g b / 0.1);
+  background-color: rgba(3, 7, 17, 0.1); /* --gray-2x-dark */
   z-index: 10;
 }
 
 .colorPickerModal {
   padding: 2rem;
-  background-color: rgba(17, 24, 39, 0.9); /* fallback for older browsers */
-  background-color: rgb(from var(--gray-x-dark) r g b / 0.9);
+  background-color: rgba(17, 24, 39, 0.9); /* --gray-x-dark */
   border-radius: 8px;
   width: fit-content;
 }
