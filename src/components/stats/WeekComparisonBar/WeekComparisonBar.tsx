@@ -4,7 +4,7 @@ import { addDays, getWeek } from "../../../hooks/useCalendar";
 import useElementSize from "../../../hooks/useElementSize";
 import { Category } from "../../../types/Category";
 import { Day } from "../../../types/Day";
-import { filterByDateRange, to1Dec } from "../../../utils/functions";
+import { filterByDateRange, to1Dec, toYMD } from "../../../utils/functions";
 import BarChart from "../BarChart/BarChart";
 import Legend from "../Legend/Legend";
 import StatsBox from "../StatsBox/StatsBox";
@@ -53,7 +53,7 @@ function convertDataToChart(
   );
 
   datesWithinWeeks.forEach((day) => {
-    const week = thisWeek.map((date) => date.toISOString()).includes(day.date)
+    const week = thisWeek.map((date) => toYMD(date)).includes(day.date)
       ? "This week"
       : "Past week";
     day.score.forEach((score) => {

@@ -10,6 +10,11 @@ export const chartTheme = {
   grid: { line: { stroke: "var(--gray-x-light)" } },
 };
 
+export const chartThemeSecondary = {
+  text: { fill: "var(--gray)", fontFamily: "Open Sans" },
+  grid: { line: { stroke: "var(--gray-light)" } },
+};
+
 export const weekdays = [
   "Monday",
   "Tuesday",

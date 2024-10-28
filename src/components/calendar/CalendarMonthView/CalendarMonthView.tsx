@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import React, { useMemo } from "react";
 import { useCalendar } from "../../../hooks/useCalendar";
 import { DayStatus, ListDaysReturn } from "../../../types/Day";
-import { formatDate, to1Dec } from "../../../utils/functions";
+import { formatDate, to1Dec, toYMD } from "../../../utils/functions";
 import DayStatusMarker from "../DayStatusMarker/DayStatusMarker";
 import InfoPopupContent from "../InfoPopupContent/InfoPopupContent";
 import styles from "./CalendarMonthView.module.css";
@@ -35,7 +35,7 @@ const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({ days }) => {
   const selectedInfo: SelectedInfo = useMemo(() => {
     const status: DayStatus = getDateStatus(
       currentDate,
-      currentDate.toISOString() in days,
+      toYMD(currentDate) in days,
     );
 
     const formattedDate = formatDate(currentDate, "custom", {
@@ -47,7 +47,7 @@ const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({ days }) => {
     let score;
 
     if (status === DayStatus.HasResult) {
-      const thisDay = days[currentDate.toISOString()];
+      const thisDay = days[toYMD(currentDate)];
       const totalScore = to1Dec(thisDay.totalScore);
       const maxScore = thisDay.maxScore;
       const percentageScore = to1Dec(thisDay.percentageScore);
@@ -83,10 +83,7 @@ const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({ days }) => {
         <main className={styles.calendar}>
           {currentMonthDates.map((week) =>
             week.map((day) => {
-              const status: DayStatus = getDateStatus(
-                day,
-                day.toISOString() in days,
-              );
+              const status: DayStatus = getDateStatus(day, toYMD(day) in days);
               const statusStyles = styles[`status-${status}`];
               const selectedDayStyles =
                 currentDate.toDateString() === day.toDateString()
@@ -107,7 +104,7 @@ const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({ days }) => {
               let score;
 
               if (status === DayStatus.HasResult) {
-                const thisDay = days[day.toISOString()];
+                const thisDay = days[toYMD(day)];
                 const totalScore = to1Dec(thisDay.totalScore);
                 const maxScore = thisDay.maxScore;
                 const percentageScore = to1Dec(thisDay.percentageScore);
@@ -153,7 +150,7 @@ const CalendarMonthView: React.FC<CalendarMonthViewProps> = ({ days }) => {
               week.map((day) => {
                 const status: DayStatus = getDateStatus(
                   day,
-                  day.toISOString() in days,
+                  toYMD(day) in days,
                 );
                 const statusStyles = styles[`status-${status}`];
                 const selectedDayStyles =

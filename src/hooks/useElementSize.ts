@@ -5,18 +5,30 @@ type Size = {
   height: number;
 };
 
-function useElementSize<T extends HTMLElement>(): [Size, React.RefObject<T>] {
+type Options = {
+  includePadding?: boolean;
+};
+
+function useElementSize<T extends HTMLElement>({
+  includePadding = false,
+}: Options = {}): [Size, React.RefObject<T>] {
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
   const elementRef = useRef<T>(null);
 
   useEffect(() => {
     const updateSize = (entries: ResizeObserverEntry[]) => {
       const entry = entries[0];
-      if (entry) {
-        setSize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
+      if (entry && elementRef.current) {
+        const newSize = includePadding
+          ? {
+              width: elementRef.current.getBoundingClientRect().width,
+              height: elementRef.current.getBoundingClientRect().height,
+            }
+          : {
+              width: entry.contentRect.width,
+              height: entry.contentRect.height,
+            };
+        setSize(newSize);
       }
     };
 
@@ -32,7 +44,7 @@ function useElementSize<T extends HTMLElement>(): [Size, React.RefObject<T>] {
       }
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [includePadding]);
 
   return [size, elementRef];
 }

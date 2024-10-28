@@ -7,6 +7,12 @@
   max-width: 30rem;
 }
 
+.stats.calendarMonthSmall {
+  margin: 0;
+  border: solid 2px var(--primary-color);
+  border-radius: 8px;
+}
+
 .header {
   height: 3rem;
   padding: 0.25rem 0rem;
@@ -28,10 +34,22 @@
   font-weight: 600;
 }
 
+.stats .weekDays > div {
+  color: var(--gray-mid);
+}
+
 .monthText {
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--gray-light);
+}
+
+.stats .monthText {
+  color: var(--gray);
+}
+
+.stats .arrowContainer {
+  color: var(--gray-mid);
 }
 
 .arrowContainer {
@@ -66,10 +84,22 @@
   background-color: var(--primary-color-dark);
 }
 
+.stats .selected {
+  background-color: var(--primary-color-light);
+}
+
 .dayNumber {
   text-align: end;
   font-weight: 600;
   color: var(--gray-light);
+}
+
+.stats .dayNumber {
+  color: var(--gray);
+}
+
+.stats .selected .dayNumber {
+  color: var(--gray-dark);
 }
 
 .selected .dayNumber {
@@ -78,6 +108,10 @@
 
 .notInMonth .dayNumber {
   color: var(--gray);
+}
+
+.stats .notInMonth .dayNumber {
+  color: var(--gray-light);
 }
 
 .statusBar {

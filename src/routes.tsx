@@ -6,12 +6,14 @@ import Categories from "./views/Categories";
 import Category from "./views/Category";
 import Configuration from "./views/Configuration";
 import Dashboard from "./views/Dashboard";
+import Daystats from "./views/Daystats";
 import LandingPage from "./views/LandingPage";
 import Login from "./views/Login";
 import NotFound from "./views/NotFound";
 import Settings from "./views/Settings";
 import Signup from "./views/Signup";
 import Stats from "./views/Stats";
+import Weekstats from "./views/Weekstats";
 
 const Routes = () => {
   const openRoutes = [
@@ -60,6 +62,14 @@ const Routes = () => {
         {
           path: "/stats",
           element: <Stats />,
+        },
+        {
+          path: "/stats/day",
+          element: <Daystats />,
+        },
+        {
+          path: "/stats/week",
+          element: <Weekstats />,
         },
         {
           path: "/categories",
