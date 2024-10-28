@@ -7,6 +7,7 @@ import DayStatsCategories from "../components/stats/DayStatsCategories/DayStatsC
 import DayStatsCharts from "../components/stats/DayStatsCharts/DayStatsCharts";
 import DayStatsHeader from "../components/stats/DayStatsHeader/DayStatsHeader";
 import DayStatsMain from "../components/stats/DayStatsMain/DayStatsMain";
+import NoStatsSection from "../components/stats/NoStatsSection/NoStatsSection";
 import StatsLayout from "../components/stats/StatsLayout/StatsLayout";
 import { useHandleSearchParam } from "../hooks/useHandleSearchParam";
 import useSelectSession from "../hooks/useSelectSession";
@@ -34,7 +35,7 @@ const Daystats = () => {
   useEffect(() => addParam(), []);
 
   const { data, isLoading, error } = useQuery({
-    enabled: !!currentSession || !!currentValue,
+    enabled: !!currentSession && !!currentValue,
     ...queryConfig,
     queryKey: ["stats", currentSession?.id, currentValue],
     queryFn: () =>
@@ -51,25 +52,40 @@ const Daystats = () => {
 
   return (
     <Layout name="Stats">
-      <StatsLayout
-        breadcrumbs={breadcrumbs}
-        sections={[
-          <DayStatsHeader sessionInfo={data.sessionInfo} />,
-          <DayStatsMain
-            day={data.day}
-            dayComparisonInfo={data.dayComparisonInfo}
-            dayTrendChartData={data.dayTrendChartData}
-          />,
-          <DayStatsCharts
-            chartData={data.dayHorizontalBarChartData}
-            day={data.day}
-          />,
-          <DayStatsCategories
-            day={data.day}
-            dayComparisonInfo={data.dayComparisonInfo}
-          />,
-        ]}
-      />
+      {data.status === "exists" &&
+        data.day &&
+        data.dayComparisonInfo &&
+        data.dayHorizontalBarChartData &&
+        data.dayTrendChartData && (
+          <StatsLayout
+            breadcrumbs={breadcrumbs}
+            sections={[
+              <DayStatsHeader sessionInfo={data.sessionInfo} />,
+              <DayStatsMain
+                day={data.day}
+                dayComparisonInfo={data.dayComparisonInfo}
+                dayTrendChartData={data.dayTrendChartData}
+              />,
+              <DayStatsCharts
+                chartData={data.dayHorizontalBarChartData}
+                day={data.day}
+              />,
+              <DayStatsCategories
+                day={data.day}
+                dayComparisonInfo={data.dayComparisonInfo}
+              />,
+            ]}
+          />
+        )}
+      {data.status === "not_exists" && (
+        <StatsLayout
+          breadcrumbs={breadcrumbs}
+          sections={[
+            <DayStatsHeader sessionInfo={data.sessionInfo} />,
+            <NoStatsSection />,
+          ]}
+        />
+      )}
     </Layout>
   );
 };

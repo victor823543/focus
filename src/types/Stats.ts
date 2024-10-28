@@ -2,11 +2,12 @@ import { Category, CategoryPeriodDateStats } from "./Category";
 import { CategoryScore } from "./Day";
 
 export type DayStatsResponse = {
-  day: DayRelevant;
-  dayComparisonInfo: DayComparisonInfo;
-  dayHorizontalBarChartData: DayHorizontalBarChartData;
+  status: "exists" | "not_exists";
+  day?: DayRelevant;
+  dayComparisonInfo?: DayComparisonInfo;
+  dayHorizontalBarChartData?: DayHorizontalBarChartData;
   sessionInfo: SessionStatsInfo;
-  dayTrendChartData: DayTrendChartData;
+  dayTrendChartData?: DayTrendChartData;
 };
 
 export type CategoriesInfo = Record<
