@@ -11,6 +11,7 @@ import {
   setCurrentDate,
 } from "../features/calendar/calendarSlice";
 import { DayStatus } from "../types/Day";
+import { toYMD } from "../utils/functions";
 import useSelectSession from "./useSelectSession";
 
 // Utility Types for readability
@@ -185,7 +186,7 @@ export const useCalendar = () => {
 
   // Method to update the current date
   const goToDate = (newDate: Date) => {
-    dispatch(setCurrentDate(newDate.toISOString()));
+    dispatch(setCurrentDate(toYMD(newDate)));
   };
 
   const getDateStatus = (date: Date, hasResult: boolean) => {

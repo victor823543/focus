@@ -1,5 +1,5 @@
 import { Controller, FieldValues, Path, UseFormReturn } from "react-hook-form";
-import { dateToInputFormat } from "../../../utils/functions";
+import { dateToInputFormat, toYMD } from "../../../utils/functions";
 import styles from "./DateInput.module.css";
 
 type DateInputProps<TFieldValues extends FieldValues> = {
@@ -26,7 +26,7 @@ const DateInput = <TFieldValues extends FieldValues>({
             id={name}
             type="date"
             onBlur={onBlur}
-            onChange={(e) => onChange(new Date(e.target.value).toISOString())}
+            onChange={(e) => onChange(toYMD(new Date(e.target.value)))}
             value={dateToInputFormat(value)}
           />
           {error?.message}

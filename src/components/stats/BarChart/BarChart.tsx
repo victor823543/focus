@@ -1,4 +1,5 @@
 import { BarDatum, ResponsiveBar } from "@nivo/bar";
+import { Theme } from "@nivo/core";
 import React from "react";
 import { Category } from "../../../types/Category";
 import { chartTheme } from "../../../utils/constants";
@@ -13,6 +14,7 @@ type BarChartProps = {
   layout?: "vertical" | "horizontal";
   colors?: any;
   margin?: { top: number; right: number; bottom: number; left: number };
+  theme?: Theme;
 };
 
 function setColor(id: string | number, categories: Category[]) {
@@ -32,6 +34,7 @@ const BarChart: React.FC<BarChartProps> = ({
   layout = "vertical",
   colors,
   margin = { top: 20, right: 10, bottom: 40, left: 30 },
+  theme,
 }) => {
   return (
     <ResponsiveBar
@@ -60,7 +63,7 @@ const BarChart: React.FC<BarChartProps> = ({
         truncateTickAt: 0,
       }}
       enableLabel={false}
-      theme={chartTheme}
+      theme={theme ? theme : chartTheme}
     />
   );
 };

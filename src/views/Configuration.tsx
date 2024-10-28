@@ -14,6 +14,7 @@ import useSelectSession from "../hooks/useSelectSession";
 import { useAuth } from "../provider/authProvider";
 import { CreateSessionResponse } from "../types/Session";
 import { callAPI } from "../utils/apiService";
+import { toYMD } from "../utils/functions";
 
 const categorySchema = yup.object({
   name: yup.string().required(),
@@ -95,7 +96,11 @@ const Configuration = () => {
 
   const configureMutation = useMutation({
     mutationFn: (params: ConfigureFormFields) =>
-      callAPI<CreateSessionResponse>(`/sessions/configure`, "POST", params),
+      callAPI<CreateSessionResponse>(`/sessions/configure`, "POST", {
+        ...params,
+        start: toYMD(params.start),
+        end: params.end ? toYMD(params.end) : null,
+      }),
     onSuccess: async (response) => {
       await reloadUserStatus();
       selectSession(response);
