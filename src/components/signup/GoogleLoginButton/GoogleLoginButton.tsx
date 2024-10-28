@@ -8,7 +8,7 @@ import { callAPI } from "../../../utils/apiService";
 import styles from "./GoogleLoginButton.module.css";
 
 const GoogleLoginButton: React.FC = () => {
-  const { setToken } = useAuth();
+  const { setToken, reloadUserStatus } = useAuth();
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -16,9 +16,11 @@ const GoogleLoginButton: React.FC = () => {
       callAPI<{ token: string }>("/auth/google-login", "POST", {
         token: googleToken,
       }),
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       setToken(response.token);
-      navigate("/dashboard");
+      const newUserStatus = await reloadUserStatus();
+      if (newUserStatus === "Configured") navigate("/dashboard");
+      else navigate("/configuration");
     },
     onError: (error) => {
       console.error(error);
