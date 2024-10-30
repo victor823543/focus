@@ -1,15 +1,25 @@
-.h2 {
-  font-size: 1.4rem;
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.h3 {
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--gray-x-dark);
-  margin-bottom: 1rem;
 }
 
 .progressWrapper {
+  display: none;
+}
+
+.progressWrapperSmall {
   width: fit-content;
   margin: 0 auto;
   margin-bottom: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
 }
 
 .percentage {
@@ -20,8 +30,59 @@
   font-size: 0.8rem;
   color: var(--gray);
   margin-bottom: 0.25rem;
+  text-align: center;
 }
 
 .bold {
   font-weight: 500;
+}
+
+.data {
+  background-color: var(--primary-color-2x-light);
+  padding: 0 5px;
+  border-radius: 3px;
+}
+
+@media (min-width: 480px) {
+  .progressWrapper {
+    width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    margin-top: 0.75rem;
+    display: block;
+  }
+
+  .progressWrapperSmall {
+    display: none;
+  }
+}
+
+@media (min-width: 880px) {
+  .topP {
+    display: none;
+  }
+
+  .bottomP {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .topP {
+    display: block;
+  }
+
+  .bottomP {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .topP {
+    display: none;
+  }
+
+  .bottomP {
+    display: none;
+  }
 }

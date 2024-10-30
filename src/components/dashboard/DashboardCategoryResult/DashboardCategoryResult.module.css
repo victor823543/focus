@@ -6,7 +6,7 @@
 }
 
 .infoBox {
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   background-color: var(--gray-light-tr);
   border-radius: 8px;
   font-weight: 600;
@@ -16,7 +16,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-between;
   box-sizing: border-box;
 }
 
@@ -41,4 +41,35 @@
   height: 100%;
   border-radius: 8px;
   background-color: var(--hex);
+}
+
+.categoryList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1rem;
+  overflow-y: scroll;
+  max-height: 17rem;
+}
+
+@media (min-width: 880px) {
+  .categoryList {
+    display: block;
+    max-height: 25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .categoryList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1rem;
+    max-height: 18rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .categoryList {
+    display: block;
+    max-height: 25rem;
+  }
 }

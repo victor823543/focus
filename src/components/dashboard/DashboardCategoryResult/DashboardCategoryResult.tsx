@@ -18,7 +18,7 @@ const DashboardCategoryResult: React.FC<DashboardCategoryResultProps> = ({
 
   const categories = currentSession.categories;
   return (
-    <div>
+    <div className={styles.container}>
       <h2 className={styles.h2}>Category Score This Week</h2>
       <div className={styles.categoryList}>
         {Object.entries(categoryData).map(([id, score]) => {
