@@ -15,12 +15,13 @@ const LineTabs: React.FC<LineTabsProps> = ({
   color,
 }) => {
   return (
-    <div className={styles.tabs}>
+    <div className={styles.tabs} data-testid="line-tabs">
       {tabs.map((tab) => (
         <div
           key={tab.id}
           onClick={() => setSelected(tab.id)}
           className={`${styles.tab} ${selected === tab.id ? styles.selected : ""}`}
+          data-testid={`tab-${tab.id}`}
         >
           <span>{tab.label}</span>
           <div className={`${styles.line} ${styles.outline}`}></div>
@@ -28,6 +29,7 @@ const LineTabs: React.FC<LineTabsProps> = ({
             <div
               style={color ? { backgroundColor: color } : {}}
               className={`${styles.line} ${styles.foreground}`}
+              data-testid={`line-${tab.id}`}
             ></div>
           )}
         </div>

@@ -16,14 +16,22 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
     <nav className={styles.breadcrumbs}>
       <ol className={styles.ol}>
         <li className={styles.li}>
-          <Link to="/dashboard" className={styles.homeLink}>
+          <Link
+            to="/dashboard"
+            className={styles.homeLink}
+            data-testid={"link-home"}
+          >
             <HomeIcon className={styles.icon} />
           </Link>
         </li>
         {items.map((item, index) => (
           <li key={index} className={styles.li}>
             <ChevronRightIcon className={`${styles.icon} ${styles.chevron}`} />
-            <Link to={item.href} className={styles.link}>
+            <Link
+              to={item.href}
+              className={styles.link}
+              data-testid={`link-${item.name}`}
+            >
               {item.name}
             </Link>
           </li>

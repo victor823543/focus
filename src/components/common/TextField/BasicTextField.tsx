@@ -1,5 +1,4 @@
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
 import { Controller, FieldValues, Path, UseFormReturn } from "react-hook-form";
 import styles from "./BasicTextField.module.css";
 
@@ -26,8 +25,6 @@ const BasicTextField = <TFieldValues extends FieldValues>({
   onChangeCallback,
   dataCy,
 }: BasicTextFieldProps<TFieldValues>) => {
-  const [inputFocus, setInputFocus] = useState(false);
-
   return (
     <Controller
       name={name}
@@ -49,10 +46,8 @@ const BasicTextField = <TFieldValues extends FieldValues>({
               onChange(e.target.value),
                 onChangeCallback ? onChangeCallback() : undefined;
             }}
-            onFocus={() => setInputFocus(true)}
             onBlur={() => {
               onBlur();
-              setInputFocus(false);
             }}
             autoCapitalize="off"
             autoComplete={autoComplete}
