@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { WeekCategoryData } from "../../../types/Dashboard";
 import { to1Dec } from "../../../utils/functions";
@@ -13,6 +14,7 @@ const DashboardCategoryResult: React.FC<DashboardCategoryResultProps> = ({
   categoryData,
 }) => {
   const { currentSession } = useSelectSession();
+  const navigate = useNavigate();
 
   if (currentSession === null) return <Loading />;
 
@@ -27,6 +29,7 @@ const DashboardCategoryResult: React.FC<DashboardCategoryResultProps> = ({
             <div
               key={id}
               className={styles.infoContainer}
+              onClick={() => navigate(`/categories/${id}`)}
               style={
                 {
                   "--hex": categoryInfo?.color.main,
