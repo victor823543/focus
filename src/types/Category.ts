@@ -3,6 +3,7 @@ export type Category = {
   user: string;
   name: string;
   importance: number;
+  description?: string;
   color: Color;
   timestamp: number;
 };
@@ -12,6 +13,11 @@ export type CreateCategoryParams = {
   importance: number;
   color: Color;
 };
+
+export type UpdateCategoryParams = Partial<{
+  importance: number;
+  color: Color;
+}>;
 
 export type Color = {
   name: string;
@@ -48,4 +54,5 @@ export type GetCategoryResponse = {
   stats: CategoryStats;
   category: Category;
   dateStats: CategoryDateStats;
+  totalDays: number;
 };

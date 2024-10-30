@@ -11,6 +11,7 @@ import {
   setCurrentDate,
 } from "../features/calendar/calendarSlice";
 import { DayStatus } from "../types/Day";
+import { toYMD } from "../utils/functions";
 import useSelectSession from "./useSelectSession";
 
 // Utility Types for readability
@@ -33,7 +34,7 @@ export const addDays = (date: Date, days: number) => {
 };
 
 // Helper function to compare dates (ignores time)
-const isSameDay = (date1: Date, date2: Date): boolean => {
+export const isSameDay = (date1: Date, date2: Date): boolean => {
   return (
     date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
@@ -185,7 +186,7 @@ export const useCalendar = () => {
 
   // Method to update the current date
   const goToDate = (newDate: Date) => {
-    dispatch(setCurrentDate(newDate.toISOString()));
+    dispatch(setCurrentDate(toYMD(newDate)));
   };
 
   const getDateStatus = (date: Date, hasResult: boolean) => {

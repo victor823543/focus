@@ -11,6 +11,15 @@ export const dateToInputFormat = (dateString: string) => {
   return `${year}-${month}-${day}`;
 };
 
+export function toYMD(date: Date | string | number): string {
+  date = new Date(date);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 export const formatMonthYear = (date: Date): string => {
   return date.toLocaleDateString("en-US", {
     month: "long",
@@ -77,6 +86,18 @@ export function resetToMidnight(date: Date): Date {
 
 // Functions for numbers
 export const to1Dec = (number: number) => Math.round(number * 10) / 10;
+
+export function calculateTickValues(maxValue: number) {
+  const n = Math.floor((maxValue - 30) / 30) + 1;
+  const step = 5 * n + 5;
+
+  const tickValues = [];
+  for (let i = 0; i <= maxValue; i += step) {
+    tickValues.push(i);
+  }
+
+  return tickValues;
+}
 
 // Functions for objects
 export function createRecordFromRange(

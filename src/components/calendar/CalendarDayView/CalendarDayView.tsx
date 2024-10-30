@@ -13,7 +13,7 @@ import { useCalendar } from "../../../hooks/useCalendar";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { DayStatus, ListDaysReturn, UpdateDayParams } from "../../../types/Day";
 import { callAPI } from "../../../utils/apiService";
-import { to1Dec } from "../../../utils/functions";
+import { to1Dec, toYMD } from "../../../utils/functions";
 import Alerts from "../../common/Alerts/Alerts";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { StaticCircularProgress } from "../../common/CircularProgress/CircularProgress";
@@ -48,10 +48,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
   const { currentSession } = useSelectSession();
 
   // Handle constants
-  const thisDay = useMemo(
-    () => days[currentDate.toISOString()],
-    [days, currentDate],
-  );
+  const thisDay = useMemo(() => days[toYMD(currentDate)], [days, currentDate]);
   const dayCategories = useMemo(
     () => (thisDay ? thisDay.categories : currentSession?.categories || []),
     [thisDay, currentSession],
@@ -61,7 +58,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       thisDay ? thisDay.maxScore : currentSession ? currentSession.maxScore : 0,
     [thisDay, currentSession],
   );
-  const currentDateString = currentDate.toISOString();
+  const currentDateString = toYMD(currentDate);
 
   // State for score
   const [totalScore, setTotalScore] = useState(
@@ -123,6 +120,12 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       queryClient.invalidateQueries({
         queryKey: ["session", currentSession?.id],
       });
+      queryClient.refetchQueries({
+        queryKey: ["dashboard", currentSession?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["stats", currentSession?.id, toYMD(currentDate)],
+      });
       pushAlert(new SuccessAlert("Day created successfully", { duration: 4 }));
     },
     onError: (err) => console.log(err.message),
@@ -138,6 +141,12 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       });
       queryClient.invalidateQueries({
         queryKey: ["session", currentSession?.id],
+      });
+      queryClient.refetchQueries({
+        queryKey: ["dashboard", currentSession?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["stats", currentSession?.id, toYMD(currentDate)],
       });
       pushAlert(new SuccessAlert("Day updated successfully", { duration: 4 }));
     },
