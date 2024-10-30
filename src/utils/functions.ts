@@ -87,6 +87,18 @@ export function resetToMidnight(date: Date): Date {
 // Functions for numbers
 export const to1Dec = (number: number) => Math.round(number * 10) / 10;
 
+export function calculateTickValues(maxValue: number) {
+  const n = Math.floor((maxValue - 30) / 30) + 1;
+  const step = 5 * n + 5;
+
+  const tickValues = [];
+  for (let i = 0; i <= maxValue; i += step) {
+    tickValues.push(i);
+  }
+
+  return tickValues;
+}
+
 // Functions for objects
 export function createRecordFromRange(
   start: number,

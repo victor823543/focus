@@ -27,16 +27,25 @@ const Dashboard = () => {
   console.log(data);
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined || currentSession === null)
+    return <Loading />;
 
   return (
     <Layout name="Dashboard">
       <DashboardLayout
         calendar={<DashboardCalendar />}
         statsTop={
-          <DashboardBarChart chartData={data.currentWeekBarChartData} />
+          <DashboardBarChart
+            chartData={data.currentWeekBarChartData}
+            maxScore={currentSession.maxScore}
+          />
         }
-        statsBottom={<DashboardLineChart chartData={data.dayTrendChartData} />}
+        statsBottom={
+          <DashboardLineChart
+            chartData={data.dayTrendChartData}
+            maxScore={currentSession.maxScore}
+          />
+        }
         comparison={
           <WeekImprovementBox
             comparison={data.weekImprovement}
