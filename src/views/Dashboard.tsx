@@ -1,56 +1,67 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
-import BorderAnimationButton from "../components/common/Buttons/BorderAnimationButton/BorderAnimationButton";
-import { Container } from "../components/common/Containers/Containers";
 import Loading from "../components/common/Loading/Loading";
+import DashboardBarChart from "../components/dashboard/DashboardBarChart/DashboardBarChart";
+import DashboardCalendar from "../components/dashboard/DashboardCalendar/DashboardCalendar";
+import DashboardCategoryResult from "../components/dashboard/DashboardCategoryResult/DashboardCategoryResult";
+import DashboardLayout from "../components/dashboard/DashboardLayout/DashboardLayout";
+import DashboardLineChart from "../components/dashboard/DashboardLineChart/DashboardLineChart";
+import WeekImprovementBox from "../components/dashboard/WeekImprovementBox/WeekImprovementBox";
+import WeekScoreLeftBox from "../components/dashboard/WeekScoreLeftBox/WeekScoreLeftBox";
 import Layout from "../components/layout/Layout/Layout";
-import useCreateSession from "../hooks/useCreateSession";
 import useSelectSession from "../hooks/useSelectSession";
-import { ListSessionsResponse } from "../types/Session";
+import { DashboardDataResponse } from "../types/Dashboard";
 import { callAPI } from "../utils/apiService";
+import { queryConfig } from "../utils/constants";
 
 const Dashboard = () => {
-  const createSession = useCreateSession();
-  const { selectSession, selectSessions, currentSession } = useSelectSession();
+  const { currentSession } = useSelectSession();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["sessions"],
-    queryFn: () => callAPI<ListSessionsResponse>("/sessions", "GET"),
+    enabled: !!currentSession,
+    ...queryConfig,
+    queryKey: ["dashboard", currentSession?.id],
+    queryFn: () =>
+      callAPI<DashboardDataResponse>(`/dashboard/${currentSession?.id}`, "GET"),
   });
 
-  // const {
-  //   data: sessionData,
-  //   isLoading: sessionIsLoading,
-  //   error: sessionError,
-  // } = useQuery({
-  //   enabled: !!currentSession && !!data,
-  //   ...queryConfig,
-  //   queryKey: ["session", currentSession?.id],
-  //   queryFn: () => callAPI<Session>(`/sessions/${currentSession?.id}`, "GET"),
-  // });
-
-  useEffect(() => {
-    if (data && data.length > 0) {
-      if (!currentSession) {
-        selectSession(data[0]);
-      }
-      selectSessions(data);
-    }
-  }, [data]);
+  console.log(data);
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined || currentSession === null)
+    return <Loading />;
 
-  const sessions = data;
   return (
     <Layout name="Dashboard">
-      {sessions.length === 0 && (
-        <Container style={{ height: "100%" }} flex="center">
-          <BorderAnimationButton onClick={createSession}>
-            Create Session
-          </BorderAnimationButton>
-        </Container>
-      )}
+      <DashboardLayout
+        calendar={<DashboardCalendar />}
+        statsTop={
+          <DashboardBarChart
+            chartData={data.currentWeekBarChartData}
+            maxScore={currentSession.maxScore}
+          />
+        }
+        statsBottom={
+          <DashboardLineChart
+            chartData={data.dayTrendChartData}
+            maxScore={currentSession.maxScore}
+          />
+        }
+        comparison={
+          <WeekImprovementBox
+            comparison={data.weekImprovement}
+            isFirstWeek={data.isFirstWeek}
+          />
+        }
+        weeklyTarget={
+          <WeekScoreLeftBox
+            data={data.weekScoreLeft}
+            isFirstWeek={data.isFirstWeek}
+          />
+        }
+        categories={
+          <DashboardCategoryResult categoryData={data.weekCategoryData} />
+        }
+      />
     </Layout>
   );
 };
