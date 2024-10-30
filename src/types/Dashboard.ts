@@ -6,6 +6,7 @@ export type DashboardDataResponse = {
   weekCategoryData: WeekCategoryData;
   dayTrendChartData: DayTrendChartData;
   weekScoreLeft: WeekScoreLeft;
+  isFirstWeek: boolean;
 };
 
 export type CurrentWeekBarChartData = Array<{

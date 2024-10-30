@@ -6,32 +6,38 @@ import styles from "./WeekScoreLeftBox.module.css";
 
 type WeekScoreLeftBoxProps = {
   data: WeekScoreLeft;
+  isFirstWeek: boolean;
 };
 
-const WeekScoreLeftBox: React.FC<WeekScoreLeftBoxProps> = ({ data }) => {
+const WeekScoreLeftBox: React.FC<WeekScoreLeftBoxProps> = ({
+  data,
+  isFirstWeek,
+}) => {
+  const toRecordPercentage = isFirstWeek ? 100 : data.toRecordPercentage;
+  const toAveragePercentage = isFirstWeek ? 100 : data.toAveragePercentage;
   return (
     <div className={styles.box}>
       <div className={styles.container}>
         <h3 className={styles.h3}>Record week</h3>
         <div className={styles.progressWrapper}>
           <HalfCircleProgress
-            progress={data.toRecordPercentage}
+            progress={toRecordPercentage}
             size={150}
             strokeWidth={15}
           >
             <span className={styles.percentage}>
-              {to1Dec(data.toRecordPercentage)}%
+              {to1Dec(toRecordPercentage)}%
             </span>
           </HalfCircleProgress>
         </div>
         <div className={styles.progressWrapperSmall}>
           <HalfCircleProgress
-            progress={data.toRecordPercentage}
+            progress={toRecordPercentage}
             size={100}
             strokeWidth={10}
           >
             <span className={styles.percentage}>
-              {to1Dec(data.toRecordPercentage)}%
+              {to1Dec(toRecordPercentage)}%
             </span>
           </HalfCircleProgress>
         </div>
@@ -50,23 +56,23 @@ const WeekScoreLeftBox: React.FC<WeekScoreLeftBoxProps> = ({ data }) => {
         <h3 className={styles.h3}>Average week</h3>
         <div className={styles.progressWrapper}>
           <HalfCircleProgress
-            progress={data.toAveragePercentage}
+            progress={toAveragePercentage}
             size={150}
             strokeWidth={15}
           >
             <span className={styles.percentage}>
-              {to1Dec(data.toAveragePercentage)}%
+              {to1Dec(toAveragePercentage)}%
             </span>
           </HalfCircleProgress>
         </div>
         <div className={styles.progressWrapperSmall}>
           <HalfCircleProgress
-            progress={data.toAveragePercentage}
+            progress={toAveragePercentage}
             size={100}
             strokeWidth={10}
           >
             <span className={styles.percentage}>
-              {to1Dec(data.toAveragePercentage)}%
+              {to1Dec(toAveragePercentage)}%
             </span>
           </HalfCircleProgress>
         </div>
@@ -83,6 +89,12 @@ const WeekScoreLeftBox: React.FC<WeekScoreLeftBoxProps> = ({ data }) => {
           </p>
         </div>
       </div>
+      {isFirstWeek && (
+        <div className={styles.isFirstWeek}>
+          <h3>This is your first week.</h3>
+          <p> There is no previous week to compare to.</p>
+        </div>
+      )}
     </div>
   );
 };

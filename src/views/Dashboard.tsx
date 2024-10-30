@@ -37,8 +37,18 @@ const Dashboard = () => {
           <DashboardBarChart chartData={data.currentWeekBarChartData} />
         }
         statsBottom={<DashboardLineChart chartData={data.dayTrendChartData} />}
-        comparison={<WeekImprovementBox comparison={data.weekImprovement} />}
-        weeklyTarget={<WeekScoreLeftBox data={data.weekScoreLeft} />}
+        comparison={
+          <WeekImprovementBox
+            comparison={data.weekImprovement}
+            isFirstWeek={data.isFirstWeek}
+          />
+        }
+        weeklyTarget={
+          <WeekScoreLeftBox
+            data={data.weekScoreLeft}
+            isFirstWeek={data.isFirstWeek}
+          />
+        }
         categories={
           <DashboardCategoryResult categoryData={data.weekCategoryData} />
         }
