@@ -120,6 +120,12 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       queryClient.invalidateQueries({
         queryKey: ["session", currentSession?.id],
       });
+      queryClient.refetchQueries({
+        queryKey: ["dashboard", currentSession?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["stats", currentSession?.id, toYMD(currentDate)],
+      });
       pushAlert(new SuccessAlert("Day created successfully", { duration: 4 }));
     },
     onError: (err) => console.log(err.message),
@@ -135,6 +141,12 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
       });
       queryClient.invalidateQueries({
         queryKey: ["session", currentSession?.id],
+      });
+      queryClient.refetchQueries({
+        queryKey: ["dashboard", currentSession?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["stats", currentSession?.id, toYMD(currentDate)],
       });
       pushAlert(new SuccessAlert("Day updated successfully", { duration: 4 }));
     },
