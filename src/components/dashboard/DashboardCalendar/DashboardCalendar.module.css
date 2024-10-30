@@ -1,0 +1,73 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gray-x-dark);
+}
+
+.arrows {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.arrow {
+  width: 1.5rem;
+  cursor: pointer;
+  color: var(--gray);
+}
+
+.daySelect {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  color: var(--gray-dark);
+  padding: 0.75rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.todayBar {
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  border-radius: 2px;
+  background-color: var(--blue);
+  bottom: -4px;
+}
+
+.selected {
+  background-color: var(--primary-color-light);
+}
+
+.weekDay {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dayNumber {
+  font-size: 0.9rem;
+  font-weight: 400;
+
+  position: relative;
+}
+
+.weekend {
+  color: var(--red);
+}
+
+.dayItems {
+  margin-top: 1.5rem;
+}
