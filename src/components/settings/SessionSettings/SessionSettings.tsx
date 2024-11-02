@@ -199,6 +199,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
                   onClick={() => deleteMutation.mutate()}
                   type="button"
                   variant="strong-warning"
+                  data-testid="confirm-delete"
                 >
                   Delete
                 </CustomizableButton>
