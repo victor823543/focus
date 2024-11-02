@@ -1,5 +1,12 @@
 import { ConfigureFormFields } from "../../src/views/Configuration";
 
+export const mockUser = {
+  username: "testuser",
+  email: "user@example.com",
+  _id: "1",
+  timestamp: 1633072800000,
+};
+
 export const mockColors = [
   {
     name: "Red",

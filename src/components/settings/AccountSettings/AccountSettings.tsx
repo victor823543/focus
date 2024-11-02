@@ -166,6 +166,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ pushAlert }) => {
                 className={styles.passwordInput}
                 onChangeCallback={() => form.trigger("rePassword")}
                 dataCy="password"
+                testId="password-input"
               />
             </div>
             <div>
@@ -181,6 +182,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ pushAlert }) => {
                 placeholder="********"
                 className={styles.passwordInput}
                 dataCy="rePassword"
+                testId="re-password-input"
               />
             </div>
           </div>
@@ -242,6 +244,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({ pushAlert }) => {
                   type="button"
                   variant="strong-warning"
                   data-cy="confirm-delete"
+                  data-testid="confirm-delete"
                 >
                   Delete
                 </CustomizableButton>

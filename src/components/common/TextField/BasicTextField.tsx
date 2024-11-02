@@ -12,6 +12,7 @@ type BasicTextFieldProps<TFieldValues extends FieldValues> = {
   placeholder?: string;
   onChangeCallback?: () => void;
   dataCy?: string;
+  testId?: string;
 };
 
 const BasicTextField = <TFieldValues extends FieldValues>({
@@ -24,6 +25,7 @@ const BasicTextField = <TFieldValues extends FieldValues>({
   placeholder = "",
   onChangeCallback,
   dataCy,
+  testId,
 }: BasicTextFieldProps<TFieldValues>) => {
   return (
     <Controller
@@ -55,6 +57,7 @@ const BasicTextField = <TFieldValues extends FieldValues>({
             autoCorrect="off"
             className={`${styles.input} ${className}`}
             data-cy={dataCy}
+            data-testid={testId}
           />
           {error && (
             <div className={styles.error}>
