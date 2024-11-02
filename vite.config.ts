@@ -6,12 +6,13 @@ import { defineConfig } from "vitest/config";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
+  const isTesting = process.env.VITE_TESTING === "true"; // Check if in testing mode
 
   return {
     plugins: [react()],
     server: {
       host: "0.0.0.0",
-      ...(isProduction
+      ...(isProduction || isTesting
         ? { open: true } // Open browser on server start in production
         : {
             https: {
