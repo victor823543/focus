@@ -54,6 +54,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
                   "--category-color": category.color?.main,
                 } as React.CSSProperties
               }
+              data-testid="category-importance-form"
             >
               <div className={styles.categoryContainer}>
                 <div className={styles.category}>{category.name}</div>
@@ -61,6 +62,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
                   className={styles.colorBox}
                   style={{ backgroundColor: category.color?.main }}
                   onClick={() => setShowColorPicker(index)}
+                  data-testid="color-box"
                 ></div>
               </div>
 
@@ -76,6 +78,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
                 <div
                   className={styles.modalWrapper}
                   onClick={() => setShowColorPicker(null)}
+                  data-testid="modal-wrapper"
                 >
                   <div
                     className={styles.colorPickerModal}

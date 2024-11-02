@@ -1,3 +1,5 @@
+import { ConfigureFormFields } from "../../src/views/Configuration";
+
 export const mockColors = [
   {
     name: "Red",
@@ -47,3 +49,46 @@ export const mockCategories = [
     timestamp: 1633072800000,
   },
 ];
+
+export const mockConfigurationState = {
+  categories: [
+    {
+      name: "Study",
+      importance: 1,
+      color: {
+        name: "Gray",
+        main: "#9ca3af",
+        light: "#e5e7eb",
+        dark: "#374151",
+      },
+    },
+    {
+      name: "Sleep",
+      importance: 1,
+      color: {
+        name: "Gray",
+        main: "#9ca3af",
+        light: "#e5e7eb",
+        dark: "#374151",
+      },
+    },
+    {
+      name: "Read",
+      importance: 1,
+      color: {
+        name: "Gray",
+        main: "#9ca3af",
+        light: "#e5e7eb",
+        dark: "#374151",
+      },
+    },
+  ],
+  customCategories: [],
+};
+
+export const mockEmptyConfigurationForm: ConfigureFormFields = {
+  title: "Test",
+  categories: [],
+  start: "2021-10-01",
+  end: null,
+};
