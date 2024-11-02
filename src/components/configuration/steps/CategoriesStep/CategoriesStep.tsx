@@ -121,6 +121,7 @@ const CategoriesStep = () => {
                   : () => addConfigCategory(category)
               }
               data-cy={`category-${category.name}`}
+              data-testid="category"
             >
               {category.name}
             </div>
@@ -140,11 +141,13 @@ const CategoriesStep = () => {
             className={styles.colorBox}
             style={{ backgroundColor: form.watch("color.main") }}
             onClick={() => setShowColorPicker((prev) => !prev)}
+            data-testid="color-box"
           ></div>
           {showColorPicker && (
             <div
               className={styles.modalWrapper}
               onClick={() => setShowColorPicker(false)}
+              data-testid="modal-wrapper"
             >
               <div
                 className={styles.colorPickerModal}
