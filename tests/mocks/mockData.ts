@@ -1,4 +1,4 @@
-import { Category } from "../../src/types/Category";
+import { Category, GetCategoryResponse } from "../../src/types/Category";
 import { CreateSessionResponse } from "../../src/types/Session";
 import { ConfigureFormFields } from "../../src/views/Configuration";
 
@@ -209,4 +209,106 @@ export const mockEmptyConfigurationForm: ConfigureFormFields = {
   categories: [],
   start: "2021-10-01",
   end: null,
+};
+
+export const mockGetCategoryResponse: GetCategoryResponse = {
+  stats: {
+    allTime: {
+      totalScore: 34,
+      totalCalculatedScore: 74.8,
+      averageScore: 5.7,
+      averageCalculatedScore: 12.5,
+    },
+    thisWeek: {
+      totalScore: 34,
+      totalCalculatedScore: 74.8,
+      averageScore: 5.7,
+      averageCalculatedScore: 12.5,
+    },
+    thisMonth: {
+      totalScore: 12,
+      totalCalculatedScore: 26.4,
+      averageScore: 6,
+      averageCalculatedScore: 13.2,
+    },
+  },
+  dateStats: {
+    allTime: {
+      "2024-10-28": {
+        score: 7,
+        calculatedScore: 15.4,
+      },
+      "2024-10-29": {
+        score: 5,
+        calculatedScore: 11,
+      },
+      "2024-10-30": {
+        score: 6,
+        calculatedScore: 13.2,
+      },
+      "2024-10-31": {
+        score: 4,
+        calculatedScore: 8.8,
+      },
+      "2024-11-01": {
+        score: 4,
+        calculatedScore: 8.8,
+      },
+      "2024-11-02": {
+        score: 8,
+        calculatedScore: 17.6,
+      },
+    },
+    thisWeek: {
+      "2024-10-28": {
+        score: 7,
+        calculatedScore: 15.4,
+      },
+      "2024-10-29": {
+        score: 5,
+        calculatedScore: 11,
+      },
+      "2024-10-30": {
+        score: 6,
+        calculatedScore: 13.2,
+      },
+      "2024-10-31": {
+        score: 4,
+        calculatedScore: 8.8,
+      },
+      "2024-11-01": {
+        score: 4,
+        calculatedScore: 8.8,
+      },
+      "2024-11-02": {
+        score: 8,
+        calculatedScore: 17.6,
+      },
+    },
+    thisMonth: {
+      "2024-11-01": {
+        score: 4,
+        calculatedScore: 8.8,
+      },
+      "2024-11-02": {
+        score: 8,
+        calculatedScore: 17.6,
+      },
+    },
+  },
+  category: {
+    user: "671f6c4e325568b9be3caaa6",
+    name: "Work",
+    importance: 2.2,
+    description: "Should work at least 8 hours a day, with a productive day.",
+    color: {
+      name: "Indigo",
+      main: "#818cf8",
+      light: "#c7d2fe",
+      dark: "#4338ca",
+    },
+    timestamp: 1730151071,
+    id: "6720029fa35bf9442d8771f3",
+  },
+  totalDays: 6,
 };

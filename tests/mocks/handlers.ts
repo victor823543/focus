@@ -3,6 +3,7 @@ import { API_ADDRESS } from "../../src/config";
 import {
   mockCategories,
   mockColors,
+  mockGetCategoryResponse,
   mockSession,
   mockSessionCategories,
 } from "./mockData";
@@ -32,4 +33,10 @@ export const handlers = [
   http.delete(`${API_ADDRESS}/users`, () => {
     return new HttpResponse(null, { status: 204 });
   }),
+  http.put(
+    `${API_ADDRESS}/categories/update/${mockGetCategoryResponse.category.id}`,
+    () => {
+      return new HttpResponse(null, { status: 204 });
+    },
+  ),
 ];
