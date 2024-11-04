@@ -20,6 +20,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
             to="/dashboard"
             className={styles.homeLink}
             data-testid={"link-home"}
+            data-cy="link-home"
           >
             <HomeIcon className={styles.icon} />
           </Link>
@@ -31,6 +32,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
               to={item.href}
               className={styles.link}
               data-testid={`link-${item.name}`}
+              data-cy={`breadcrumb-${index + 1}`}
             >
               {item.name}
             </Link>

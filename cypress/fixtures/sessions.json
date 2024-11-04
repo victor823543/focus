@@ -31,10 +31,5 @@
       "importance": 2
     }
   ],
-  "title": "Test Session",
-  "user": {
-    "email": "testuser@example.com",
-    "username": "testuser",
-    "password": "Password123"
-  }
+  "title": "New Session"
 }

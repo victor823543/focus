@@ -31,6 +31,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ form, handleSubmit }) => {
               form={form}
               name="username"
               placeholder="Choose a username"
+              dataCy="username"
             />
           </Container>
           <Container flex="end" gap="md" paddingX="none">
@@ -39,6 +40,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ form, handleSubmit }) => {
               form={form}
               name="email"
               placeholder="Enter your email address"
+              dataCy="email"
             />
           </Container>
           <Container flex="end" gap="md" paddingX="none">
@@ -49,14 +51,20 @@ const SignupForm: React.FC<SignupFormProps> = ({ form, handleSubmit }) => {
               placeholder="Choose a strong password"
               type="password"
               autoComplete="new-password"
+              dataCy="password"
             />
           </Container>
         </Container>
-        <CustomizableButton variant="wide" size="lg" type="submit">
+        <CustomizableButton
+          variant="wide"
+          size="lg"
+          type="submit"
+          data-cy="submit"
+        >
           Submit
         </CustomizableButton>
         <GoogleLoginButton />
-        <Link to={"/login"}>
+        <Link to={"/login"} data-cy="link-login">
           Already have an account? Login <span>here.</span>
         </Link>
       </Container>

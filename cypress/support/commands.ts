@@ -23,10 +23,10 @@ declare namespace Cypress {
      */
     login(): Chainable<any>;
     /**
-     * Custom command to log in using the API and create a session.
-     * @example cy.loginWithSession()
+     * Custom command to create a new empty session for already logged in user.
+     * @example cy.createSession()
      */
-    loginWithSession(): Chainable<any>;
+    createSession(): Chainable<any>;
     /**
      * Custom command to seed the database with a user and an empty session.
      * @example cy.seedUserWithEmptySession()
@@ -87,27 +87,21 @@ Cypress.Commands.add("login", () => {
   });
 });
 
-Cypress.Commands.add("loginWithSession", () => {
-  cy.fixture("sessions").then((session) => {
-    cy.request("POST", "http://localhost:4000/api/users/login", {
-      email: session.user.email,
-      password: session.user.password,
-    })
-      .then((resp) => {
-        window.localStorage.setItem("token", resp.body.token);
-      })
-      .then((resp) => {
-        cy.request({
-          method: "POST",
-          url: "http://localhost:4000/api/sessions/configure",
-          auth: { bearer: resp.body.token },
-          body: {
-            categories: session.categories,
-            title: session.title,
-            start: addDays(resetToMidnight(new Date()), -2).toISOString(),
-          },
-        });
+Cypress.Commands.add("createSession", () => {
+  cy.window().then((window) => {
+    const token = window.localStorage.getItem("token");
+    cy.fixture("sessions").then((session) => {
+      cy.request({
+        method: "POST",
+        url: "http://localhost:4000/api/sessions/configure",
+        auth: { bearer: token },
+        body: {
+          categories: session.categories,
+          title: session.title,
+          start: addDays(resetToMidnight(new Date()), -2).toISOString(),
+        },
       });
+    });
   });
 });
 

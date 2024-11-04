@@ -22,6 +22,7 @@ const LineTabs: React.FC<LineTabsProps> = ({
           onClick={() => setSelected(tab.id)}
           className={`${styles.tab} ${selected === tab.id ? styles.selected : ""}`}
           data-testid={`tab-${tab.id}`}
+          data-cy={`tab-${tab.id}`}
         >
           <span>{tab.label}</span>
           <div className={`${styles.line} ${styles.outline}`}></div>
