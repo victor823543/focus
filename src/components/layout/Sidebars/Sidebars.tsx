@@ -68,6 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div
           className={styles.sessionDisplay}
           onClick={() => setShowSessionDropdown(!showSessionDropdown)}
+          data-cy="session-display"
         >
           <div className={styles.sessionIconWrapper}>
             <DocumentChartBarIcon />

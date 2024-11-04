@@ -72,7 +72,7 @@ const TextField = <TFieldValues extends FieldValues>({
             />
           </div>
           {error && (
-            <div className={styles.error}>
+            <div className={styles.error} data-cy="form-error">
               <ExclamationTriangleIcon
                 className={styles.errorIcon}
                 aria-hidden="true"

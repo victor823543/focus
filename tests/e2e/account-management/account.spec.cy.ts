@@ -1,15 +1,17 @@
 describe("Account Settings Functionality", () => {
-  beforeEach(() => {
-    cy.loginWithSession();
+  beforeEach(function () {
+    cy.seedUserWithEmptySession();
+    cy.loginWithEmptySession();
+    cy.fixture("user").then((users) => {
+      cy.wrap(users.userWithEmptySession).as("user");
+    });
     cy.visit("settings?tab=account");
   });
 
-  it("should render the settings page with correct values", () => {
+  it("should render the settings page with correct values", function () {
     cy.dataCy("account-settings-title").should("contain", "Account");
-    cy.fixture("user").then((testUser) => {
-      cy.dataCy("email").should("contain", `Email: ${testUser.email}`);
-      cy.dataCy("username").should("have.value", testUser.username);
-    });
+    cy.dataCy("email").should("contain", `Email: ${this.user.email}`);
+    cy.dataCy("username").should("have.value", this.user.username);
   });
 
   it("should update the username", () => {
@@ -18,7 +20,7 @@ describe("Account Settings Functionality", () => {
     cy.dataCy("username").should("have.value", "newUsername");
   });
 
-  it("should have correctly functioning submit button", () => {
+  it("should have correctly functioning submit button", function () {
     cy.dataCy("submit").should("be.disabled");
     cy.dataCy("password").type("password123");
     cy.dataCy("rePassword").type("something");
@@ -30,17 +32,26 @@ describe("Account Settings Functionality", () => {
     cy.dataCy("submit").should("be.disabled");
     cy.dataCy("username").clear().type("newUsername");
     cy.dataCy("submit").should("not.be.disabled");
-    cy.fixture("user").then((testUser) => {
-      cy.dataCy("username").clear().type(testUser.username);
-      cy.dataCy("submit").should("be.disabled");
-    });
+    cy.dataCy("username").clear().type(this.user.username);
+    cy.dataCy("submit").should("be.disabled");
   });
 
   it("should show warning before deleting account", () => {
     cy.dataCy("delete-account").click();
-    cy.dataCy("warning-modal-header").should("contain", "Are you sure?");
+    cy.dataCy("warning-modal-header")
+      .invoke("text")
+      .should("match", /Are you sure\?/i);
     cy.dataCy("confirm-delete").should("be.visible");
     cy.dataCy("cancel-delete").click();
     cy.dataCy("warning-modal-header").should("not.exist");
+  });
+
+  it("should delete account", () => {
+    cy.dataCy("delete-account").click();
+    cy.dataCy("confirm-delete").click();
+    cy.url().should("include", "/signup");
+    cy.window().then((window) => {
+      expect(window.localStorage.getItem("token")).to.be.null;
+    });
   });
 });
