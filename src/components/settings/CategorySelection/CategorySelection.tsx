@@ -49,7 +49,7 @@ const CategorySelection = ({
 
   return (
     <div className={styles.categorySelection}>
-      <div className={styles.selectedScroller}>
+      <div className={styles.selectedScroller} data-cy="category-scroller">
         {selectedCategories.map((category) => (
           <div
             key={category.id}

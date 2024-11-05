@@ -65,6 +65,7 @@ const CalendarDateInput = <TFieldValues extends FieldValues>({
                     className={`${styles.day} ${classes}`}
                     key={day.toString()}
                     onClick={() => onChange(toYMD(day))}
+                    data-cy={`calendar-day-${day.getDate()}`}
                   >
                     <div className={styles.dayNumber}>{day.getDate()}</div>
                     <div className={styles.statusBar}></div>

@@ -13,6 +13,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ content, selected }) => {
     <Link
       to={content.href}
       className={`${styles.link} ${selected ? styles.selected : ""}`}
+      data-cy="sidebar-link"
     >
       <div className={styles.iconWrapper}>
         <content.Icon />

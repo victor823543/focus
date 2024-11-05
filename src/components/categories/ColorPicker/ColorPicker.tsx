@@ -40,7 +40,7 @@ const ColorPicker = <TFieldValues extends FieldValues>({
           onChange,
         },
       }) => (
-        <div className={styles.colorPicker}>
+        <div className={styles.colorPicker} data-testid="color-picker">
           {data.map((color) => (
             <div
               key={color.name}
@@ -49,6 +49,7 @@ const ColorPicker = <TFieldValues extends FieldValues>({
               onClick={() => {
                 onChange(color), callback ? callback(color) : undefined;
               }}
+              data-testid={`color-option`}
             >
               {color.name}
             </div>
@@ -77,7 +78,7 @@ export const ColorPickerNoForm: React.FC<ColorPickerNoFormProps> = ({
   if (isLoading || data === undefined) return <Loading />;
 
   return (
-    <div className={styles.colorPicker}>
+    <div className={styles.colorPicker} data-testid="color-picker">
       {data.map((color) => (
         <div
           key={color.name}
@@ -86,6 +87,7 @@ export const ColorPickerNoForm: React.FC<ColorPickerNoFormProps> = ({
           onClick={() => {
             callback(color);
           }}
+          data-testid={`color-option`}
         >
           {color.name}
         </div>

@@ -46,7 +46,10 @@ const createAlertComponent = ({ variant, Icon }: AlertStylingProps) => {
       }
     }, [duration]);
     return (
-      <div className={`${styles.alert} ${styles[variant]}`}>
+      <div
+        className={`${styles.alert} ${styles[variant]}`}
+        data-cy={`${variant}-alert`}
+      >
         <div className={styles.iconWrapper}>
           <Icon className={styles.icon} />
         </div>
