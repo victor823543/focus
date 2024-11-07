@@ -11,6 +11,7 @@ type ModalWrapperStylingProps = {
 type ModalWrapperProps = React.HTMLProps<HTMLDivElement> & {
   noSidebar?: boolean;
   noPointerEvents?: boolean;
+  noNavbar?: boolean;
 };
 
 const createModalWrapper =
@@ -20,6 +21,7 @@ const createModalWrapper =
     style,
     className,
     noSidebar = false,
+    noNavbar = false,
     noPointerEvents = false,
     ...rest
   }) => {
@@ -32,7 +34,7 @@ const createModalWrapper =
           backgroundColor: `rgba(3, 7, 17, ${darken})`,
           pointerEvents,
         }}
-        className={`${className} ${styles.modalWrapper} ${noSidebar ? "" : styles.marginLeft}`}
+        className={`${className} ${styles.modalWrapper} ${noSidebar ? "" : styles.marginLeft} ${noNavbar ? "" : styles.marginTop}`}
         {...rest}
       >
         {children}

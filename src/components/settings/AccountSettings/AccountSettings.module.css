@@ -1,6 +1,6 @@
 .label {
   color: var(--gray);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
@@ -48,5 +48,9 @@
 
   .input {
     width: 80%;
+  }
+
+  .label {
+    font-size: 0.8rem;
   }
 }

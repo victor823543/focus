@@ -31,11 +31,11 @@ const CalendarDateInput = <TFieldValues extends FieldValues>({
         <div className={styles.calendarMonthSmall}>
           <header className={styles.header}>
             <div onClick={goToPrevMonth} className={styles.arrowContainer}>
-              <ChevronLeftIcon strokeWidth={2} />
+              <ChevronLeftIcon strokeWidth={2} width={"1.7rem"} />
             </div>
             <div className={styles.monthText}>{currentMonth}</div>
             <div onClick={goToNextMonth} className={styles.arrowContainer}>
-              <ChevronRightIcon strokeWidth={2} />
+              <ChevronRightIcon strokeWidth={2} width={"1.7rem"} />
             </div>
           </header>
           <div className={styles.weekDays}>
@@ -112,11 +112,11 @@ export const CalendarDateInputNoForm: React.FC<
     <div className={`${styles.calendarMonthSmall} ${styles[variant]}`}>
       <header className={styles.header}>
         <div onClick={goToPrevMonth} className={styles.arrowContainer}>
-          <ChevronLeftIcon strokeWidth={2} />
+          <ChevronLeftIcon strokeWidth={2} width={"1.7rem"} />
         </div>
         <div className={styles.monthText}>{currentMonth}</div>
         <div onClick={goToNextMonth} className={styles.arrowContainer}>
-          <ChevronRightIcon strokeWidth={2} />
+          <ChevronRightIcon strokeWidth={2} width={"1.7rem"} />
         </div>
       </header>
       <div className={styles.weekDays}>

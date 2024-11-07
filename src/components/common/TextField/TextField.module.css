@@ -61,3 +61,17 @@
   font-size: 0.8rem;
   color: var(--error);
 }
+
+@media (max-width: 479px) {
+  .input {
+    font-size: 1.4rem;
+  }
+
+  .placeholder {
+    font-size: 1.4rem;
+  }
+
+  .errorText {
+    font-size: 1rem;
+  }
+}

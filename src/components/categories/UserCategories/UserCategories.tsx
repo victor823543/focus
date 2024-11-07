@@ -35,12 +35,12 @@ const UserCategories: React.FC<UserCategoriesProps> = ({ categories }) => {
             onClick={() => navigate(`/categories/${category.id}`)}
           >
             <Paragraph variant="bold">{category.name}</Paragraph>
-            <Paragraph variant="secondary">
+            <p className={styles.p}>
               Importance <br /> {category.importance}
-            </Paragraph>
-            <Paragraph variant="secondary">
+            </p>
+            <p className={styles.p}>
               Created <br /> {formatUnixDate(category.timestamp)}
-            </Paragraph>
+            </p>
             <div className={styles.colorBar}></div>
           </div>
         ))}

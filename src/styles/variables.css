@@ -139,3 +139,9 @@
 
   --sidebar-width: 17rem;
 }
+
+@media (max-width: 479px) {
+  :root {
+    --sidebar-width: 80%;
+  }
+}

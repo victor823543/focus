@@ -31,3 +31,14 @@
   font-size: 0.8rem;
   color: var(--error);
 }
+
+@media (max-width: 479px) {
+  .input {
+    font-size: 1.35rem;
+    padding: 1rem 1rem;
+  }
+
+  .input::placeholder {
+    font-size: 1.2rem;
+  }
+}

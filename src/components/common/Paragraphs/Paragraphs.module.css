@@ -1,6 +1,5 @@
 .secondary {
   color: var(--gray);
-  font-size: 0.9rem;
 }
 
 .bold {
@@ -10,4 +9,22 @@
 
 .center {
   text-align: center;
+}
+
+.primary {
+  font-size: 1.4rem;
+}
+
+.secondary {
+  font-size: 1.3rem;
+}
+
+@media (min-width: 480px) {
+  .p {
+    font-size: 1rem;
+  }
+
+  .secondary {
+    font-size: 0.9rem;
+  }
 }

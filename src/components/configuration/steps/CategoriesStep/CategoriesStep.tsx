@@ -129,7 +129,7 @@ const CategoriesStep = () => {
         })}
       </div>
       <Paragraph>Or add your own.</Paragraph>
-      <Container gap="lg">
+      <Container gap="lg" className={styles.addContainer}>
         <div className={styles.addCategory}>
           <TextField
             form={form}
@@ -172,6 +172,7 @@ const CategoriesStep = () => {
           Add Category
         </CustomizableButton>
       </Container>
+      <div className={styles.phoneDivider}></div>
     </Container>
   );
 };
