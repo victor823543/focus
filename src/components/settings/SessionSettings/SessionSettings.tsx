@@ -115,7 +115,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
   };
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Loading layoutName="Settings" />;
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>

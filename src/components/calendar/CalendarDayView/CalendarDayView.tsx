@@ -188,7 +188,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
     return () => subscription.unsubscribe();
   }, [form]);
 
-  if (!currentSession) return <Loading />;
+  if (!currentSession) return <Loading layoutName="Calendar" />;
 
   return (
     <form key={currentDateString} onSubmit={form.handleSubmit(handleSubmit)}>

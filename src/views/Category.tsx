@@ -24,7 +24,8 @@ const Category = () => {
   ];
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined)
+    return <Loading layoutName="Categories" />;
 
   return (
     <Layout name="Categories">

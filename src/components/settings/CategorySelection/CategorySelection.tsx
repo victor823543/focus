@@ -9,7 +9,6 @@ import { formatUnixDate } from "../../../utils/formatUnixDate";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { Container } from "../../common/Containers/Containers";
 import { Header } from "../../common/Headers/Headers";
-import Loading from "../../common/Loading/Loading";
 import { Modal, ModalWrapperBlur } from "../../common/Modals/Modals";
 import { Paragraph } from "../../common/Paragraphs/Paragraphs";
 import { ConfigureFormFields } from "../SessionSettings/SessionSettings";
@@ -45,7 +44,7 @@ const CategorySelection = ({
   }, [form.register("categories"), data]);
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <div>Loading...</div>;
 
   return (
     <div className={styles.categorySelection}>
