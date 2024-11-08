@@ -199,7 +199,11 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
                 color="var(--gray-dark)"
                 className={styles.textArea}
               />
-              <CustomizableButton type="submit" className={styles.submit}>
+              <CustomizableButton
+                style={{ color: "white" }}
+                type="submit"
+                className={styles.submit}
+              >
                 Save
               </CustomizableButton>
             </div>
@@ -217,7 +221,11 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
                 <ColorPicker form={form} name="color" />
               </div>
 
-              <CustomizableButton type="submit" className={styles.submit}>
+              <CustomizableButton
+                style={{ color: "white" }}
+                type="submit"
+                className={styles.submit}
+              >
                 Save
               </CustomizableButton>
             </div>
