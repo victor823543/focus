@@ -48,12 +48,14 @@ type SidebarProps = {
   selected: string;
   sidebarOpen: boolean;
   setSidebarOpen: (bool: boolean) => void;
+  loading?: boolean;
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
   selected,
   sidebarOpen,
   setSidebarOpen,
+  loading = false,
 }) => {
   const logout = useLogout();
   const { user, setToken } = useAuth();
@@ -68,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div
           className={styles.sessionDisplay}
           onClick={() => setShowSessionDropdown(!showSessionDropdown)}
-          data-cy="session-display"
+          data-cy={loading ? "" : "session-display"}
         >
           <div className={styles.sessionIconWrapper}>
             <DocumentChartBarIcon />

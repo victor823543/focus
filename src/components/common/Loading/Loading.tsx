@@ -9,7 +9,7 @@ type LoadingProps = {
 const Loading: React.FC<LoadingProps> = ({ layoutName = "Dashboard" }) => {
   return (
     <div data-testid="loading">
-      <Layout name={layoutName}>
+      <Layout name={layoutName} loading>
         <Spinner />
       </Layout>
     </div>
