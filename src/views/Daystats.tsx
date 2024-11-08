@@ -41,8 +41,6 @@ const Daystats = () => {
       ),
   });
 
-  console.log(data);
-
   if (error !== null) return <span>Something went wrong</span>;
   if (isLoading || data === undefined) return <Loading layoutName="Stats" />;
 

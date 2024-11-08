@@ -10,9 +10,6 @@ const useCategory = (): UseCategoryReturn => {
   const createMutation = useMutation({
     mutationFn: (params: CreateCategoryParams) =>
       callAPI("/categories/create", "POST", params),
-    onSuccess: (response) => {
-      console.log(response);
-    },
   });
 
   const createCategory = (params: CreateCategoryParams) => {
