@@ -23,3 +23,16 @@
 .settingsContainer > * + * {
   border-top: solid 1px var(--border-light);
 }
+
+@media (max-width: 478px) {
+  .field {
+    padding: 1.5rem 1rem;
+  }
+  .h2 {
+    font-size: 1.4rem;
+  }
+
+  .p {
+    font-size: 1.2rem;
+  }
+}

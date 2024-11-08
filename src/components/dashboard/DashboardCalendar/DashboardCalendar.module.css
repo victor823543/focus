@@ -71,3 +71,21 @@
 .dayItems {
   margin-top: 1.5rem;
 }
+
+@media (max-width: 479px) {
+  .h2 {
+    font-size: 1.3rem;
+  }
+
+  .header {
+    padding-bottom: 6px;
+  }
+
+  .arrows {
+    gap: 0.5rem;
+  }
+
+  .arrow {
+    width: 2.5rem;
+  }
+}

@@ -46,7 +46,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, handleSubmit }) => {
           variant="wide"
           size="lg"
           type="submit"
-          style={{ fontSize: "1rem" }}
           data-cy="submit"
         >
           Submit

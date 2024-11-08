@@ -22,7 +22,7 @@ const Calendar = () => {
   });
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Loading layoutName="Stats" />;
 
   return (
     <Layout name="Calendar" padding={false}>

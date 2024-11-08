@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useSelectSession from "../../../hooks/useSelectSession";
 import { WeekCategoryData } from "../../../types/Dashboard";
 import { to1Dec } from "../../../utils/functions";
-import Loading from "../../common/Loading/Loading";
+import Spinner from "../../common/Spinner/Spinner";
 import styles from "./DashboardCategoryResult.module.css";
 
 type DashboardCategoryResultProps = {
@@ -16,7 +16,7 @@ const DashboardCategoryResult: React.FC<DashboardCategoryResultProps> = ({
   const { currentSession } = useSelectSession();
   const navigate = useNavigate();
 
-  if (currentSession === null) return <Loading />;
+  if (currentSession === null) return <Spinner />;
 
   const categories = currentSession.categories;
   return (

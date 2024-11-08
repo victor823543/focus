@@ -6,7 +6,7 @@ import { ListDaysReturn } from "../../../types/Day";
 import { callAPI } from "../../../utils/apiService";
 import { queryConfig } from "../../../utils/constants";
 import { formatDate } from "../../../utils/functions";
-import Loading from "../../common/Loading/Loading";
+import Spinner from "../../common/Spinner/Spinner";
 import CalendarItems from "../CalendarItems/CalendarItems";
 import styles from "./DashboardCalendar.module.css";
 
@@ -31,7 +31,7 @@ const DashboardCalendar = () => {
   });
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Spinner />;
 
   return (
     <div className={styles.calendar}>

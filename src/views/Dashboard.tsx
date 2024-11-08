@@ -24,8 +24,6 @@ const Dashboard = () => {
       callAPI<DashboardDataResponse>(`/dashboard/${currentSession?.id}`, "GET"),
   });
 
-  console.log(data);
-
   if (error !== null) return <span>Something went wrong</span>;
   if (isLoading || data === undefined || currentSession === null)
     return <Loading />;

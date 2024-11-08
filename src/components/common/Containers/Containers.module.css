@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  padding: var(--container-padding);
 }
 
 .flex-none {
@@ -33,4 +34,24 @@
 
 .col {
   flex-direction: column;
+}
+
+.gap-none {
+  gap: 0;
+}
+
+.gap-sm {
+  gap: 0.25rem;
+}
+
+.gap-md {
+  gap: 0.5rem;
+}
+
+.gap-lg {
+  gap: 1rem;
+}
+
+.gap-xl {
+  gap: 2rem;
 }

@@ -3,12 +3,21 @@
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
+  gap: 1.5rem;
 }
 
 .h3 {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--gray-x-dark);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
 }
 
 .progressWrapper {
@@ -27,7 +36,7 @@
 }
 
 .info p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--gray);
   margin-bottom: 0.25rem;
   text-align: center;
@@ -84,6 +93,22 @@
 
   .progressWrapperSmall {
     display: none;
+  }
+
+  .info p {
+    font-size: 0.8rem;
+  }
+
+  .h3 {
+    font-size: 1.1rem;
+  }
+
+  .box {
+    gap: none;
+  }
+
+  .container {
+    display: block;
   }
 }
 

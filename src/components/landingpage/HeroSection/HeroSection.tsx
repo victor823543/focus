@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import screenImgPhone from "../../../assets/images/stats-img-phone.png";
-import screenImg from "../../../assets/images/stats-img.png";
+import screenImg from "../../../assets/images/dashboard-new.png";
+import screenImgPhone from "../../../assets/images/dashboard-phone-no-nav.png";
 import useOverflowHeight from "../../../hooks/useOverflowHeight";
 import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { Header } from "../../common/Headers/Headers";

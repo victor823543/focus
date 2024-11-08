@@ -3,7 +3,7 @@ import { CSSProperties } from "react";
 import { Controller, FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { Color } from "../../../types/Category";
 import { callAPI } from "../../../utils/apiService";
-import Loading from "../../common/Loading/Loading";
+import Spinner from "../../common/Spinner/Spinner";
 import styles from "./ColorPicker.module.css";
 
 type ColorPickerProps<TFieldValues extends FieldValues> = {
@@ -23,7 +23,7 @@ const ColorPicker = <TFieldValues extends FieldValues>({
   });
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Spinner />;
 
   return (
     <Controller
@@ -75,7 +75,7 @@ export const ColorPickerNoForm: React.FC<ColorPickerNoFormProps> = ({
   });
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Spinner />;
 
   return (
     <div className={styles.colorPicker} data-testid="color-picker">

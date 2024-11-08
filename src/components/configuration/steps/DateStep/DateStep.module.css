@@ -3,13 +3,14 @@
 }
 
 .header {
-  margin: 0 1.5;
+  margin: 0 1.5rem;
 }
 
 .p {
   max-width: 30rem;
   text-align: center;
   margin: 0 1.5rem;
+  font-size: 1.3rem;
 }
 
 .grid {
@@ -23,6 +24,12 @@
 .grid > * {
   flex-grow: 1;
   flex-shrink: 0;
+}
+
+@media (min-width: 480px) {
+  .p {
+    font-size: 1rem;
+  }
 }
 
 @media (min-width: 786px) {

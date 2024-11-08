@@ -33,8 +33,8 @@ const WeekScoreLeftBox: React.FC<WeekScoreLeftBoxProps> = ({
         <div className={styles.progressWrapperSmall}>
           <HalfCircleProgress
             progress={toRecordPercentage}
-            size={100}
-            strokeWidth={10}
+            size={150}
+            strokeWidth={15}
           >
             <span className={styles.percentage}>
               {to1Dec(toRecordPercentage)}%
@@ -68,8 +68,8 @@ const WeekScoreLeftBox: React.FC<WeekScoreLeftBoxProps> = ({
         <div className={styles.progressWrapperSmall}>
           <HalfCircleProgress
             progress={toAveragePercentage}
-            size={100}
-            strokeWidth={10}
+            size={150}
+            strokeWidth={15}
           >
             <span className={styles.percentage}>
               {to1Dec(toAveragePercentage)}%

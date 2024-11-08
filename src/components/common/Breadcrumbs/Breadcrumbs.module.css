@@ -44,3 +44,14 @@
 .link:hover {
   color: var(--gray-dark);
 }
+
+@media (max-width: 479px) {
+  .link {
+    font-size: 1rem;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

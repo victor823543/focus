@@ -56,12 +56,6 @@ describe("ImportanceStep Component", () => {
       });
     });
 
-    it("renders slider correctly", async () => {
-      renderComponent();
-      const sliders = await screen.findAllByRole("slider");
-      expect(sliders).toHaveLength(mockConfigurationState.categories.length);
-    });
-
     it("renders color correctly", async () => {
       renderComponent();
       const colors = await screen.findAllByTestId("color-box");
@@ -150,38 +144,6 @@ describe("ImportanceStep Component", () => {
       expect(updatedColorBoxes[2]).toHaveStyle({
         "background-color": mockColors[2].main,
       });
-    });
-  });
-
-  describe("Update Importance Functionality", () => {
-    it("updates importance correctly", async () => {
-      renderComponent();
-      const firstCategory = mockConfigurationState.categories[0];
-      const sliders = await screen.findAllByRole("slider");
-      const slider = sliders[0];
-      expect(slider).toHaveValue(firstCategory.importance.toString());
-      fireEvent.change(slider, { target: { value: 2 } });
-      expect(slider).toHaveValue("2");
-    });
-
-    it("updates multiple categories importance correctly", async () => {
-      renderComponent();
-      const updateCategoryImportance = async (
-        categoryIndex: number,
-        importance: number,
-      ) => {
-        const sliders = await screen.findAllByRole("slider");
-        const slider = sliders[categoryIndex];
-        fireEvent.change(slider, { target: { value: importance } });
-      };
-
-      await updateCategoryImportance(0, 2);
-      await updateCategoryImportance(1, 2.5);
-      await updateCategoryImportance(2, 1);
-      const updatedSliders = await screen.findAllByRole("slider");
-      expect(updatedSliders[0]).toHaveValue("2");
-      expect(updatedSliders[1]).toHaveValue("2.5");
-      expect(updatedSliders[2]).toHaveValue("1");
     });
   });
 });

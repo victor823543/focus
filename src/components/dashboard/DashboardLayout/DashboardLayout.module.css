@@ -14,33 +14,33 @@
   display: grid;
   min-height: 80vh;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-template-rows: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(0, 1fr));
   gap: 1rem;
   box-sizing: border-box;
 }
 
 .calendar {
-  grid-area: 1 / 1 / 3 / 4;
+  grid-area: 1 / 1 / 3 / 6;
 }
 
 .weeklyTarget {
-  grid-area: 1 / 4 / 4 / 6;
+  grid-area: 4 / 1 / 7 / 6;
 }
 
 .comparison {
-  grid-area: 3 / 1 / 4 / 4;
+  grid-area: 3 / 1 / 4 / 6;
 }
 
 .statsTop {
-  grid-area: 4 / 1 / 6 / 6;
+  grid-area: 7 / 1 / 9 / 6;
 }
 
 .statsBottom {
-  grid-area: 6 / 1 / 8 / 6;
+  grid-area: 9 / 1 / 11 / 6;
 }
 
 .categories {
-  grid-area: 8 / 1 / 10 / 6;
+  grid-area: 11 / 1 / 13 / 6;
 }
 
 .box {

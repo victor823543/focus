@@ -19,7 +19,7 @@ import CustomizableButton from "../../common/Buttons/CustomizableButton";
 import { StaticCircularProgress } from "../../common/CircularProgress/CircularProgress";
 import { Header } from "../../common/Headers/Headers";
 import Loading from "../../common/Loading/Loading";
-import StyledRangeInput from "../../common/RangeInput/StyledRangeInput";
+import { StyledRange } from "../../common/RangeInput/StyledRangeInput";
 import styles from "./CalendarDayView.module.css";
 
 type CalendarDayViewProps = {
@@ -188,7 +188,7 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
     return () => subscription.unsubscribe();
   }, [form]);
 
-  if (!currentSession) return <Loading />;
+  if (!currentSession) return <Loading layoutName="Calendar" />;
 
   return (
     <form key={currentDateString} onSubmit={form.handleSubmit(handleSubmit)}>
@@ -269,15 +269,19 @@ const CalendarDayView: React.FC<CalendarDayViewProps> = ({ days }) => {
                     </div>
 
                     <div className={styles.categoryResult}>
-                      <StyledRangeInput
+                      <StyledRange
                         form={form}
                         name={`categories.${index}.score`}
                         min={0}
                         max={10}
                         step={1}
-                        fieldColor="var(--gray-light)"
-                        thumbColor="var(--gray-mid)"
-                        initialValue={startValue}
+                        fieldColor="var(--gray-light-tr)"
+                        fillColor={category.color.main}
+                        color="var(--gray-dark)"
+                        startValue={startValue}
+                        showValue="left-side"
+                        height="2.5rem"
+                        phoneHeight="3rem"
                       />
                       {/* Automatically set category field to category.id */}
                       <input

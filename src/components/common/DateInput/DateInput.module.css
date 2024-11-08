@@ -11,3 +11,10 @@
   font-family: "Montserrat";
   font-weight: 500;
 }
+
+@media (max-width: 479px) {
+  .input {
+    font-size: 1.35rem;
+    padding: 1.5rem 1rem;
+  }
+}

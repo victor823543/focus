@@ -34,3 +34,22 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+@media (max-width: 479px) {
+  .markerTitle {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+
+  .markerP {
+    font-size: 0.9rem;
+  }
+
+  .markerA {
+    font-size: 0.9rem;
+  }
+
+  .item {
+    gap: 1rem;
+  }
+}
