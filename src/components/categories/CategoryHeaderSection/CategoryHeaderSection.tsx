@@ -130,7 +130,7 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
             <div className={styles.infoBox} style={{ width: "100%" }}>
               Color palette
             </div>
-            <div className={styles.colorsContainer}>
+            <div className={styles.colorsContainer} data-testid="color-palette">
               <div
                 className={styles.color}
                 style={{ backgroundColor: color.light } as React.CSSProperties}
@@ -160,6 +160,7 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
           <div
             className={`${styles.description} ${description ? "" : styles.empty}`}
             onClick={() => setParam("description")}
+            data-testid="description"
           >
             {!description && <a>Click to add description</a>}
             {description && (
@@ -186,7 +187,10 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
       />
       {currentValue === "description" && (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <ModalWrapperStrong onClick={() => removeParam()}>
+          <ModalWrapperStrong
+            onClick={() => removeParam()}
+            data-testid="description-modal-wrapper"
+          >
             <div onClick={(e) => e.stopPropagation()} className={styles.modal}>
               <TextArea
                 name="description"
@@ -195,7 +199,11 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
                 color="var(--gray-dark)"
                 className={styles.textArea}
               />
-              <CustomizableButton type="submit" className={styles.submit}>
+              <CustomizableButton
+                style={{ color: "white" }}
+                type="submit"
+                className={styles.submit}
+              >
                 Save
               </CustomizableButton>
             </div>
@@ -204,13 +212,20 @@ const CategoryHeaderSection: React.FC<CategoryHeaderSectionProps> = ({
       )}
       {currentValue === "color" && (
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <ModalWrapperStrong onClick={() => removeParam()}>
+          <ModalWrapperStrong
+            onClick={() => removeParam()}
+            data-testid="color-modal-wrapper"
+          >
             <div onClick={(e) => e.stopPropagation()} className={styles.modal}>
               <div className={styles.colorPickerWrapper}>
                 <ColorPicker form={form} name="color" />
               </div>
 
-              <CustomizableButton type="submit" className={styles.submit}>
+              <CustomizableButton
+                style={{ color: "white" }}
+                type="submit"
+                className={styles.submit}
+              >
                 Save
               </CustomizableButton>
             </div>

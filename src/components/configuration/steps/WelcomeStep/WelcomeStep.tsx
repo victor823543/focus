@@ -13,7 +13,12 @@ type WelcomeStepProps = {
 const WelcomeStep: React.FC<WelcomeStepProps> = ({ form }) => {
   return (
     <Container className={styles.container} gap="lg">
-      <Header data-cy="configuration-title" variant="config" center>
+      <Header
+        data-cy="configuration-title"
+        variant="config"
+        center
+        style={{ margin: "0 2rem" }}
+      >
         Let's create your first session
       </Header>
       <Paragraph>Choose a title for your session</Paragraph>

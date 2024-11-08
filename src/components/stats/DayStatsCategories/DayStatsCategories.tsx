@@ -58,7 +58,6 @@ const CategoryDisplay: React.FC<{
     >
       <div className={styles.infoContainer}>
         <div className={styles.infoBox}>{category.name}</div>
-        <div className={styles.bar}></div>
       </div>
       <div className={styles.infoContainer}>
         <div className={styles.infoBox}>

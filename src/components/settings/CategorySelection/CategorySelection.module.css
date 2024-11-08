@@ -26,6 +26,12 @@
   transition: all 0.2s;
 }
 
+.p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .addNew {
   --hex: var(--gray-light);
   opacity: 1;

@@ -28,6 +28,7 @@ const DateInput = <TFieldValues extends FieldValues>({
             onBlur={onBlur}
             onChange={(e) => onChange(toYMD(new Date(e.target.value)))}
             value={dateToInputFormat(value)}
+            data-testid="date-input"
           />
           {error?.message}
         </>

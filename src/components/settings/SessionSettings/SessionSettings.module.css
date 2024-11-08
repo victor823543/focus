@@ -15,3 +15,9 @@
   gap: 2rem;
   margin-top: 1rem;
 }
+
+@media (max-width: 479px) {
+  .label {
+    font-size: 1rem;
+  }
+}

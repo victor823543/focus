@@ -90,7 +90,14 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
       console.log("Session deleted");
       console.log(sessions.length);
       if (sessions.length > 1) {
-        selectSession(sessions[0]);
+        // Find the first session that is not the current session
+        const newSession = sessions.find(
+          (session) => session.id !== currentSession?.id,
+        );
+        if (newSession) {
+          selectSession(newSession);
+        }
+        queryClient.clear();
         navigate(`/dashboard`);
       } else {
         queryClient.clear();
@@ -108,7 +115,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
   };
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Loading layoutName="Settings" />;
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -133,7 +140,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
           title="Start Date"
           description="Change the start date of your session."
         >
-          <div className={styles.dateWrapper}>
+          <div className={styles.dateWrapper} data-cy="start-field">
             <label className={styles.label} htmlFor="start">
               Start Date
             </label>
@@ -144,7 +151,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
           title="End Date (optional)"
           description="Change the end date of your session."
         >
-          <div className={styles.dateWrapper}>
+          <div className={styles.dateWrapper} data-cy="end-field">
             <label className={styles.label} htmlFor="end">
               End Date
             </label>
@@ -155,7 +162,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
           <CategorySelection form={form} name="categories" />
         </SettingsField>
         <SettingsField>
-          <CustomizableButton type="submit" variant="primary">
+          <CustomizableButton type="submit" variant="primary" data-cy="update">
             Update Session
           </CustomizableButton>
         </SettingsField>
@@ -168,6 +175,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
               onClick={() => setShowDeleteModal(true)}
               type="button"
               variant="warning"
+              data-cy="delete-session"
             >
               Delete Session
             </CustomizableButton>
@@ -192,6 +200,7 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
                 <CustomizableButton
                   type="button"
                   onClick={() => setShowDeleteModal(false)}
+                  data-cy="cancel-delete"
                 >
                   Cancel
                 </CustomizableButton>
@@ -199,6 +208,8 @@ const SessionSettings: React.FC<SessionSettingsProps> = ({ pushAlert }) => {
                   onClick={() => deleteMutation.mutate()}
                   type="button"
                   variant="strong-warning"
+                  data-testid="confirm-delete"
+                  data-cy="confirm-delete"
                 >
                   Delete
                 </CustomizableButton>

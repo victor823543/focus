@@ -31,11 +31,11 @@ const CalendarDateInput = <TFieldValues extends FieldValues>({
         <div className={styles.calendarMonthSmall}>
           <header className={styles.header}>
             <div onClick={goToPrevMonth} className={styles.arrowContainer}>
-              <ChevronLeftIcon strokeWidth={2} />
+              <ChevronLeftIcon strokeWidth={2} width={"1.7rem"} />
             </div>
             <div className={styles.monthText}>{currentMonth}</div>
             <div onClick={goToNextMonth} className={styles.arrowContainer}>
-              <ChevronRightIcon strokeWidth={2} />
+              <ChevronRightIcon strokeWidth={2} width={"1.7rem"} />
             </div>
           </header>
           <div className={styles.weekDays}>
@@ -65,6 +65,7 @@ const CalendarDateInput = <TFieldValues extends FieldValues>({
                     className={`${styles.day} ${classes}`}
                     key={day.toString()}
                     onClick={() => onChange(toYMD(day))}
+                    data-cy={`calendar-day-${day.getDate()}`}
                   >
                     <div className={styles.dayNumber}>{day.getDate()}</div>
                     <div className={styles.statusBar}></div>
@@ -111,11 +112,11 @@ export const CalendarDateInputNoForm: React.FC<
     <div className={`${styles.calendarMonthSmall} ${styles[variant]}`}>
       <header className={styles.header}>
         <div onClick={goToPrevMonth} className={styles.arrowContainer}>
-          <ChevronLeftIcon strokeWidth={2} />
+          <ChevronLeftIcon strokeWidth={2} width={"1.7rem"} />
         </div>
         <div className={styles.monthText}>{currentMonth}</div>
         <div onClick={goToNextMonth} className={styles.arrowContainer}>
-          <ChevronRightIcon strokeWidth={2} />
+          <ChevronRightIcon strokeWidth={2} width={"1.7rem"} />
         </div>
       </header>
       <div className={styles.weekDays}>

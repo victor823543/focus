@@ -164,9 +164,8 @@
 }
 
 .categoryWrapper {
-  display: flex;
-  flex-direction: column; /* Add flex display */
-  justify-content: center; /* Center horizontally */
+  width: 100%;
+  position: relative;
 }
 
 .category {
@@ -203,8 +202,6 @@
 
 .categoryResult {
   padding: 0.5rem 0;
-  display: flex;
-  align-items: center;
   justify-content: end;
 }
 

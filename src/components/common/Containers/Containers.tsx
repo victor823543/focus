@@ -44,8 +44,10 @@ export const Container: React.FC<ContainerProps> = ({
 
   return (
     <div
-      style={{ padding, gap: gapConvert[gap], ...style }}
-      className={`${styles.container} ${styles[`flex-${flex}`]}
+      style={
+        { "--container-padding": padding, ...style } as React.CSSProperties
+      }
+      className={`${styles.container} ${styles[`gap-${gap}`]} ${styles[`flex-${flex}`]}
         ${styles[direction]}
         ${center ? styles.center : ""}
          ${className}

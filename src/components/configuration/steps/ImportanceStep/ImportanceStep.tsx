@@ -7,7 +7,7 @@ import { ColorPickerNoForm } from "../../../categories/ColorPicker/ColorPicker";
 import { Container } from "../../../common/Containers/Containers";
 import { Header } from "../../../common/Headers/Headers";
 import { Paragraph } from "../../../common/Paragraphs/Paragraphs";
-import { StyledRangeInputNoForm } from "../../../common/RangeInput/StyledRangeInput";
+import { StyledRangeNoForm } from "../../../common/RangeInput/StyledRangeInput";
 import styles from "./ImportanceStep.module.css";
 
 type ImportanceStepProps = {
@@ -36,7 +36,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
 
   return (
     <Container className={styles.container} gap="lg">
-      <Header variant="config" center>
+      <Header variant="config" center style={{ margin: "0 2rem" }}>
         Configure importance
       </Header>
       <Paragraph className={styles.p}>
@@ -54,6 +54,7 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
                   "--category-color": category.color?.main,
                 } as React.CSSProperties
               }
+              data-testid="category-importance-form"
             >
               <div className={styles.categoryContainer}>
                 <div className={styles.category}>{category.name}</div>
@@ -61,21 +62,28 @@ const ImportanceStep: React.FC<ImportanceStepProps> = ({ form }) => {
                   className={styles.colorBox}
                   style={{ backgroundColor: category.color?.main }}
                   onClick={() => setShowColorPicker(index)}
+                  data-testid="color-box"
                 ></div>
               </div>
 
-              <StyledRangeInputNoForm
+              <StyledRangeNoForm
                 min={1}
                 max={3}
                 step={0.1}
                 onDragEnd={(value) => updateImportance(value, category)}
                 startValue={category.importance}
+                fieldColor="var(--gray-light-tr)"
+                fillColor={category.color?.main}
+                showValue="left-side"
+                height="2.5rem"
+                phoneHeight="3.5rem"
               />
 
               {showColorPicker === index && (
                 <div
                   className={styles.modalWrapper}
                   onClick={() => setShowColorPicker(null)}
+                  data-testid="modal-wrapper"
                 >
                   <div
                     className={styles.colorPickerModal}

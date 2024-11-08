@@ -1,4 +1,4 @@
-import { API_ADDRESS } from "../config";
+import { API_ADDRESS, API_ADDRESS_PHONE_MODE } from "../config";
 import { ErrorCode, SuccessCode } from "../types/StatusCode";
 
 type JSONValue = string | number | boolean | None | JSONObject | JSONArray;
@@ -16,6 +16,8 @@ export async function callAPI<T extends Data | void = void>(
   body?: Data,
 ): Promise<T> {
   const token = localStorage.getItem("token");
+  const isPhoneMode = import.meta.env.VITE_PHONE_MODE === "true" || false;
+  const apiAddress = isPhoneMode ? API_ADDRESS_PHONE_MODE : API_ADDRESS;
 
   const headers =
     body instanceof FormData
@@ -34,7 +36,7 @@ export async function callAPI<T extends Data | void = void>(
     }),
   };
 
-  const response: CustomResponse = await fetch(API_ADDRESS + url, options);
+  const response: CustomResponse = await fetch(apiAddress + url, options);
 
   if (response.status === SuccessCode.NO_CONTENT) return undefined as T;
 

@@ -89,7 +89,12 @@ export const StaticCircularProgress: React.FC<StaticCircularProgressProps> = ({
 
   return (
     <div style={{ width: size, height: size }} className={styles.container}>
-      <svg width={size} height={size} className={styles.svg}>
+      <svg
+        width={size}
+        height={size}
+        className={styles.svg}
+        data-testid="circular-progress-svg"
+      >
         {/* Background Circle */}
         <circle
           cx={size / 2}

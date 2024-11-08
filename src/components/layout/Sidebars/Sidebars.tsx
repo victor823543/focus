@@ -48,12 +48,14 @@ type SidebarProps = {
   selected: string;
   sidebarOpen: boolean;
   setSidebarOpen: (bool: boolean) => void;
+  loading?: boolean;
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
   selected,
   sidebarOpen,
   setSidebarOpen,
+  loading = false,
 }) => {
   const logout = useLogout();
   const { user, setToken } = useAuth();
@@ -68,6 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div
           className={styles.sessionDisplay}
           onClick={() => setShowSessionDropdown(!showSessionDropdown)}
+          data-cy={loading ? "" : "session-display"}
         >
           <div className={styles.sessionIconWrapper}>
             <DocumentChartBarIcon />
@@ -146,9 +149,16 @@ const SessionDropdown: React.FC<SessionDropdownProps> = ({ show, setShow }) => {
   }, [show]);
 
   return (
-    <div className={styles.sessionDropdown} ref={dropdownRef}>
+    <div
+      className={styles.sessionDropdown}
+      ref={dropdownRef}
+      data-cy="session-dropdown"
+    >
       <div className={styles.currentSessionWrapper}>
-        <div className={`${styles.sessionOption} ${styles.currentSession}`}>
+        <div
+          className={`${styles.sessionOption} ${styles.currentSession}`}
+          data-cy="selected-session"
+        >
           {currentSession ? currentSession.title : "Session"}
         </div>
       </div>
@@ -163,6 +173,7 @@ const SessionDropdown: React.FC<SessionDropdownProps> = ({ show, setShow }) => {
               onClick={() => {
                 selectSession(session);
               }}
+              data-cy="session-option"
             >
               {session.title}
             </div>
@@ -171,6 +182,7 @@ const SessionDropdown: React.FC<SessionDropdownProps> = ({ show, setShow }) => {
         <div
           className={styles.sessionOption}
           onClick={() => navigate("/configuration")}
+          data-cy="add-session"
         >
           Add new Session
         </div>
@@ -180,6 +192,7 @@ const SessionDropdown: React.FC<SessionDropdownProps> = ({ show, setShow }) => {
           <div
             className={`${styles.sessionOption} ${styles.addSession}`}
             onClick={() => navigate("/configuration")}
+            data-cy="add-session"
           >
             Add new Session
           </div>

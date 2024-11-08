@@ -22,7 +22,10 @@ const DateStep: React.FC<DateStepProps> = ({ form }) => {
         to a specific period. You can always change it later.
       </Paragraph>
       <div className={styles.grid}>
-        <Container className={styles.calendarContainer}>
+        <Container
+          className={styles.calendarContainer}
+          data-cy="start-container"
+        >
           <Header
             variant="secondary"
             style={{ color: "var(--gray-light)", fontSize: "1.6rem" }}
@@ -31,7 +34,7 @@ const DateStep: React.FC<DateStepProps> = ({ form }) => {
           </Header>
           <CalendarDateInput form={form} name="start" />
         </Container>
-        <Container className={styles.calendarContainer}>
+        <Container className={styles.calendarContainer} data-cy="end-container">
           <Header
             variant="secondary"
             style={{ color: "var(--gray-light)", fontSize: "1.6rem" }}

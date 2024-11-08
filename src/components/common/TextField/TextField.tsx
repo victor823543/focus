@@ -38,13 +38,16 @@ const TextField = <TFieldValues extends FieldValues>({
           <div
             className={styles.textField}
             style={{ "--field-color": color } as React.CSSProperties}
+            data-testid="text-field"
           >
             <div
               className={classNames(styles.placeholder, {
                 [styles.focus]: inputFocus || value.length > 0,
               })}
             >
-              <motion.span layout>{placeholder}</motion.span>
+              <motion.span layout data-testid="placeholder">
+                {placeholder}
+              </motion.span>
             </div>
             <input
               type={type}
@@ -65,10 +68,11 @@ const TextField = <TFieldValues extends FieldValues>({
               autoCorrect="off"
               className={styles.input}
               data-cy={dataCy}
+              data-testid="input"
             />
           </div>
           {error && (
-            <div className={styles.error}>
+            <div className={styles.error} data-cy="form-error">
               <ExclamationTriangleIcon
                 className={styles.errorIcon}
                 aria-hidden="true"

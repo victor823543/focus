@@ -27,11 +27,11 @@
 }
 
 .infoBox {
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   background-color: var(--gray-light-tr);
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--gray-dark);
   border-right: solid 5px var(--primary-color);
   width: 100%;
@@ -77,6 +77,8 @@
   .infoBox {
     justify-content: center;
     gap: 1rem;
+    font-size: 0.9rem;
+    padding: 1rem 1.5rem;
   }
 
   .infoContainer {
@@ -107,5 +109,9 @@
   }
   .leftContainer {
     margin-right: 2rem;
+  }
+
+  .bar {
+    height: 0.5rem;
   }
 }

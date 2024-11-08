@@ -10,8 +10,8 @@ import ColorPicker from "../../../categories/ColorPicker/ColorPicker";
 import CustomizableButton from "../../../common/Buttons/CustomizableButton";
 import { Container } from "../../../common/Containers/Containers";
 import { Header } from "../../../common/Headers/Headers";
-import Loading from "../../../common/Loading/Loading";
 import { Paragraph } from "../../../common/Paragraphs/Paragraphs";
+import Spinner from "../../../common/Spinner/Spinner";
 import TextField from "../../../common/TextField/TextField";
 import styles from "./CategoriesStep.module.css";
 
@@ -81,7 +81,7 @@ const CategoriesStep = () => {
   });
 
   if (error !== null) return <span>Something went wrong</span>;
-  if (isLoading || data === undefined) return <Loading />;
+  if (isLoading || data === undefined) return <Spinner />;
 
   const categories: Array<CreateCategoryParams> = [
     ...data.map((category) => ({
@@ -121,6 +121,7 @@ const CategoriesStep = () => {
                   : () => addConfigCategory(category)
               }
               data-cy={`category-${category.name}`}
+              data-testid="category"
             >
               {category.name}
             </div>
@@ -128,7 +129,7 @@ const CategoriesStep = () => {
         })}
       </div>
       <Paragraph>Or add your own.</Paragraph>
-      <Container gap="lg">
+      <Container gap="lg" className={styles.addContainer}>
         <div className={styles.addCategory}>
           <TextField
             form={form}
@@ -140,11 +141,13 @@ const CategoriesStep = () => {
             className={styles.colorBox}
             style={{ backgroundColor: form.watch("color.main") }}
             onClick={() => setShowColorPicker((prev) => !prev)}
+            data-testid="color-box"
           ></div>
           {showColorPicker && (
             <div
               className={styles.modalWrapper}
               onClick={() => setShowColorPicker(false)}
+              data-testid="modal-wrapper"
             >
               <div
                 className={styles.colorPickerModal}
@@ -169,6 +172,7 @@ const CategoriesStep = () => {
           Add Category
         </CustomizableButton>
       </Container>
+      <div className={styles.phoneDivider}></div>
     </Container>
   );
 };

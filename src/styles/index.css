@@ -9,6 +9,13 @@ body {
   margin: 0;
 }
 
+@media (hover: none) {
+  *:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -31,3 +31,22 @@
   font-size: 0.8rem;
   color: var(--error);
 }
+
+@media (max-width: 479px) {
+  .area {
+    font-size: 1.35rem;
+  }
+
+  .area::placeholder {
+    font-size: 1.35rem;
+  }
+
+  .errorText {
+    font-size: 0.9rem;
+  }
+
+  .errorIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}

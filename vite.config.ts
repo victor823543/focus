@@ -6,12 +6,14 @@ import { defineConfig } from "vitest/config";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
+  const isTesting = process.env.VITE_TESTING === "true"; // Check if in testing mode
+  const isPhoneMode = process.env.VITE_PHONE_MODE === "true"; // Check if in phone development mode
 
   return {
     plugins: [react()],
     server: {
       host: "0.0.0.0",
-      ...(isProduction
+      ...(isProduction || isTesting || isPhoneMode
         ? { open: true } // Open browser on server start in production
         : {
             https: {
@@ -25,7 +27,7 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: "jsdom",
-      setupFiles: "src/setupTests",
+      setupFiles: "tests/setupTests",
       mockReset: true,
     },
   };

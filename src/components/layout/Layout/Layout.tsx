@@ -7,9 +7,15 @@ type LayoutProps = {
   children: React.ReactNode;
   name: string;
   padding?: boolean;
+  loading?: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({ children, name, padding = true }) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  name,
+  padding = true,
+  loading = false,
+}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className={styles.layout}>
@@ -23,6 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ children, name, padding = true }) => {
           selected={name}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
+          loading={loading}
         />
         {sidebarOpen && (
           <div
