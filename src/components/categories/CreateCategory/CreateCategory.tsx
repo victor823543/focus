@@ -11,7 +11,7 @@ import { Container } from "../../common/Containers/Containers";
 import { Header } from "../../common/Headers/Headers";
 import Label from "../../common/Label/Label";
 import { Modal, ModalWrapperBlur } from "../../common/Modals/Modals";
-import StyledRangeInput from "../../common/RangeInput/StyledRangeInput";
+import { StyledRange } from "../../common/RangeInput/StyledRangeInput";
 import TextField from "../../common/TextField/TextField";
 import ColorPicker from "../ColorPicker/ColorPicker";
 
@@ -112,15 +112,22 @@ const CreateCategory = () => {
             </Container>
             <Container gap="lg">
               <Label htmlFor="importance">Importance</Label>
-              <StyledRangeInput
-                form={form}
-                name="importance"
-                min={1}
-                max={3}
-                step={0.1}
-                fieldColor="var(--primary-color-light)"
-                thumbColor="var(--primary-color-mid)"
-              />
+              <div style={{ width: "20rem" }}>
+                <StyledRange
+                  form={form}
+                  name="importance"
+                  startValue={form.getValues("importance")}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  fieldColor="var(--gray-light-tr)"
+                  fillColor="var(--primary-color)"
+                  showValue="right-side"
+                  height="2.5rem"
+                  phoneHeight="3.5rem"
+                  color="var(--primary-color-dark)"
+                />
+              </div>
             </Container>
             <Container gap="lg">
               <Label>Color</Label>

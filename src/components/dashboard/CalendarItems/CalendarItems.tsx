@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCalendar } from "../../../hooks/useCalendar";
 import { Day, DayStatus } from "../../../types/Day";
+import { to1Dec } from "../../../utils/functions";
 import styles from "./CalendarItems.module.css";
 
 type CalendarItemsProps = {
@@ -41,7 +42,7 @@ const CalendarItems: React.FC<CalendarItemsProps> = ({ status, day, date }) => {
           <>
             <Item
               variant="result"
-              title={`Score: ${day.totalScore}`}
+              title={`Score: ${to1Dec(day.totalScore)}`}
               text={`View stats`}
               href={`/stats/day?date=${day.date}`}
             />
