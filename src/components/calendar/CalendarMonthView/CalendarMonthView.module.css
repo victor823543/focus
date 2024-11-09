@@ -1,0 +1,215 @@
+/* Desktop */
+@media (min-width: 768px) {
+  .calendarMonth {
+    height: clamp(40rem, 80vh, 70rem);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+  }
+
+  .header {
+    height: 3rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: solid 1px var(--border-light);
+    background-color: var(--slate-3x-light);
+  }
+
+  .monthText {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .arrowContainer {
+    width: 2rem;
+    color: var(--gray);
+    cursor: pointer;
+  }
+
+  .calendar {
+    background-color: var(--slate-3x-light);
+    border: solid 0.5px var(--border-light);
+    border-top: none;
+    flex: 1;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .day {
+    border: solid 0.5px var(--border-light);
+    border-collapse: collapse;
+    cursor: pointer;
+    position: relative;
+    transition:
+      scale 0.2s,
+      box-shadow 0.2s,
+      background-color 0.2s;
+  }
+
+  .dayNumber {
+    text-align: end;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    font-weight: 600;
+    color: var(--gray-dark);
+  }
+
+  .notInMonth .dayNumber {
+    color: var(--gray-light);
+  }
+
+  .selected {
+    scale: 1.25;
+    background-color: white;
+    z-index: 10;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .weekDays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    background-color: var(--slate-3x-light);
+    border-left: solid 1px var(--border-light);
+    border-right: solid 1px var(--border-light);
+    border-bottom: solid 0.5px var(--border-light);
+  }
+
+  .weekDays > div {
+    color: var(--gray);
+    text-align: center;
+    padding: 1rem 0;
+    font-weight: 600;
+  }
+
+  .iconWrapper {
+    width: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .status-0 .iconWrapper {
+    color: var(--error);
+  }
+
+  .smallScreenWrapper {
+    display: none;
+  }
+}
+
+/* Phone */
+@media (max-width: 767px) {
+  .calendarMonth {
+    display: none;
+  }
+
+  .smallScreenWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+  }
+
+  .calendarMonthSmall {
+    margin: 1rem;
+    padding: 0 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    max-width: 30rem;
+  }
+
+  .header {
+    height: 3rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .weekDays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .weekDays > div {
+    color: var(--gray);
+    text-align: center;
+    padding: 1rem 0;
+    font-weight: 600;
+  }
+
+  .monthText {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .arrowContainer {
+    width: 2rem;
+    color: var(--gray);
+    cursor: pointer;
+  }
+
+  .calendar {
+    flex: 1;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .day {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 4rem;
+  }
+
+  .dayNumber {
+    text-align: end;
+    font-weight: 600;
+    color: var(--gray-dark);
+  }
+
+  .notInMonth .dayNumber {
+    color: var(--gray-light);
+  }
+
+  .statusBar {
+    height: 3px;
+    width: 1rem;
+    border-radius: 2px;
+  }
+
+  .status-2 .statusBar {
+    background-color: var(--green);
+  }
+
+  .status-0 .statusBar {
+    background-color: var(--red);
+  }
+
+  .status-1 .statusBar {
+    background-color: var(--blue);
+  }
+
+  /* Dayinfo Popup styles */
+  .dayInfo {
+    background-color: white;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 35rem;
+    border-radius: 2rem 2rem 0 0;
+    flex: 1;
+  }
+}

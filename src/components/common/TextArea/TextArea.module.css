@@ -1,0 +1,52 @@
+.area {
+  outline: none;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  color: var(--area-color);
+  background-color: var(--area-bg);
+  font-family: "Montserrat", sans-serif;
+}
+
+.area::placeholder {
+  opacity: 0.7;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.errorIcon {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--error);
+}
+
+.errorText {
+  margin-left: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--error);
+}
+
+@media (max-width: 479px) {
+  .area {
+    font-size: 1.35rem;
+  }
+
+  .area::placeholder {
+    font-size: 1.35rem;
+  }
+
+  .errorText {
+    font-size: 0.9rem;
+  }
+
+  .errorIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}

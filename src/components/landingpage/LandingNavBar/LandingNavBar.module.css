@@ -1,0 +1,27 @@
+.navWrapper {
+  position: absolute;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 50;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logoWrapper {
+  width: 2rem;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 1rem;
+}

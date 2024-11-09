@@ -1,0 +1,40 @@
+.container {
+  color: var(--gray-x-light);
+}
+
+.header {
+  margin: 0 1.5rem;
+}
+
+.p {
+  max-width: 30rem;
+  text-align: center;
+  margin: 0 1.5rem;
+  font-size: 1.3rem;
+}
+
+.grid {
+  margin: 2rem 2.5rem 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+}
+
+.grid > * {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+@media (min-width: 480px) {
+  .p {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 786px) {
+  .grid {
+    flex-wrap: nowrap;
+    gap: 3rem;
+  }
+}

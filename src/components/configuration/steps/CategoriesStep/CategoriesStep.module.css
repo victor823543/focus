@@ -1,0 +1,126 @@
+.container {
+  color: var(--gray-x-light);
+}
+
+.p {
+  margin: 0 1.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.grid {
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+}
+
+.category {
+  padding: 1rem 4rem 1rem 1.5rem;
+  background-color: var(--gray-light-tr);
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--gray-2x-light);
+  cursor: pointer;
+  border-right: solid 5px var(--category-color);
+}
+
+.selected {
+  background-color: rgba(110, 231, 183, 0.6); /* --primary-color-light */
+  outline: solid 2px var(--primary-color);
+  border: none;
+}
+
+.phoneDivider {
+  display: none;
+}
+
+/* Add Category Styles */
+
+.addCategory {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-direction: column;
+}
+
+.colorBox {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modalWrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  background-color: rgba(3, 7, 17, 0.1); /* --gray-2x-dark */
+}
+
+.colorPickerModal {
+  padding: 2rem;
+  background-color: rgba(17, 24, 39, 0.9); /* --gray-x-dark */
+  border-radius: 8px;
+  width: fit-content;
+}
+
+@media (max-width: 479px) {
+  .container {
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .phoneDivider {
+    display: block;
+    border-bottom: solid 1px var(--gray-light-tr);
+    width: 90%;
+    margin: 1.5rem 0 0.5rem 0;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category {
+    width: 100%;
+    padding: 1.5rem 4rem 1.5rem 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .addCategory {
+    gap: 1.5rem;
+  }
+
+  .addContainer {
+    gap: 1.5rem;
+  }
+
+  .colorBox {
+    height: 4rem;
+    width: 6rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .addCategory {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .p {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 786px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

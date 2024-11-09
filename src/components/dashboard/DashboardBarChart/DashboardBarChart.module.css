@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.chartWrapper {
+  height: 16rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 1rem;
+  justify-content: center;
+}
+
+.h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--gray-x-dark);
+  margin-bottom: 1rem;
+}

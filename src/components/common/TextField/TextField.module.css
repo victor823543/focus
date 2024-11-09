@@ -1,0 +1,77 @@
+.textField {
+  border-radius: 0.75rem;
+  border: solid 1px var(--border-dark);
+  position: relative;
+  width: 25rem;
+  overflow: hidden;
+}
+
+.placeholder {
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(100% - 32px);
+  pointer-events: none;
+  color: var(--field-color);
+  opacity: 0.8;
+  font-size: 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.placeholder > span {
+  padding: 0.5rem 0;
+}
+
+.placeholder.focus {
+  font-size: 0.85rem;
+  align-items: start;
+}
+
+.input {
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--field-color);
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  padding: 1.75rem 0.75rem 0.5rem;
+}
+
+/* "block ml-1.5 text-xs text-red-500" */
+
+.error {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.errorIcon {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--error);
+}
+
+.errorText {
+  margin-left: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--error);
+}
+
+@media (max-width: 479px) {
+  .input {
+    font-size: 1.4rem;
+  }
+
+  .placeholder {
+    font-size: 1.4rem;
+  }
+
+  .errorText {
+    font-size: 1rem;
+  }
+}
